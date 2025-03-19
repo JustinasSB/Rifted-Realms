@@ -28,8 +28,6 @@ public class PlayerStats
             { StatType.RegenerationPercentage, new Stat("RegenerationPercentage", "Undescribed", 1f) },
             { StatType.RegenerationFlat, new Stat("RegenerationFlat", "Undescribed", 5f) }
         };
-        //Stats[StatType.Dexterity].OnStatChanged += OnDexterityChanged;
-
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {
         if (!Stats.ContainsKey(statType)) return;
