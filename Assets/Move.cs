@@ -9,18 +9,30 @@ public class PlayerMovement : MonoBehaviour
     public float maxDropDistanceForLedge = 0.4f;
     private PlayerStatsManager playerStatsManager;
     private CharacterController controller;
+    private Stat Movement;
     private Vector3 velocity;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
+        Movement = playerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
     }
 
     void Update()
     {
         Move();
         GroundPlayer();
+        if (Input.GetMouseButtonDown(0))
+        {
+            playerStatsManager.playerStats.Stats[StatType.CurrentLife].DirectValueSet(playerStatsManager.playerStats.Stats[StatType.CurrentLife].Value - 50);
+        }
+
+        // Right Click (Reduce Mana)
+        if (Input.GetMouseButtonDown(1))
+        {
+            playerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(playerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - 10);
+        }
     }
 
     private void Move() {
@@ -31,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         {
             move = Vector3.zero;
         }
-        controller.Move(move * playerStatsManager.playerStats.Stats[StatType.MovementSpeed].Value * Time.deltaTime);
+        controller.Move(move * Movement.Value * Time.deltaTime);
     }
 
     private void GroundPlayer() {
