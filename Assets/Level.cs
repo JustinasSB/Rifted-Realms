@@ -49,11 +49,11 @@ public class Level
     }
     private void CalculateFill() 
     {
-        float pexp = experienceForLevel - experience;
+        float pexp = experience - experienceForPreviousLevel;
         float rexp = experienceForLevel - experienceForPreviousLevel;
         if (pexp > 0)
         {
-            percentageFilled = rexp/pexp;
+            percentageFilled = pexp/rexp;
         }
     }
     private void LevelUp() 

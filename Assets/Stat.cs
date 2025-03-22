@@ -42,6 +42,14 @@ public class Stat
         }
         RecalculateValue();
     }
+    /// <summary>
+    /// For use in regeneration, sets stat value directly to avoid unnecessary calculations
+    /// </summary>
+    /// <param name="value"></param>
+    public void DirectValueSet(float value) 
+    {
+        this.Value = value;
+    }
     public void RecalculateValue()
     {
         float baseInc = baseIncrease.Sum();
@@ -102,7 +110,6 @@ public class Stat
         {
             RecalculateValue();
         }
-        //OnStatChanged?.Invoke(Name, Value);
     }
     private void deductConversionFromValue() 
     {

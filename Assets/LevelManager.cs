@@ -19,7 +19,14 @@ public class LevelManager : MonoBehaviour
     }
     private void HandleLevelUp(int level)
     {
-        playerStatsManager.playerStats.Stats[StatType.Life].AddBaseAdded((float)10 * (level / 5));
-        playerStatsManager.playerStats.Stats[StatType.Mana].AddBaseAdded(3f);
+        Stat Life = playerStatsManager.playerStats.Stats[StatType.Life];
+        Stat Mana = playerStatsManager.playerStats.Stats[StatType.Mana];
+        Life.AddBaseAdded((float)10 * (level / 5));
+        Mana.AddBaseAdded(3f);
+
+        //fully recover player resources
+        playerStatsManager.playerStats.Stats[StatType.CurrentLife].DirectValueSet(Life.Value);
+        playerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(Mana.Value);
+        playerStatsManager.playerStats.Stats[StatType.CurrentEnergy].DirectValueSet(playerStatsManager.playerStats.Stats[StatType.Energy].Value);
     }
 }

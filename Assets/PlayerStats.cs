@@ -26,7 +26,12 @@ public class PlayerStats
             { StatType.Mana, new Stat("Mana", "Undescribed", 50f) },
             { StatType.CurrentMana, new Stat("CurrentMana", "Undescribed", 50f) },
             { StatType.RegenerationPercentage, new Stat("RegenerationPercentage", "Undescribed", 1f) },
-            { StatType.RegenerationFlat, new Stat("RegenerationFlat", "Undescribed", 5f) }
+            { StatType.RegenerationFlat, new Stat("RegenerationFlat", "Undescribed", 5f) },
+            { StatType.ManaRegenerationPercentage, new Stat("ManaRegenerationPercentage", "Undescribed", 1f) },
+            { StatType.ManaRegenerationFlat, new Stat("ManaRegenerationFlat", "Undescribed", 1f) },
+            { StatType.EnergyRecharge, new Stat("EnergyRecharge", "Undescribed", 30f) },
+            { StatType.EnergyRegenerationPercentage, new Stat("EnergyRegenerationPercentage", "Undescribed", 0f) },
+            { StatType.EnergyRegenerationFlat, new Stat("EnergyRegenerationFlat", "Undescribed", 0f) }
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {

@@ -19,7 +19,13 @@ public enum StatType
     Mana,
     CurrentMana,
     RegenerationPercentage,
-    RegenerationFlat
+    RegenerationFlat,
+    ManaRegenerationPercentage,
+    ManaRegenerationFlat,
+    EnergyRecharge,
+    EnergyRegenerationPercentage,
+    EnergyRegenerationFlat
+
 }
 public enum OperationType
 {
