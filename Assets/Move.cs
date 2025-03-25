@@ -1,7 +1,4 @@
-using System.Diagnostics;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStatsManager playerStatsManager;
     private CharacterController controller;
     private Stat Movement;
-    private Vector3 velocity;
 
     void Start()
     {
@@ -32,13 +28,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             playerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(playerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - 10);
+            playerStatsManager.playerStats.Stats[StatType.CurrentEnergy].DirectValueSet(playerStatsManager.playerStats.Stats[StatType.CurrentEnergy].Value - 10);
         }
     }
 
     private void Move() {
         float moveZ = Input.GetAxisRaw("Horizontal");
         float moveX = -Input.GetAxisRaw("Vertical");
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        Vector3 move = (transform.right * moveX + transform.forward * moveZ).normalized;
         if (IsLedgeAhead(move))
         {
             move = Vector3.zero;

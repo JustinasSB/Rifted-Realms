@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 
 public class Level
 {
@@ -23,7 +18,8 @@ public class Level
     }
     public void IncreaseExperience(ulong exp, int sourceLevel) 
     {
-        experience += exp;
+        float gain = Math.Max(Math.Abs(sourceLevel - CurrentLevel) - (CurrentLevel/20),0);
+        experience += (ulong)(exp * Math.Pow(0.9,gain));
         if (experience >= experienceForLevel) 
         {
             LevelUp();

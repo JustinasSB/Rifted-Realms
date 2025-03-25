@@ -16,22 +16,22 @@ public class PlayerStats
             { StatType.Strength, new Stat("Strength", "Undescribed", 10f) },
             { StatType.Dexterity, new Stat("Dexterity", "Undescribed", 10f) },
             { StatType.Intelligence, new Stat("Intelligence", "Undescribed", 10f) },
-            { StatType.MovementSpeed, new Stat("MovementSpeed", "Undescribed", 5f) },
+            { StatType.MovementSpeed, new Stat("Movement Speed", "Undescribed", 5f) },
             { StatType.Armour, new Stat("Armour", "Undescribed", 0f) },
             { StatType.Evasion, new Stat("Evasion", "Undescribed", 0f) },
             { StatType.Energy, new Stat("Energy", "Undescribed", 100f) },
-            { StatType.CurrentEnergy, new Stat("CurrentEnergy", "Undescribed", 100f) },
+            { StatType.CurrentEnergy, new Stat("Current Energy", "Undescribed", 100f) },
             { StatType.Life, new Stat("Life", "Undescribed", 100f) },
-            { StatType.CurrentLife, new Stat("CurrentLife", "Undescribed", 100f) },
+            { StatType.CurrentLife, new Stat("Current Life", "Undescribed", 100f) },
             { StatType.Mana, new Stat("Mana", "Undescribed", 50f) },
-            { StatType.CurrentMana, new Stat("CurrentMana", "Undescribed", 50f) },
-            { StatType.RegenerationPercentage, new Stat("RegenerationPercentage", "Undescribed", 0.01f) },
-            { StatType.RegenerationFlat, new Stat("RegenerationFlat", "Undescribed", 5f) },
-            { StatType.ManaRegenerationPercentage, new Stat("ManaRegenerationPercentage", "Undescribed", 0.01f) },
-            { StatType.ManaRegenerationFlat, new Stat("ManaRegenerationFlat", "Undescribed", 1f) },
-            { StatType.EnergyRecharge, new Stat("EnergyRecharge", "Undescribed", 0.3f) },
-            { StatType.EnergyRegenerationPercentage, new Stat("EnergyRegenerationPercentage", "Undescribed", 0f) },
-            { StatType.EnergyRegenerationFlat, new Stat("EnergyRegenerationFlat", "Undescribed", 0f) }
+            { StatType.CurrentMana, new Stat("Current Mana", "Undescribed", 50f) },
+            { StatType.RegenerationPercentage, new Stat("Regeneration Percentage", "Undescribed", 0.01f) },
+            { StatType.RegenerationFlat, new Stat("Regeneration Flat", "Undescribed", 5f) },
+            { StatType.ManaRegenerationPercentage, new Stat("Mana Regeneration Percentage", "Undescribed", 0.01f) },
+            { StatType.ManaRegenerationFlat, new Stat("Mana Regeneration Flat", "Undescribed", 1f) },
+            { StatType.EnergyRecharge, new Stat("Energy Recharge", "Undescribed", 0.3f) },
+            { StatType.EnergyRegenerationPercentage, new Stat("Energy Regeneration Percentage", "Undescribed", 0f) },
+            { StatType.EnergyRegenerationFlat, new Stat("Energy Regeneration Flat", "Undescribed", 0f) }
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {
