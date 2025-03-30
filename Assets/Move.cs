@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStatsManager playerStatsManager;
     private CharacterController controller;
     private Stat Movement;
+    public Vector3 MovementDirection;
+    public bool isMoving;
 
     void Start()
     {
@@ -40,7 +43,22 @@ public class PlayerMovement : MonoBehaviour
         {
             move = Vector3.zero;
         }
-        controller.Move(move * Movement.Value * Time.deltaTime);
+        if (move != Vector3.zero)
+        {
+            MovementDirection = move;
+            isMoving = true;
+        }
+        else 
+        {
+            MovementDirection = Vector3.zero;
+            isMoving = false;
+        }
+        CollisionFlags flags =  controller.Move(move * Movement.Value * Time.deltaTime);
+        if ((flags & CollisionFlags.Sides) != 0)
+        {
+            MovementDirection = Vector3.zero;
+            isMoving = false;
+        }
     }
 
     private void GroundPlayer() {
@@ -57,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 rayOrigin = transform.position;
         Ray ray = new(rayOrigin + direction.normalized * (controller.radius + ledgeCheckDistance), Vector3.down);
-        //UnityEngine.Debug.DrawRay(rayOrigin + direction.normalized * (controller.radius + 0.2f), Vector3.down*100, Color.red);
         return !Physics.Raycast(ray, controller.height + maxDropDistanceForLedge);
     }
 }

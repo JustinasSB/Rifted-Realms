@@ -31,7 +31,10 @@ public class PlayerStats
             { StatType.ManaRegenerationFlat, new Stat("Mana Regeneration Flat", "Undescribed", 1f) },
             { StatType.EnergyRecharge, new Stat("Energy Recharge", "Undescribed", 0.3f) },
             { StatType.EnergyRegenerationPercentage, new Stat("Energy Regeneration Percentage", "Undescribed", 0f) },
-            { StatType.EnergyRegenerationFlat, new Stat("Energy Regeneration Flat", "Undescribed", 0f) }
+            { StatType.EnergyRegenerationFlat, new Stat("Energy Regeneration Flat", "Undescribed", 0f) },
+            { StatType.AttackSpeed, new Stat("Attack Speed", "Undescribed", 1f) },
+            { StatType.CastingSpeed, new Stat("Casting Speed", "Undescribed", 1f) },
+            { StatType.AnimationSpeed, new Stat ("Animation Speed", "Undescribed", 1f)}
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {

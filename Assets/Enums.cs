@@ -24,7 +24,10 @@ public enum StatType
     ManaRegenerationFlat,
     EnergyRecharge,
     EnergyRegenerationPercentage,
-    EnergyRegenerationFlat
+    EnergyRegenerationFlat,
+    AttackSpeed,
+    CastingSpeed,
+    AnimationSpeed
 
 }
 public enum OperationType
