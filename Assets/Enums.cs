@@ -44,3 +44,22 @@ public enum OperationType
     ExtraRemove,
     SetBase
 }
+public enum AbilityType 
+{
+    Spell = 1,
+    SelfSpell,
+    MeleeAttack,
+    RangedAttack
+}
+public enum WeaponType
+{
+    Unarmed,
+    Dagger,
+    Sword,
+    Axe,
+    Mace,
+    Staff,
+    Bow,
+    Wand,
+    Book
+}

@@ -27,19 +27,12 @@ public class Stat
     public float Value;
     private float valueBeforeConversion;
     //public event Action<string, float> OnStatChanged;
-    public Stat(string name, string description, float baseValue)
+    public Stat(string name, string description, float baseValue, StatType statType)
     {
         this.Name = name;
         this.Description = description;
         this.BaseValue = baseValue;
-        if (Enum.TryParse<StatType>(name, true, out StatType result))
-        {
-            this.StatType = result;
-        }
-        else 
-        {
-            Debug.Log("given name doesn't match a value in the enum");
-        }
+        this.StatType = statType;
         RecalculateValue();
     }
     /// <summary>
