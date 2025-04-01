@@ -59,6 +59,7 @@ public class AbilityAnimator : MonoBehaviour
         rightArmBasePosition = RightArmTarget.transform.localPosition;
         rightArmHintBasePosition = RightArmHint.transform.localPosition;
         rightArmBaseRotation = RightArmTarget.transform.localRotation;
+        LoadIdleAnimation();
     }
     void Update()
     {
@@ -68,43 +69,55 @@ public class AbilityAnimator : MonoBehaviour
         RightArmTarget.transform.localPosition = rightArmCurrentPosition;
         RightArmTarget.transform.localRotation = rightArmCurrentRotation;
         RightArmHint.transform.localPosition = rightArmHintCurrentPosition;
-        if (animationPlaying) 
+        
+        if (animationPlaying)
         {
-            elapsedTime += GetScaledDeltaTime(ability);
+            elapsedTime += getScaledDeltaTime(ability);
             float NormalizedElapsedTime = Mathf.Clamp01(elapsedTime / animationTime);
             //lerp factor climbs from 0 to 1 during the first half of animation time, then from 1 to 0 to return to base position 
             float lerpFactor = (NormalizedElapsedTime < 0.5f) ? (NormalizedElapsedTime * 2f) : ((1f - NormalizedElapsedTime) * 2f);
-
-            leftArmCurrentPosition = Vector3.Lerp(leftArmBasePosition, leftArmTargetPosition, lerpFactor);
-            leftArmCurrentRotation = Quaternion.Slerp(leftArmBaseRotation, leftArmTargetRotation, lerpFactor);
-            leftArmHintCurrentPosition = Vector3.Lerp(leftArmHintBasePosition, leftArmHintTargetPosition, lerpFactor);
-
-            rightArmCurrentPosition = Vector3.Lerp(rightArmBasePosition, rightArmTargetPosition, lerpFactor);
-            rightArmCurrentRotation = Quaternion.Slerp(rightArmBaseRotation, rightArmTargetRotation, lerpFactor);
-            rightArmHintCurrentPosition = Vector3.Lerp(rightArmHintBasePosition, rightArmHintTargetPosition, lerpFactor);
+            interpolateMovement(lerpFactor);
 
             if (!Triggered && NormalizedElapsedTime >= 0.5f)
             {
                 Triggered = true;
                 //do some ability
             }
-            if (NormalizedElapsedTime >= 1) 
+            if (NormalizedElapsedTime >= 1)
             {
                 animationPlaying = false;
                 Triggered = false;
+                elapsedTime = 0;
+                animationTime = 0.5f;
                 if (bufferedAnimation == 0 && bufferedAbility == 0)
                 {
-                    leftArmHintCurrentPosition = leftArmHintBasePosition;
-                    rightArmHintCurrentPosition = rightArmHintBasePosition;
+                    LoadIdleAnimation();
                 }
-                else 
+                else
                 {
                     PlayAnimation(bufferedAnimation, bufferedAbility);
+                    bufferedAnimation = 0;
+                    bufferedAbility = 0;
                 }
-                bufferedAnimation = 0;
-                bufferedAbility = 0;
             }
         }
+        else if (leftArmCurrentPosition != leftArmBasePosition)
+        {
+            elapsedTime += getScaledDeltaTime(0);
+            float NormalizedElapsedTime = Mathf.Clamp01(elapsedTime / animationTime);
+            float lerpFactor = (1f - NormalizedElapsedTime);
+            interpolateMovement(lerpFactor);
+        }
+    }
+    private void interpolateMovement(float lerpFactor)
+    {
+        leftArmCurrentPosition = Vector3.Lerp(leftArmBasePosition, leftArmTargetPosition, lerpFactor);
+        leftArmCurrentRotation = Quaternion.Slerp(leftArmBaseRotation, leftArmTargetRotation, lerpFactor);
+        leftArmHintCurrentPosition = Vector3.Lerp(leftArmHintBasePosition, leftArmHintTargetPosition, lerpFactor);
+
+        rightArmCurrentPosition = Vector3.Lerp(rightArmBasePosition, rightArmTargetPosition, lerpFactor);
+        rightArmCurrentRotation = Quaternion.Slerp(rightArmBaseRotation, rightArmTargetRotation, lerpFactor);
+        rightArmHintCurrentPosition = Vector3.Lerp(rightArmHintBasePosition, rightArmHintTargetPosition, lerpFactor);
     }
     public void PlayAnimation(float AnimationTime, AbilityType Ability)
     {
@@ -129,7 +142,7 @@ public class AbilityAnimator : MonoBehaviour
                     break;
             }
         }
-        else if (animationTime-elapsedTime-Time.deltaTime*2<0)
+        else if (animationTime-elapsedTime-animationTime*0.2<0)
         {
             bufferedAnimation = AnimationTime;
             bufferedAbility = ability;
@@ -139,10 +152,12 @@ public class AbilityAnimator : MonoBehaviour
     {
         this.weapon = type;
     }
-    private float GetScaledDeltaTime(AbilityType Ability)
+    private float getScaledDeltaTime(AbilityType Ability)
     {
         switch ((int)Ability)
         {
+            case 0:
+                return Time.deltaTime * animationSpeed.Value;
             case 1:
             case 2:
                 return Time.deltaTime * castingSpeed.Value * animationSpeed.Value;
@@ -151,18 +166,19 @@ public class AbilityAnimator : MonoBehaviour
                 return Time.deltaTime * attackSpeed.Value * animationSpeed.Value;
             default:
                 Debug.Log("ability type unset");
-                return Time.deltaTime;
+                return Time.deltaTime * animationSpeed.Value;
 
         }
     }
     private void SpellHandAnimation()
     {
-        leftArmTargetPosition = new Vector3((float)-0.016, (float)-0.083, (float)0.33);
-        leftArmTargetRotation = new quaternion((float)0.1503837, (float)-0.4924039, (float)-0.8528685, (float)0.0868241);
-        leftArmHintTargetPosition = new Vector3((float)-0.0866, (float)0.0525, (float)0.2774);
-        rightArmTargetPosition = new Vector3((float)0.0329, (float)-0.0975, (float)0.2808);
-        rightArmTargetRotation = new quaternion((float)0.2668861, (float)-0.5242557, (float)-0.8040591, (float)-0.0861205);
-        rightArmHintTargetPosition = new Vector3((float)0.1282, (float)0.0525, (float)0.262);
+        LoadAbilityBase();
+        leftArmTargetPosition = new Vector3(-0.01539947f, -0.1010992f, 0.312396f);
+        leftArmTargetRotation = new quaternion(-0.09592f, 0.53698f, 0.83658f, -0.05089f);
+        leftArmHintTargetPosition = new Vector3(-0.0782f, 0.0525f, 0.262f);
+        rightArmTargetPosition = new Vector3(0.03f, -0.0956f, 0.3197f);
+        rightArmTargetRotation = new quaternion(-0.04082f, -0.49159f, -0.86964f, -0.02000f);
+        rightArmHintTargetPosition = new Vector3(0.067f, 0.0525f, 0.262f);
         animationPlaying = true;
     }
     private void BuffHandAnimation()
@@ -172,5 +188,41 @@ public class AbilityAnimator : MonoBehaviour
     private void AttackHandAnimation()
     {
         animationPlaying = true;
+    }
+    private void LoadAbilityBase()
+    {
+        switch ((int)weapon)
+        {
+            case 0:
+                leftArmBasePosition = new Vector3(-0.03610138f, -0.02900007f, 0.2678969f);
+                leftArmBaseRotation = new quaternion(0.1443452f, -0.539722f, 0.8137537f, -0.1602173f);
+                leftArmHintBasePosition = new Vector3(-0.0687f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.03760367f, -0.05310554f, 0.2963893f);
+                rightArmBaseRotation = new quaternion(0.0838614f, -0.582919f, 0.7199153f, -0.3672801f);
+                rightArmHintBasePosition = new Vector3(0.0722f, 0.05254095f, 0.2619794f);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+    }
+    private void LoadIdleAnimation()
+    {
+        switch ((int)weapon) 
+        {
+            case 0:
+                leftArmBasePosition = new Vector3(-0.06810334f, 0.0009017753f, 0.2167678f);
+                leftArmBaseRotation = new quaternion(0.8271084f, -0.062163f, -0.0193626f, -0.5582584f);
+                leftArmHintBasePosition = new Vector3(-0.0721f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.0674f, 0.0127f, 0.2224f);
+                rightArmBaseRotation = new quaternion(-0.8236926f, -0.2241978f, -0.4545183f, 0.2543205f);
+                rightArmHintBasePosition = new Vector3(0.0648f, 0.0525f, 0.262f);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 }
