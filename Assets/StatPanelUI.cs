@@ -13,8 +13,11 @@ public class StatPanelUI : MonoBehaviour
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private Transform labelContainer;
     [SerializeField] private GameObject labelPrefab;
+    [SerializeField] private GameObject[] AttributeNumerics;
     private PlayerStatsManager playerStatsManager;
-    private List<Stat> statsToDisplay;
+    private List<Stat> statsToUse;
+    private List<Stat> Attributes = new List<Stat>();
+    private List<(string, float, bool)> valuesToDisplay = new List<(string, float, bool)>();
     private bool isVisible = false;
     private float labelUpdatePeriod = 2f;
     private float actionTime = 0f;
@@ -24,6 +27,8 @@ public class StatPanelUI : MonoBehaviour
         playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
         labelPrefab.SetActive(false);
         loadStats();
+        loadAttributes();
+        loadDisplayValues();
         offense.onClick.AddListener(() => SetValue(0));
         defense.onClick.AddListener(() => SetValue(1));
         utility.onClick.AddListener(() => SetValue(2));
@@ -34,6 +39,7 @@ public class StatPanelUI : MonoBehaviour
         {
             actionTime = Time.time+labelUpdatePeriod;
             updateLabels();
+            updateAttributes();
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -45,7 +51,24 @@ public class StatPanelUI : MonoBehaviour
         pageToLoad = value;
         destroyLabels();
         loadStats();
+        loadDisplayValues();
         updateLabels();
+    }
+    private void loadAttributes()
+    {
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Strength));
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Intelligence));
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Wisdom));
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Constitution));
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Dexterity));
+        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Charisma));
+    }
+    private void updateAttributes()
+    {
+        for (int i = 0; i < Attributes.Count; i++)
+        {
+            AttributeNumerics[i].gameObject.GetComponent<TMP_Text>().text = Attributes[i].Value.ToString();
+        }
     }
     private void loadStats() 
     {
@@ -61,18 +84,45 @@ public class StatPanelUI : MonoBehaviour
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Evasion));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.RegenerationPercentage));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.RegenerationFlat));
+                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Life));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRecharge));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationPercentage));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationFlat));
+                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Energy));
                 break;
             case 2:
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.MovementSpeed));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.AnimationSpeed));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationPercentage));
                 newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationFlat));
+                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Mana));
                 break;
         }
-        statsToDisplay = newStatList;
+        statsToUse = newStatList;
+    }
+    private void loadDisplayValues()
+    {
+        List<(string, float, bool)> newDisplayList = new List<(string, float, bool)>();
+        switch (pageToLoad)
+        {
+            case 0:
+                newDisplayList.Add((statsToUse[0].Name, statsToUse[0].Value*100, true));
+                newDisplayList.Add((statsToUse[1].Name, statsToUse[1].Value*100, true));
+                break;
+            case 1:
+                newDisplayList.Add((statsToUse[0].Name, statsToUse[0].Value, false));
+                newDisplayList.Add((statsToUse[1].Name, statsToUse[1].Value, false));
+                newDisplayList.Add(("Life Regeneration", statsToUse[4].Value * statsToUse[2].Value + statsToUse[3].Value, false));
+                newDisplayList.Add(("Energy Regeneration", statsToUse[8].Value * statsToUse[6].Value + statsToUse[7].Value, false));
+                newDisplayList.Add(("Energy Recharge", statsToUse[8].Value * statsToUse[5].Value, false));
+                break;
+            case 2:
+                newDisplayList.Add((statsToUse[0].Name, (statsToUse[0].Value/5)*100, true));
+                newDisplayList.Add((statsToUse[1].Name, (statsToUse[1].Value) * 100, true));
+                newDisplayList.Add(("Mana Regeneration", statsToUse[4].Value * statsToUse[2].Value + statsToUse[3].Value, false));
+                break;
+        }
+        valuesToDisplay = newDisplayList;
     }
     private void destroyLabels()
     {
@@ -81,26 +131,36 @@ public class StatPanelUI : MonoBehaviour
             DestroyImmediate(labelContainer.GetChild(1).gameObject);
         }
     }
+    private void createLabels()
+    {
+        for (int i = 0; i < valuesToDisplay.Count; i++)
+        {
+            GameObject newLabel = Instantiate(labelPrefab, labelContainer);
+            newLabel.SetActive(true);
+        }
+    }
     private void updateLabels()
     {
         labelContainer.gameObject.SetActive(true);
-        if (labelContainer.childCount > 1)
+        if (labelContainer.childCount < 2)
         {
-            int i = 1;
-            foreach (Stat stat in statsToDisplay)
-            {
-                labelContainer.GetChild(i).gameObject.GetComponent<TMP_Text>().text = stat.Name + ": " + stat.Value;
-                i++;
-            }
+            createLabels();
         }
-        else
+        int i = 1;
+        foreach ((string, float, bool) tuple in valuesToDisplay)
         {
-            foreach (Stat stat in statsToDisplay)
+            GameObject prefab = labelContainer.GetChild(i).gameObject;
+            GameObject numeric = labelContainer.GetChild(i).GetChild(0).gameObject;
+            prefab.gameObject.GetComponent<TMP_Text>().text = tuple.Item1;
+            if (tuple.Item3)
             {
-                GameObject newLabel = Instantiate(labelPrefab, labelContainer);
-                newLabel.GetComponent<TMP_Text>().text = stat.Name + ": " + stat.Value;
-                newLabel.SetActive(true);
+                numeric.GetComponent<TMP_Text>().text = tuple.Item2 + "%";
             }
+            else
+            {
+                numeric.GetComponent<TMP_Text>().text = tuple.Item2.ToString();
+            }
+            i++;
         }
     }
     private void togglePanel()

@@ -16,7 +16,7 @@ public class Stat
     private List<float> baseAdded = new List<float>();
     private List<float> baseIncrease = new List<float>();
     private List<float> baseMultiplier = new List<float>();
-    private StatType StatType;
+    public StatType StatType;
 
     //Stores Stat and the percentage of this.Value converted into held Stat
     private Dictionary<Stat, float> conversion = new Dictionary<Stat, float>();

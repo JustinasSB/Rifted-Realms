@@ -34,6 +34,9 @@ public class PlayerStats
             { StatType.EnergyRegenerationFlat, new Stat("Energy Regeneration Flat", "Undescribed", 0f, StatType.EnergyRegenerationFlat) },
             { StatType.AttackSpeed, new Stat("Attack Speed", "Undescribed", 1f, StatType.AttackSpeed) },
             { StatType.CastingSpeed, new Stat("Casting Speed", "Undescribed", 1f, StatType.CastingSpeed) },
+            { StatType.Wisdom, new Stat ("Wisdom", "Undescribed", 10f, StatType.Wisdom)},
+            { StatType.Constitution, new Stat ("Constitution", "Undescribed", 10f, StatType.Constitution)},
+            { StatType.Charisma, new Stat ("Charisma", "Undescribed", 10f, StatType.Charisma)},
             { StatType.AnimationSpeed, new Stat ("Animation Speed", "Undescribed", 1f, StatType.AnimationSpeed)}
         };
     }

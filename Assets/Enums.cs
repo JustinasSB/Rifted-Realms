@@ -7,8 +7,11 @@ using UnityEngine;
 public enum StatType
 {
     Strength,
-    Dexterity,
     Intelligence,
+    Wisdom,
+    Constitution,
+    Dexterity,
+    Charisma,
     MovementSpeed,
     Armour,
     Evasion,
