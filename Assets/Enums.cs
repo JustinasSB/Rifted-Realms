@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-public enum StatType
+﻿public enum StatType
 {
     Strength,
     Intelligence,
@@ -65,4 +59,20 @@ public enum WeaponType
     Bow,
     Wand,
     Book
+}
+public enum ItemType
+{
+    None,
+    Mainhand,
+    Offhand,
+    Helmet,
+    Bodyarmour,
+    Pants,
+    Belt,
+    Gloves,
+    Boots,
+    Ring,
+    Amulet,
+    Potion,
+    Stackable
 }
