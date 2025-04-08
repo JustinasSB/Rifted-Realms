@@ -8,25 +8,26 @@ public class ResourceManager : MonoBehaviour
     PlayerStatsManager playerStatsManager;
     private Stat[] resources;
     private bool canRecharge = false;
-    IEnumerator Start()
+    //IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitUntil(() => GetComponent<PlayerStatsManager>()?.playerStats != null);
+        //yield return new WaitUntil(() => GetComponent<PlayerStatsManager>()?.playerStats != null);
         playerStatsManager = GetComponent<PlayerStatsManager>();
         resources = new[]
         {
-            playerStatsManager.playerStats.GetStat(StatType.Life),                          //0
-            playerStatsManager.playerStats.GetStat(StatType.Mana),                          //1
-            playerStatsManager.playerStats.GetStat(StatType.Energy),                        //2
-            playerStatsManager.playerStats.GetStat(StatType.CurrentLife),                   //3
-            playerStatsManager.playerStats.GetStat(StatType.CurrentMana),                   //4
-            playerStatsManager.playerStats.GetStat(StatType.CurrentEnergy),                 //5
-            playerStatsManager.playerStats.GetStat(StatType.RegenerationPercentage),        //6
-            playerStatsManager.playerStats.GetStat(StatType.RegenerationFlat),              //7
-            playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationPercentage),    //8
-            playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationFlat),          //9
-            playerStatsManager.playerStats.GetStat(StatType.EnergyRecharge),                //10
-            playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationPercentage),  //11
-            playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationFlat)         //12
+            PlayerStatsManager.playerStats.GetStat(StatType.Life),                          //0
+            PlayerStatsManager.playerStats.GetStat(StatType.Mana),                          //1
+            PlayerStatsManager.playerStats.GetStat(StatType.Energy),                        //2
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentLife),                   //3
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentMana),                   //4
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentEnergy),                 //5
+            PlayerStatsManager.playerStats.GetStat(StatType.RegenerationPercentage),        //6
+            PlayerStatsManager.playerStats.GetStat(StatType.RegenerationFlat),              //7
+            PlayerStatsManager.playerStats.GetStat(StatType.ManaRegenerationPercentage),    //8
+            PlayerStatsManager.playerStats.GetStat(StatType.ManaRegenerationFlat),          //9
+            PlayerStatsManager.playerStats.GetStat(StatType.EnergyRecharge),                //10
+            PlayerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationPercentage),  //11
+            PlayerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationFlat)         //12
         };
     }
 

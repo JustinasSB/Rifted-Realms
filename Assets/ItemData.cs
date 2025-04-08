@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
@@ -9,4 +10,7 @@ public class ItemData : ScriptableObject
     public ItemType ItemType;
     public GameObject ItemPrefab;
     public Vector2Int SlotSize;
+    public Rarity ItemRarity;
+    public RolledItemModifier Implicit;
+    public List<RolledItemModifier> Modifiers { get; private set; } = new();
 }

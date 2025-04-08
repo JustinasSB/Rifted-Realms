@@ -16,18 +16,19 @@ public class ResourceUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI EnergyLabel;
     private Stat[] resources;
 
-    private IEnumerator Start()
+    //private IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitUntil(() => GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>()?.playerStats != null);
-        playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
+        //yield return new WaitUntil(() => GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>()?.playerStats != null);
+        //playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
         resources = new[]
         {
-            playerStatsManager.playerStats.GetStat(StatType.Life),
-            playerStatsManager.playerStats.GetStat(StatType.Mana),
-            playerStatsManager.playerStats.GetStat(StatType.Energy),
-            playerStatsManager.playerStats.GetStat(StatType.CurrentLife),
-            playerStatsManager.playerStats.GetStat(StatType.CurrentMana),
-            playerStatsManager.playerStats.GetStat(StatType.CurrentEnergy),
+            PlayerStatsManager.playerStats.GetStat(StatType.Life),
+            PlayerStatsManager.playerStats.GetStat(StatType.Mana),
+            PlayerStatsManager.playerStats.GetStat(StatType.Energy),
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentLife),
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentMana),
+            PlayerStatsManager.playerStats.GetStat(StatType.CurrentEnergy),
         };
     }
     private void Update()

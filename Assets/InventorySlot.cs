@@ -21,17 +21,17 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             {
                 if (!Allocating && AllocatedBy != null)
                 {
-                    Inventory.Singleton.SetCarriedItem(AllocatedBy.Item);
+                    Inventory.Singleton.SetCarriedItem(AllocatedBy.Item, true);
                     Deallocate(AllocatedBy);
                 }
                 else if (Allocating)
                 {
-                    Inventory.Singleton.SetCarriedItem(Item);
+                    Inventory.Singleton.SetCarriedItem(Item, true);
                     Deallocate(this);
                 }
                 else 
                 {
-                    Inventory.Singleton.SetCarriedItem(Item);
+                    Inventory.Singleton.SetCarriedItem(Item, true);
                     this.Allocated = false;
                 }
             }
@@ -49,7 +49,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
         Inventory.carriedItem = null;
-        if (reallocate != null) Inventory.Singleton.SetCarriedItem(reallocate);
+        if (reallocate != null) Inventory.Singleton.SetCarriedItem(reallocate, true);
         int x = item.data.SlotSize.x;
         int y = item.data.SlotSize.y;
         int index = transform.GetSiblingIndex();

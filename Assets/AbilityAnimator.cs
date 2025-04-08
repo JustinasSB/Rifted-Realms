@@ -49,9 +49,9 @@ public class AbilityAnimator : MonoBehaviour
     {
         playerStatsManager = GetComponent<PlayerStatsManager>();
         body = GetComponent<CharacterController>();
-        attackSpeed = playerStatsManager.playerStats.GetStat(StatType.AttackSpeed);
-        castingSpeed = playerStatsManager.playerStats.GetStat(StatType.CastingSpeed);
-        animationSpeed = playerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
+        attackSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AttackSpeed);
+        castingSpeed = PlayerStatsManager.playerStats.GetStat(StatType.CastingSpeed);
+        animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
         weapon = 0;
         leftArmBasePosition = LeftArmTarget.transform.localPosition;
         leftArmHintBasePosition = LeftArmHint.transform.localPosition;

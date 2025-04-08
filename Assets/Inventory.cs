@@ -15,8 +15,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] Button giveItemBtn;
     private Vector3 carriedItemOffset;
     private List<InventorySlot> highlightedSlots = new();
-    private bool cleared = true;
-    private InventorySlot currentHoveredSlot;
+    private EquipmentSlot highlightedSlot;
+    private bool clearHightlights = false;
+    private MonoBehaviour currentHoveredSlot;
     public GraphicRaycaster raycaster;
     public EventSystem eventSystem;
     private void Awake()
@@ -30,29 +31,49 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
-        if (carriedItem == null) 
+        if (carriedItem == null)
         {
             ClearHighlights();
-            return; 
-        }
-        carriedItem.transform.position = Input.mousePosition + carriedItemOffset;
-        InventorySlot slot = GetHoveredSlot();
-        if (slot == null || slot == currentHoveredSlot)
             return;
+        }
 
-        ClearHighlights();
-        currentHoveredSlot = slot;
+        carriedItem.transform.position = Input.mousePosition + carriedItemOffset;
 
-        int status = slot.CanAllocate(Inventory.carriedItem);
-        List<InventorySlot> slotsToHighlight = slot.GetTargetSlots(Inventory.carriedItem);
-
-        foreach (var s in slotsToHighlight)
+        RaycastResult? hoveredResult = GetHoveredSlotResult();
+        if (!clearHightlights)
         {
-            s.Highlight(status == 2 ? Color.red.WithAlpha(50f/255f) : Color.green.WithAlpha(50f/255f));
-            highlightedSlots.Add(s);
+            if (hoveredResult == null)
+            {
+                ClearHighlights();
+                currentHoveredSlot = null;
+                return;
+            }
+            if (hoveredResult.Value.gameObject == currentHoveredSlot?.gameObject)
+                return;
+        }
+
+        clearHightlights = false;
+        ClearHighlights();
+
+        if (hoveredResult == null)
+        {
+            currentHoveredSlot = null;
+            return;
+        }
+
+        GameObject hoveredObject = hoveredResult.Value.gameObject;
+        currentHoveredSlot = hoveredObject.GetComponent<MonoBehaviour>(); // still stored for tracking
+
+        if (hoveredObject.TryGetComponent(out InventorySlot invSlot))
+        {
+            HighlightInventorySlots(invSlot);
+        }
+        else if (hoveredObject.TryGetComponent(out EquipmentSlot equipSlot))
+        {
+            HighlightEquipmentSlots(equipSlot);
         }
     }
-    public InventorySlot GetHoveredSlot()
+    private RaycastResult? GetHoveredSlotResult()
     {
         PointerEventData pointerData = new PointerEventData(eventSystem)
         {
@@ -64,12 +85,33 @@ public class Inventory : MonoBehaviour
 
         foreach (RaycastResult result in results)
         {
-            InventorySlot slot = result.gameObject.GetComponent<InventorySlot>();
-            if (slot != null)
-                return slot;
+            if (result.gameObject.GetComponent<InventorySlot>() != null ||
+                result.gameObject.GetComponent<EquipmentSlot>() != null)
+            {
+                return result;
+            }
         }
 
         return null;
+    }
+    private void HighlightInventorySlots(InventorySlot slot)
+    {
+        int status = slot.CanAllocate(Inventory.carriedItem);
+        List<InventorySlot> slotsToHighlight = slot.GetTargetSlots(Inventory.carriedItem);
+
+        foreach (var s in slotsToHighlight)
+        {
+            s.Highlight(status == 2 ? Color.red.WithAlpha(50f / 255f) : Color.green.WithAlpha(50f / 255f));
+            highlightedSlots.Add(s);
+        }
+    }
+
+    private void HighlightEquipmentSlots(EquipmentSlot slot)
+    {
+        int status = slot.CanAllocate(Inventory.carriedItem);
+        EquipmentSlot slotToHighlight = slot.GetTargetSlot();
+        slotToHighlight.Highlight(status == 2 ? Color.red.WithAlpha(50f / 255f) : Color.green.WithAlpha(50f / 255f));
+        highlightedSlot = slotToHighlight;
     }
 
     public void SpawnInventoryItem(ItemData item = null)
@@ -90,6 +132,11 @@ public class Inventory : MonoBehaviour
     }
     private void ClearHighlights()
     {
+        if (highlightedSlot != null)
+        {
+            highlightedSlot.ResetHighlight();
+            highlightedSlot = null;
+        }
         foreach (var s in highlightedSlots)
             s.ResetHighlight();
         highlightedSlots.Clear();
@@ -98,7 +145,7 @@ public class Inventory : MonoBehaviour
     {
         return inventorySlots[index];
     }
-    public void SetCarriedItem(InventoryItem item)
+    public void SetCarriedItem(InventoryItem item, bool withClear)
     {
         if (carriedItem != null) return;
 
@@ -108,7 +155,7 @@ public class Inventory : MonoBehaviour
         {
             carriedItemOffset = new Vector2(item.data.SlotSize.x * item.data.Size.x / 2 - item.data.Size.x / 2 - 10, -item.data.SlotSize.y * item.data.Size.y / 2 + item.data.Size.y / 2 + 10);
         }
-        item.itemIcon.raycastTarget = false;
+        clearHightlights = withClear;
     }
 
     ItemData PickRandomItem()

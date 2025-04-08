@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
-        movementSpeed = playerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
-        animationSpeed = playerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
+        movementSpeed = PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
+        animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
     }
 
     void Update()

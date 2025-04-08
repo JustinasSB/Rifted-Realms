@@ -56,12 +56,12 @@ public class StatPanelUI : MonoBehaviour
     }
     private void loadAttributes()
     {
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Strength));
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Intelligence));
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Wisdom));
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Constitution));
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Dexterity));
-        Attributes.Add(playerStatsManager.playerStats.GetStat(StatType.Charisma));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Strength));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Intelligence));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Wisdom));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Constitution));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Dexterity));
+        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Charisma));
     }
     private void updateAttributes()
     {
@@ -76,26 +76,26 @@ public class StatPanelUI : MonoBehaviour
         switch (pageToLoad)
         {
             case 0:
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.AttackSpeed));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.CastingSpeed));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.AttackSpeed));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.CastingSpeed));
                 break;
             case 1:
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Armour));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Evasion));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.RegenerationPercentage));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.RegenerationFlat));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Life));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRecharge));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationPercentage));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationFlat));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Energy));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.Armour));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.Evasion));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.RegenerationPercentage));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.RegenerationFlat));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.Life));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.EnergyRecharge));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationPercentage));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.EnergyRegenerationFlat));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.Energy));
                 break;
             case 2:
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.MovementSpeed));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.AnimationSpeed));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationPercentage));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.ManaRegenerationFlat));
-                newStatList.Add(playerStatsManager.playerStats.GetStat(StatType.Mana));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.ManaRegenerationPercentage));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.ManaRegenerationFlat));
+                newStatList.Add(PlayerStatsManager.playerStats.GetStat(StatType.Mana));
                 break;
         }
         statsToUse = newStatList;

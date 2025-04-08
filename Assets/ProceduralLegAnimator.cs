@@ -26,8 +26,8 @@ public class ProceduralLegAnimator : MonoBehaviour
     private void Start()
     {
         playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
-        speed = playerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
-        animationSpeed = playerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
+        speed = PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
+        animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
         currentposition = transform.position;
     }
     void Update()

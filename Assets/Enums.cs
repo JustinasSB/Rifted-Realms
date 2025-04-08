@@ -24,7 +24,8 @@
     EnergyRegenerationFlat,
     AttackSpeed,
     CastingSpeed,
-    AnimationSpeed
+    AnimationSpeed,
+    PhysicalDamage
 
 }
 public enum OperationType
@@ -73,6 +74,45 @@ public enum ItemType
     Boots,
     Ring,
     Amulet,
-    Potion,
+    Elixir,
     Stackable
+}
+public enum ModifiableItemType
+{
+    Dagger,
+    Sword,
+    Axe,
+    Mace,
+    Staff,
+    Bow,
+    Wand,
+    Book,
+    Helmet,
+    Bodyarmour,
+    Pants,
+    Belt,
+    Gloves,
+    Boots,
+    Ring,
+    Amulet,
+    Elixir
+}
+public enum ModifierType
+{
+    Implicit,
+    Prefix,
+    Suffix
+}
+public enum ModifierScope
+{
+    Local,
+    Global
+}
+public enum Rarity
+{
+    World,
+    Divine,
+    Legendary,
+    Rare,
+    Magic
 }

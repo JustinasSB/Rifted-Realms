@@ -9,7 +9,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStatsManager : MonoBehaviour
 {
-    public PlayerStats playerStats;
+    public static PlayerStats playerStats;
     void Start()
     {
         playerStats = new PlayerStats();
