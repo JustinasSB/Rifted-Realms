@@ -9,36 +9,66 @@ public static class ModifierDictionary
             ModifiableItemType.Axe,
             new List<ItemModifier>
             {
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 0, 0, 100, 120),
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 1, 0, 80, 99),
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 2, 0, 60, 79),
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 3, 0, 40, 59),
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 4, 0, 20, 39),
-                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 5, 0, 1, 19),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 0, 1, 50, 60),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 1, 1, 40, 49),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 2, 1, 30, 39),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 3, 1, 20, 29),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 4, 1, 10, 19),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 5, 1, 1, 9)
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 0, 0, 100, 120, 500, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 1, 0, 80, 99, 1000, 60),
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 2, 0, 60, 79, 1000, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 3, 0, 40, 59, 1000, 20),
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 4, 0, 20, 39, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 5, 0, 1, 19, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 0, 1, 50, 60, 500, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 1, 1, 40, 49, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 2, 1, 30, 39, 1000, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 3, 1, 20, 29, 1000, 20),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 4, 1, 10, 19, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 5, 1, 1, 9, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 0, 6, 100, 120, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 1, 6, 90, 99, 100, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 2, 6, 80, 89, 100, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 3, 6, 70, 79, 100, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 4, 6, 30, 59, 100, 20),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Local, StatType.RadiantDamage, 5, 6, 10, 19, 100, 0),
+
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 0, 2, 28, 30, 500, 60),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 1, 2, 22, 27, 1000, 60),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 2, 2, 17, 21, 1000, 20),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 3, 2, 11, 16, 1000, 20),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 4, 2, 6, 10, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Local, StatType.AttackSpeed, 5, 2, 1, 5, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.AirResistance, 0, 3, 35, 40, 100, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.FireResistance, 0, 4, 35, 40, 100, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.WaterResistance, 0, 5, 35, 40, 100, 0),
+
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 99, 40, 50, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 99, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.AttackSpeed, 0, 99, 5, 10, 1000, 0),
+
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.FireDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.WaterDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.AirDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.PoisonDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.RadiantDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage)
+
             }
         },
         {
             ModifiableItemType.Bodyarmour,
             new List<ItemModifier>
             {
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 0, 3, 5),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 0, 2, 3),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 0, 1, 2),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 0, 3, 5),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 0, 2, 3),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 0, 1, 2),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 0, 3, 5),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 0, 2, 3),
-                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 0, 1, 2),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59)
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 1, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 1, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 1, 40, 79, 1000, 0)
             }
         }
     };

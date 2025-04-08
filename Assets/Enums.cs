@@ -7,8 +7,8 @@
     Dexterity,
     Charisma,
     MovementSpeed,
-    Armour,
     Evasion,
+    Armour,
     Energy,
     CurrentEnergy,
     Life,
@@ -22,10 +22,20 @@
     EnergyRecharge,
     EnergyRegenerationPercentage,
     EnergyRegenerationFlat,
+    FireResistance,
+    WaterResistance,
+    AirResistance,
+    PoisonResistance,
+    RadiantResistance,
     AttackSpeed,
     CastingSpeed,
     AnimationSpeed,
-    PhysicalDamage
+    PhysicalDamage,
+    FireDamage,
+    WaterDamage,
+    AirDamage,
+    PoisonDamage,
+    RadiantDamage
 
 }
 public enum OperationType
@@ -101,7 +111,8 @@ public enum ModifierType
 {
     Implicit,
     Prefix,
-    Suffix
+    Suffix,
+    Enchant
 }
 public enum ModifierScope
 {
@@ -114,5 +125,6 @@ public enum Rarity
     Divine,
     Legendary,
     Rare,
-    Magic
+    Magic,
+    Common
 }

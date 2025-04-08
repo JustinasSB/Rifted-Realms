@@ -37,7 +37,13 @@ public class PlayerStats
             { StatType.Wisdom, new Stat ("Wisdom", "Undescribed", 10f, StatType.Wisdom)},
             { StatType.Constitution, new Stat ("Constitution", "Undescribed", 10f, StatType.Constitution)},
             { StatType.Charisma, new Stat ("Charisma", "Undescribed", 10f, StatType.Charisma)},
-            { StatType.AnimationSpeed, new Stat ("Animation Speed", "Undescribed", 1f, StatType.AnimationSpeed)}
+            { StatType.AnimationSpeed, new Stat ("Animation Speed", "Undescribed", 1f, StatType.AnimationSpeed)},
+            { StatType.FireResistance, new Stat ("Fire Resistance", "Undescribed", 0f, StatType.FireResistance)},
+            { StatType.WaterResistance, new Stat ("Water Resistance", "Undescribed", 0f, StatType.WaterResistance)},
+            { StatType.AirResistance, new Stat ("Air Resistance", "Undescribed", 0f, StatType.AirResistance)},
+            { StatType.RadiantResistance, new Stat ("Radiant Resistance", "Undescribed", 0f, StatType.RadiantResistance)},
+            { StatType.PoisonResistance, new Stat ("Poison Resistance", "Undescribed", 0f, StatType.PoisonResistance)},
+            { StatType.PhysicalDamage, new Stat ("Physical Damage", "Undescribed", 0f, StatType.PhysicalDamage)}
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {
