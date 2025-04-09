@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -120,14 +121,11 @@ public class Inventory : MonoBehaviour
         if (_item == null)
         { _item = PickRandomItem(); }
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        (bool possible, int location) = TryPlaceItem(_item);
+        if (possible) 
         {
-            // Check if the slot is empty
-            if (inventorySlots[i].Item == null)
-            {
-                Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_item, inventorySlots[i]);
-                break;
-            }
+            Instantiate(itemPrefab).InitializeInInventory(_item, location);
+            //Instantiate(itemPrefab, inventorySlots[location].transform).InitializeInInventory(_item, inventorySlots[location]);
         }
     }
     private void ClearHighlights()
@@ -162,5 +160,17 @@ public class Inventory : MonoBehaviour
     {
         int random = Random.Range(0, items.Length);
         return items[random];
+    }
+    private (bool, int) TryPlaceItem(ItemData item)
+    {
+        for (int i = 0; i < inventorySlots.Count(); i++)
+        {
+            if (inventorySlots[i].CanAllocate(item)) return (true, i);
+        }
+        return (false, -1);
+    }
+    public void PlaceItem(InventoryItem item, int location)
+    {
+        inventorySlots[location].allocateItem(item);
     }
 }

@@ -7,8 +7,10 @@ public class ItemData : ScriptableObject
     public string ItemName;
     public Sprite Icon;
     public Vector2Int Size;
-    public ItemType ItemType;
-    public GameObject ItemPrefab;
     public Vector2Int SlotSize;
+    public ItemType ItemType;
+    public ItemSpecific ItemSpecific;
     public float BaseLevel;
+    public List<ItemTemplateStats> ItemStats;
+    public GameObject ItemPrefab;
 }

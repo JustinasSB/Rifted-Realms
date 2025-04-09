@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
@@ -56,7 +57,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         InventorySlot Allocator = Inventory.Singleton.GetSlot(index + (x - 1) + (y - 1) * 15);
         Allocator.Allocated = true;
         Allocator.Item = item;
-        Allocator.Item.slot = Allocator;
         Allocator.Item.transform.SetParent(Allocator.transform);
         for (int i = index % 15; i < index % 15 + x; i++)
         {
@@ -71,7 +71,35 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             }
         }
         if (Allocator.AllocatingTo != null) Allocator.Allocating = true;
-        RectTransform rt = Allocator.Item.GetComponent<RectTransform>();
+        correctAnchor(Allocator.Item.GetComponent<RectTransform>(), item);
+    }
+    public void allocateItem(InventoryItem item)
+    {
+        int x = item.data.SlotSize.x;
+        int y = item.data.SlotSize.y;
+        int index = transform.GetSiblingIndex();
+        InventorySlot Allocator = Inventory.Singleton.GetSlot(index + (x - 1) + (y - 1) * 15);
+        Allocator.Allocated = true;
+        Allocator.Item = item;
+        Allocator.Item.transform.SetParent(Allocator.transform);
+        for (int i = index % 15; i < index % 15 + x; i++)
+        {
+            for (int j = index / 15; j < index / 15 + y; j++)
+            {
+                InventorySlot temp = Inventory.Singleton.GetSlot(j * 15 + i);
+                if (Allocator == temp) continue;
+                temp.Allocated = true;
+                temp.AllocatedBy = Allocator;
+                Allocator.AllocatingTo.Add(temp);
+
+            }
+        }
+        if (Allocator.AllocatingTo != null) Allocator.Allocating = true;
+        correctAnchor(Allocator.Item.GetComponent<RectTransform>(), item);
+        
+    }
+    private void correctAnchor(RectTransform rt, InventoryItem item)
+    {
         rt.sizeDelta = new Vector2(item.data.SlotSize.x * item.data.Size.x, item.data.SlotSize.y * item.data.Size.y);
         rt.localScale = Vector3.one;
         rt.anchoredPosition = Vector2.zero;
@@ -85,8 +113,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
         else if (item.data.SlotSize.x > 1)
         {
-            rt.anchoredPosition += new Vector2(item.data.Size.x / 2, 0);
+            rt.anchoredPosition += new Vector2(-item.data.Size.x * 0.5f, 0);
         }
+    }
+    private bool checkValidity(int index, int x, int y)
+    {
+        if ((index % 15) + x > 15) return false;
+        if ((index / 15) + y > 6) return false;
+        return true;
     }
     public List<InventorySlot> GetTargetSlots(InventoryItem item)
     {
@@ -94,11 +128,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         int index = transform.GetSiblingIndex();
         int x = item.data.SlotSize.x;
         int y = item.data.SlotSize.y;
-        for (int i = index % 15; i < index % 15 + x; i++)
+        //inverted for loops to avoid horizontal wrapping while keeping correct highlights
+        for (int j = index / 15; j < index / 15 + y; j++)
         {
-            for (int j = index / 15; j < index / 15 + y; j++)
+            for (int i = index % 15; i < index % 15 + x; i++)
             {
-                slots.Add(Inventory.Singleton.GetSlot(j * 15 + i));
+                if (i >= 15)
+                    break;
+
+                int flatIndex = j * 15 + i;
+                if (flatIndex >= Inventory.Singleton.inventorySlots.Length)
+                    continue;
+
+                slots.Add(Inventory.Singleton.GetSlot(flatIndex));
             }
         }
         return slots;
@@ -110,11 +152,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         int x = item.data.SlotSize.x;
         int y = item.data.SlotSize.y;
         int itemIndex = 0;
-        if (index + (x - 1) + (y - 1) * 15 >= transform.parent.childCount) return (2, null);
+        if (!checkValidity(index, x, y)) return (2, null);
         for (int i = index % 15; i < index % 15 + x; i++)
         {
             for (int j = index / 15; j < index / 15 + y; j++)
             {
+                if (j*15+i> Inventory.Singleton.inventorySlots.Length) return (2, null);
                 InventorySlot check = Inventory.Singleton.GetSlot(j * 15 + i);
                 if (!check.Allocated) continue;
                 if (!check.Allocating) check = check.AllocatedBy;
@@ -141,11 +184,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         int x = item.data.SlotSize.x;
         int y = item.data.SlotSize.y;
         int itemIndex = 0;
-        if (index + (x - 1) + (y - 1) * 15 >= transform.parent.childCount) return 2;
+        if (!checkValidity(index, x, y)) return 2;
         for (int i = index % 15; i < index % 15 + x; i++)
         {
             for (int j = index / 15; j < index / 15 + y; j++)
             {
+                if (j * 15 + i > Inventory.Singleton.inventorySlots.Length) return 2;
                 InventorySlot check = Inventory.Singleton.GetSlot(j * 15 + i);
                 if (!check.Allocated) continue;
                 if (!check.Allocating) check = check.AllocatedBy;
@@ -164,6 +208,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             return 1;
         }
         return 0;
+    }
+    public bool CanAllocate(ItemData item)
+    {
+        int index = transform.GetSiblingIndex();
+        int x = item.SlotSize.x;
+        int y = item.SlotSize.y;
+        if (!checkValidity(index, x, y)) return false;
+        for (int i = index % 15; i < index % 15 + x; i++)
+        {
+            for (int j = index / 15; j < index / 15 + y; j++)
+            {
+                if (j * 15 + i > Inventory.Singleton.inventorySlots.Length) return false;
+                InventorySlot check = Inventory.Singleton.GetSlot(j * 15 + i);
+                if (check.Allocated) return false;
+                if (check.Allocating) return false;
+            }
+        }
+        return true;
     }
     private void Deallocate(int index)
     {

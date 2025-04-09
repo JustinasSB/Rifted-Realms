@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 
+[System.Serializable]
 public class Stat
 {
     public string Name { get; }
@@ -31,6 +32,17 @@ public class Stat
     {
         this.Name = name;
         this.Description = description;
+        this.BaseValue = baseValue;
+        this.StatType = statType;
+        RecalculateValue();
+    }
+    /// <summary>
+    /// For use with items, minimal initialization
+    /// </summary>
+    /// <param name="baseValue"></param>
+    /// <param name="statType"></param>
+    public Stat(float baseValue, StatType statType)
+    {
         this.BaseValue = baseValue;
         this.StatType = statType;
         RecalculateValue();

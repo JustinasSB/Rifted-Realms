@@ -35,8 +35,8 @@
     WaterDamage,
     AirDamage,
     PoisonDamage,
-    RadiantDamage
-
+    RadiantDamage,
+    EffectDuration
 }
 public enum OperationType
 {
@@ -69,7 +69,8 @@ public enum WeaponType
     Staff,
     Bow,
     Wand,
-    Book
+    Book,
+    Pole
 }
 public enum ItemType
 {
@@ -86,6 +87,31 @@ public enum ItemType
     Amulet,
     Elixir,
     Stackable
+}
+public enum ItemSpecific
+{
+    None,
+    Evasion,
+    Armor,
+    Energy,
+    Life,
+    Mana,
+    Utility,
+    Dagger,
+    Sword,
+    Axe,
+    Mace,
+    Staff,
+    Bow,
+    Wand,
+    Book,
+    Quiver,
+    Shield,
+    Focus,
+    Trinket,
+    Sigil,
+    Fist,
+    Pole,
 }
 public enum ModifiableItemType
 {

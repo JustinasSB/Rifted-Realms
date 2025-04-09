@@ -3,10 +3,10 @@ using UnityEngine;
 
 public static class ModifierDictionary
 {
-    public static Dictionary<ModifiableItemType, List<ItemModifier>> ModifierPools = new()
+    public static Dictionary<(ItemType, ItemSpecific), List<ItemModifier>> ModifierPools = new()
     {
         {
-            ModifiableItemType.Axe,
+            (ItemType.Mainhand, ItemSpecific.Axe),
             new List<ItemModifier>
             {
                 new ItemModifier(OperationType.Increase, ModifierType.Prefix, ModifierScope.Local, StatType.PhysicalDamage, 0, 0, 100, 120, 500, 80),
@@ -51,7 +51,7 @@ public static class ModifierDictionary
             }
         },
         {
-            ModifiableItemType.Bodyarmour,
+            (ItemType.Bodyarmour, ItemSpecific.Armor),
             new List<ItemModifier>
             {
                 new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 0, 3, 5, 100, 80),

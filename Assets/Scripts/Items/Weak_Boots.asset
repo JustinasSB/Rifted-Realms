@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 254fd7cf0d2d71141a325736005c61f6, type: 3}
-  m_Name: Totem
+  m_Name: Weak_Boots
   m_EditorClassIdentifier: 
-  ItemName: Totem
-  Icon: {fileID: 5185426349936013449, guid: 3a193848c8d389f4c9eb72aa4a07aa1a, type: 3}
+  ItemName: Weak_Boots
+  Icon: {fileID: 21300000, guid: 57e55d9ab75fec140a903522d5acf84e, type: 3}
   Size: {x: 50, y: 50}
-  SlotSize: {x: 1, y: 2}
-  ItemType: 11
-  ItemSpecific: 6
+  SlotSize: {x: 2, y: 2}
+  ItemType: 8
+  ItemSpecific: 2
   BaseLevel: 0
   ItemStats:
-  - StatType: 15
-    BaseValue: 0.02
-  - StatType: 36
-    BaseValue: -1
+  - StatType: 8
+    BaseValue: 25
   ItemPrefab: {fileID: 0}

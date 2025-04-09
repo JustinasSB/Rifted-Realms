@@ -20111,10 +20111,22 @@ MonoBehaviour:
   draggablesTransform: {fileID: 2144485204}
   itemPrefab: {fileID: 8502793987779762414, guid: cd43b50e660aafe45830948ccdd074ef, type: 3}
   items:
-  - {fileID: 11400000, guid: 8562347b3c5f2e544ac49360fda5e1a4, type: 2}
-  - {fileID: 11400000, guid: 2f94ab4158673504d8e7fb133d4cec02, type: 2}
+  - {fileID: 11400000, guid: ad2885574c2555c47a67ec3694a945f1, type: 2}
+  - {fileID: 11400000, guid: 11d0703757b71fe4a8896f29533b1614, type: 2}
   - {fileID: 11400000, guid: 2cb8bb06a2688944985b87fba0796f51, type: 2}
+  - {fileID: 11400000, guid: 8562347b3c5f2e544ac49360fda5e1a4, type: 2}
+  - {fileID: 11400000, guid: 43cd9f579e94c91428f9d60d0b3e8cea, type: 2}
+  - {fileID: 11400000, guid: a4a1adeaaefbe4349b07ad75f7717505, type: 2}
+  - {fileID: 11400000, guid: 907548dd42f59424bae00c7e7de65d64, type: 2}
   - {fileID: 11400000, guid: a7c8ec3984371a2418343f837d499034, type: 2}
+  - {fileID: 11400000, guid: 2f94ab4158673504d8e7fb133d4cec02, type: 2}
+  - {fileID: 11400000, guid: 3f21ee9302e8d5445bc8afebe79f4b93, type: 2}
+  - {fileID: 11400000, guid: bd483a681ba0d154283f5fee0b01ef27, type: 2}
+  - {fileID: 11400000, guid: b4180aa49e062364dbd3bcb3362ee74a, type: 2}
+  - {fileID: 11400000, guid: 5789df76f5804c9438094e835fdd8a4d, type: 2}
+  - {fileID: 11400000, guid: 827cd002522432f4c90b7fc79f3d9cf7, type: 2}
+  - {fileID: 11400000, guid: 8a80d14436cf4d240b9cd978daa8a603, type: 2}
+  - {fileID: 11400000, guid: 0189e5b9a61f25b4f99ceff117939cc2, type: 2}
   giveItemBtn: {fileID: 1609232760}
   raycaster: {fileID: 0}
   eventSystem: {fileID: 0}
