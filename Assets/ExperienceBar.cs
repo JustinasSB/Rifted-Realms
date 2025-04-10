@@ -23,8 +23,8 @@ public class ExperienceBar : MonoBehaviour
     }
     private void Update()
     {
-        levelManager.level.IncreaseExperience((uint)10, 1);
-        level.text = levelManager.level.CurrentLevel.ToString();
-        fill.value = (float)levelManager.level.percentageFilled;
+        LevelManager.level.IncreaseExperience((uint)10, 1);
+        level.text = LevelManager.level.CurrentLevel.ToString();
+        fill.value = (float)LevelManager.level.percentageFilled;
     }
 }

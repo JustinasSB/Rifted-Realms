@@ -48,7 +48,6 @@ public class PlayerStats
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {
         if (!Stats.ContainsKey(statType)) return;
-
         switch (operation) {
             case OperationType.Add:
                 Stats[statType].AddBaseAdded(value);
@@ -71,9 +70,26 @@ public class PlayerStats
             case OperationType.SetBase:
                 Stats[statType].SetBaseValue(value);
                 break;
-
         }
-
+    }
+    public void ModifyStat(StatType statType, OperationType operation, float value, StatType from)
+    {
+        if (!Stats.ContainsKey(statType)) return;
+        switch (operation)
+        {
+            case OperationType.Convert:
+                Stats[from].AddConversion(Stats[statType], value);
+                break;
+            case OperationType.ConvertRemove:
+                Stats[from].RemoveConversion(Stats[statType], value);
+                break;
+            case OperationType.Extra:
+                Stats[from].AddAsExtra(Stats[statType], value);
+                break;
+            case OperationType.ExtraRemove:
+                Stats[from].RemoveAsExtra(Stats[statType], value);
+                break;
+        }
     }
     public Stat GetStat(StatType statType)
     {

@@ -18,7 +18,9 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         {
             if (this.Item == null) return;
             RemoveModifiers();
+            RemoveStats();
             deallocate();
+            SetTooltip();
         }
         else if (Inventory.carriedItem != null)
         {
@@ -26,6 +28,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             if (Item != null)
             {
                 RemoveModifiers();
+                RemoveStats();
                 allocateItem(Inventory.carriedItem, Item);
             }
             else
@@ -33,7 +36,10 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
                 allocateItem(Inventory.carriedItem, null);
             }
             ApplyModifiers();
+            AddStats();
+            SetTooltip();
         }
+        ResetTooltip();
     }
     private void Update()
     {
@@ -45,18 +51,88 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         Border.color = Color.yellow;
 
     }
+    private void ResetTooltip()
+    {
+        TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        { 
+            trigger.OnPointerExit();
+            trigger.OnPointerEnter();
+        }
+    }
+    private void SetTooltip()
+    {
+        TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        {
+            trigger.item = this.Item;
+        }
+    }
     private void deallocate()
     {
         Inventory.Singleton.SetCarriedItem(Item, false);
         this.Item = null;
     }
+    private void AddStats()
+    {
+        if (this.itemType != ItemType.Mainhand
+           && this.itemType != ItemType.Offhand)
+        {
+            foreach (var value in Item.Stats.List)
+            {
+                PlayerStatsManager.playerStats.ModifyStat(value.Key, OperationType.Add, value.Value.Value);
+            }
+        }
+    }
+    private void RemoveStats()
+    {
+        if (this.itemType != ItemType.Mainhand
+           && this.itemType != ItemType.Offhand)
+        {
+            foreach (var value in Item.Stats.List)
+            {
+                PlayerStatsManager.playerStats.ModifyStat(value.Key, OperationType.AddRemove, value.Value.Value);
+            }
+        }
+    }
     private void RemoveModifiers()
     {
-        
+        foreach (ItemModifier modifier in Item.Modifiers)
+        {
+            if (modifier.Scope != ModifierScope.Global) continue;
+            switch (modifier.OperationType)
+            {
+                case OperationType.Add:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.AddRemove, modifier.RolledValue);
+                    break;
+                case OperationType.Increase:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.IncreaseRemove, modifier.RolledValue);
+                    break;
+                case OperationType.Multiply:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.MultiplyRemove, modifier.RolledValue);
+                    break;
+                case OperationType.Convert:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ConvertRemove, modifier.RolledValue);
+                    break;
+                case OperationType.Extra:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ExtraRemove, modifier.RolledValue);
+                    break;
+                case OperationType.SetBase:
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.SetBase, modifier.RolledValue);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     private void ApplyModifiers()
     {
-        
+        foreach (ItemModifier modifier in Item.Modifiers)
+        {
+            if (modifier.Scope != ModifierScope.Global) continue;
+
+            PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
+        }
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {

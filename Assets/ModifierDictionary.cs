@@ -38,15 +38,29 @@ public static class ModifierDictionary
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.FireResistance, 0, 4, 35, 40, 100, 0),
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.WaterResistance, 0, 5, 35, 40, 100, 0),
 
-                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 99, 40, 50, 1000, 0),
-                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 99, 10, 20, 1000, 0),
-                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.AttackSpeed, 0, 99, 5, 10, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 1000, 40, 50, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 1001, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.AttackSpeed, 0, 1002, 5, 10, 1000, 0),
 
                 new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.FireDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.WaterDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.AirDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.PoisonDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.RadiantDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage)
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.WaterDamage, 0, 101, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.AirDamage, 0, 102, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.PoisonDamage, 0, 103, 5, 10, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.RadiantDamage, 0, 104, 5, 10, 1000, 0, StatType.PhysicalDamage)
+
+            }
+        },
+        {
+            (ItemType.Mainhand, ItemSpecific.Sword),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Helmet, ItemSpecific.Armor),
+            new List<ItemModifier>
+            {
 
             }
         },
@@ -68,8 +82,74 @@ public static class ModifierDictionary
                 new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
                 new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 1, 120, 150, 1000, 60),
                 new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 1, 80, 119, 1000, 30),
-                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 1, 40, 79, 1000, 0)
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 1, 40, 79, 1000, 0),
+
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1000, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1001, 10, 20, 1000, 0)
             }
-        }
+        },
+        {
+            (ItemType.Pants, ItemSpecific.Armor),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Gloves, ItemSpecific.Armor),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Boots, ItemSpecific.Armor),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Amulet, ItemSpecific.None),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Belt, ItemSpecific.None),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Ring, ItemSpecific.None),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Elixir, ItemSpecific.Life),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Elixir, ItemSpecific.Mana),
+            new List<ItemModifier>
+            {
+
+            }
+        },
+        {
+            (ItemType.Elixir, ItemSpecific.Utility),
+            new List<ItemModifier>
+            {
+
+            }
+        },
     };
 }

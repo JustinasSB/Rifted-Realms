@@ -9,7 +9,7 @@ using UnityEngine;
 [System.Serializable]
 public class LevelManager : MonoBehaviour 
 {
-    public Level level;
+    public static Level level;
     private PlayerStatsManager playerStatsManager;
     void Start() 
     {

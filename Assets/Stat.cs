@@ -43,6 +43,7 @@ public class Stat
     /// <param name="statType"></param>
     public Stat(float baseValue, StatType statType)
     {
+        this.Name = statType.ToString();
         this.BaseValue = baseValue;
         this.StatType = statType;
         RecalculateValue();
@@ -135,7 +136,6 @@ public class Stat
     }
     private void updateConversionDependants()
     {
-        //foreach (var item in Dependant)
         foreach (var item in conversion)
         {
             float value = scaledConversion[item.Key.StatType];

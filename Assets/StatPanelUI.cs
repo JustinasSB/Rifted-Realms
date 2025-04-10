@@ -38,8 +38,9 @@ public class StatPanelUI : MonoBehaviour
         if (Time.time > actionTime && isVisible) 
         {
             actionTime = Time.time+labelUpdatePeriod;
-            updateLabels();
             updateAttributes();
+            loadDisplayValues();
+            updateLabels();
         }
         if (Input.GetKeyDown(KeyCode.C))
         {

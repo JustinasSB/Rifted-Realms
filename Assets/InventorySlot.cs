@@ -12,6 +12,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public InventorySlot AllocatedBy;
     public bool Allocating;
     public List<InventorySlot> AllocatingTo = new();
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
@@ -46,6 +47,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 allocateItem(Inventory.carriedItem, t);
             }
         }
+        ResetTooltip();
+    }
+    private void ResetTooltip()
+    {
+        TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        {
+            trigger.OnPointerExit();
+            trigger.OnPointerEnter();
+        }
+    }
+    private void SetTooltip(InventorySlot slot)
+    {
+        TooltipTrigger trigger = slot.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        {
+            trigger.slot = this;
+        }
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
@@ -63,7 +82,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             for (int j = index / 15; j < index / 15 + y; j++)
             {
                 InventorySlot temp = Inventory.Singleton.GetSlot(j * 15 + i);
+                SetTooltip(temp);
                 if (Allocator == temp) continue;
+                temp.Item = item;
                 temp.Allocated = true;
                 temp.AllocatedBy = Allocator;
                 Allocator.AllocatingTo.Add(temp);
@@ -87,7 +108,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             for (int j = index / 15; j < index / 15 + y; j++)
             {
                 InventorySlot temp = Inventory.Singleton.GetSlot(j * 15 + i);
+                SetTooltip(temp);
                 if (Allocator == temp) continue;
+                temp.Item = item;
                 temp.Allocated = true;
                 temp.AllocatedBy = Allocator;
                 Allocator.AllocatingTo.Add(temp);
@@ -243,10 +266,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         foreach (InventorySlot s in slot.AllocatingTo)
         {
+            SetTooltip(s);
             s.Allocated = false;
             s.AllocatedBy = null;
             s.Item = null;
         }
+        SetTooltip(slot);
         slot.Allocated = false;
         slot.Item = null;
         slot.Allocating = false;

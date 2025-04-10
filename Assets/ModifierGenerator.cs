@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class ModifierGenerator
 {
@@ -17,7 +18,7 @@ public static class ModifierGenerator
 
         if (constraints.Enchants > 0)
         {
-            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Implicits, ModifierType.Enchant);
+            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Enchants, ModifierType.Enchant);
             foreach (ItemModifier modifier in temp)
             {
                 result.Add(modifier);
@@ -32,7 +33,7 @@ public static class ModifierGenerator
         }
         if (constraints.Prefixes > 0)
         {
-            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Implicits, ModifierType.Prefix);
+            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Prefixes, ModifierType.Prefix);
             foreach (ItemModifier modifier in temp)
             {
                 result.Add(modifier);
@@ -40,7 +41,7 @@ public static class ModifierGenerator
         }
         if (constraints.Suffixes > 0)
         {
-            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Implicits, ModifierType.Suffix);
+            List<ItemModifier> temp = GenerateModifiers(possibleModifiers, constraints.Suffixes, ModifierType.Suffix);
             foreach (ItemModifier modifier in temp)
             {
                 result.Add(modifier);
@@ -55,11 +56,13 @@ public static class ModifierGenerator
         List<ItemModifier> filtered = possibleModifiers
         .Where(mod => mod.Type == type)
         .ToList();
-        if (filtered.Count < 1) return null;
+        Debug.Log(filtered.Count);
+        if (filtered.Count == 0) return result;
         List<IGrouping<float, ItemModifier>> groupBuckets = filtered
         .GroupBy(mod => mod.Group)
         .ToList();
-        if (groupBuckets.Count < 1) return null;
+        Debug.Log(groupBuckets.Count);
+        if (groupBuckets.Count == 0) return result;
 
         var groupSampler = new VoseAliasSampler<IGrouping<float, ItemModifier>>(groupBuckets, g => g.Sum(m => m.Weight));
         HashSet<float> selectedGroups = new();
@@ -69,7 +72,7 @@ public static class ModifierGenerator
             if (selectedGroups.Contains(group.Key)) continue;
 
             var modSampler = new VoseAliasSampler<ItemModifier>(group.ToList(), m => m.Weight);
-            result.Add(modSampler.Sample());
+            result.Add(modSampler.Sample().Clone());
             selectedGroups.Add(group.Key);
         }
         return result;
@@ -81,7 +84,7 @@ public static class ModifierGenerator
         private readonly T[] outcomes;
         private readonly int[] alias;
         private readonly double[] probabilities;
-        private readonly Random random = new Random();
+        private readonly System.Random random = new System.Random();
 
         public VoseAliasSampler(List<T> items, Func<T, double> weightSelector)
         {

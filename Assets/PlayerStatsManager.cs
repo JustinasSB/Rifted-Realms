@@ -23,6 +23,10 @@ public class PlayerStatsManager : MonoBehaviour
             Debug.Log(statName.ToString() + " adjusted to " + newValue.ToString());
         });
 
+
+        //TESTING CONVERSION, AS EXTRA LOGIC
+        //TODO: Move to unit tests
+
         playerStats.Stats[StatType.Dexterity].SetBaseValue(300);
         Debug.Log(playerStats.Stats[StatType.Dexterity].Name + " adjusted to " + playerStats.Stats[StatType.Dexterity].Value.ToString());
         playerStats.Stats[StatType.MovementSpeed].SetBaseValue(20);
