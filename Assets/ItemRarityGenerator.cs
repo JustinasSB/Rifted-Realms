@@ -7,7 +7,7 @@ public class ItemRarityGenerator
     //most rare to least rare order to more easily apply weighting improvment with rarity stat when generating
     private static readonly List<(Rarity, int)> RarityWeights = new List<(Rarity, int)>()
     {
-        new(Rarity.World, 1),
+        new(Rarity.World, 100000),
         new(Rarity.Divine, 32),
         new(Rarity.Legendary, 128),
         new(Rarity.Rare, 512),
@@ -21,7 +21,7 @@ public class ItemRarityGenerator
         { Rarity.Rare, 20 },
         { Rarity.Legendary, 40 },
         { Rarity.Divine, 60 },
-        { Rarity.World, 80 }
+        { Rarity.World, 0 }
     };
     public static void GenerateRarity(InventoryItem Item, float ImprovedRarity, int SourceLevel)
     {

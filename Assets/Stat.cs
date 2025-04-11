@@ -58,11 +58,7 @@ public class Stat
     }
     public void RecalculateValue()
     {
-        float baseInc = baseIncrease.Sum();
-        if (baseInc == 0) 
-        {
-            baseInc = 1f;
-        }
+        float baseInc = (1f + baseIncrease.Sum());
         float baseMul = baseMultiplier.Aggregate(1f, (total, next) => total * next);
         valueBeforeConversion = (BaseValue + baseAdded.Sum()) * baseInc * baseMul;
         Value = valueBeforeConversion;

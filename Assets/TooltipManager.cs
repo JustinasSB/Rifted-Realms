@@ -8,10 +8,6 @@ public class TooltipManager : MonoBehaviour
     {
         instance = this;
     }
-    //public static void Show()
-    //{
-    //    instance.tooltip.gameObject.SetActive(true);
-    //}
     public static void Show(InventoryItem item, Vector2 position)
     {
         instance.tooltip.ShowTooltip(item, position);

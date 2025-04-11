@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        carriedItem.transform.position = Input.mousePosition + carriedItemOffset;
+        carriedItem.transform.position = Input.mousePosition; //+ carriedItemOffset;
 
         RaycastResult? hoveredResult = GetHoveredSlotResult();
         if (!clearHightlights)
@@ -153,6 +153,10 @@ public class Inventory : MonoBehaviour
         {
             carriedItemOffset = new Vector2(item.data.SlotSize.x * item.data.Size.x / 2 - item.data.Size.x / 2 - 10, -item.data.SlotSize.y * item.data.Size.y / 2 + item.data.Size.y / 2 + 10);
         }
+        RectTransform rt = item.GetComponent<RectTransform>();
+        rt.pivot = new Vector2(0.15f, 0.85f);
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
         clearHightlights = withClear;
     }
 

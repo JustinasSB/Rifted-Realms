@@ -58,13 +58,22 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             trigger.OnPointerEnter();
         }
     }
-    private void SetTooltip(InventorySlot slot)
+    private void SetTooltip(InventorySlot slot, bool clear = false)
     {
         TooltipTrigger trigger = slot.GetComponent<TooltipTrigger>();
-        if (trigger != null)
+        if (trigger == null) return;
+        if (clear)
         {
-            trigger.slot = this;
+            trigger.rt = null;
+            trigger.item = null;
+            return;
         }
+        if (slot.AllocatedBy != null) slot = slot.AllocatedBy;
+        if (slot.AllocatingTo.Count != 0) slot = slot.AllocatingTo[0];
+        Debug.Log("Sending slot:" + slot);
+        trigger.rt = slot.GetComponent<RectTransform>();
+        trigger.item = slot.Item;
+
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
@@ -82,15 +91,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             for (int j = index / 15; j < index / 15 + y; j++)
             {
                 InventorySlot temp = Inventory.Singleton.GetSlot(j * 15 + i);
-                SetTooltip(temp);
                 if (Allocator == temp) continue;
                 temp.Item = item;
                 temp.Allocated = true;
                 temp.AllocatedBy = Allocator;
                 Allocator.AllocatingTo.Add(temp);
-                
+                SetTooltip(temp);
             }
         }
+        SetTooltip(Allocator);
         if (Allocator.AllocatingTo != null) Allocator.Allocating = true;
         correctAnchor(Allocator.Item.GetComponent<RectTransform>(), item);
     }
@@ -108,15 +117,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             for (int j = index / 15; j < index / 15 + y; j++)
             {
                 InventorySlot temp = Inventory.Singleton.GetSlot(j * 15 + i);
-                SetTooltip(temp);
                 if (Allocator == temp) continue;
                 temp.Item = item;
                 temp.Allocated = true;
                 temp.AllocatedBy = Allocator;
                 Allocator.AllocatingTo.Add(temp);
-
+                SetTooltip(temp);
             }
         }
+        SetTooltip(Allocator);
         if (Allocator.AllocatingTo != null) Allocator.Allocating = true;
         correctAnchor(Allocator.Item.GetComponent<RectTransform>(), item);
         
@@ -126,17 +135,17 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         rt.sizeDelta = new Vector2(item.data.SlotSize.x * item.data.Size.x, item.data.SlotSize.y * item.data.Size.y);
         rt.localScale = Vector3.one;
         rt.anchoredPosition = Vector2.zero;
-        if (item.data.SlotSize.x > 1 && item.data.SlotSize.y > 1)
+        if (item.data.SlotSize != Vector2.one)
         {
-            rt.anchoredPosition += new Vector2(-item.data.Size.x / 2, item.data.SlotSize.y * item.data.Size.y / 2 - item.data.Size.y / 2);
+            rt.anchorMin = new Vector2(1, 0);
+            rt.anchorMax = new Vector2(1, 0);
+            rt.pivot = new Vector2(1f, 0f);
         }
-        else if (item.data.SlotSize.y > 1)
+        else
         {
-            rt.anchoredPosition += new Vector2(0, item.data.SlotSize.y * item.data.Size.y / 2 - item.data.Size.y / 2);
-        }
-        else if (item.data.SlotSize.x > 1)
-        {
-            rt.anchoredPosition += new Vector2(-item.data.Size.x * 0.5f, 0);
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
         }
     }
     private bool checkValidity(int index, int x, int y)
@@ -266,12 +275,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         foreach (InventorySlot s in slot.AllocatingTo)
         {
-            SetTooltip(s);
+            SetTooltip(s, true);
             s.Allocated = false;
             s.AllocatedBy = null;
             s.Item = null;
         }
-        SetTooltip(slot);
+        SetTooltip(slot, true);
         slot.Allocated = false;
         slot.Item = null;
         slot.Allocating = false;

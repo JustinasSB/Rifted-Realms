@@ -60,7 +60,7 @@ public class ProceduralLegAnimator : MonoBehaviour
                 newposition = info.point;
                 usedMovementDirection = movement.MovementDirection;
             }
-            if (stepping && movement.MovementDirection != usedMovementDirection && movement.MovementDirection != Vector3.zero) 
+            if (stepping && movement.MovementDirection != usedMovementDirection) 
             {
                 endMovement = 2;
                 usedMovementDirection = movement.MovementDirection;

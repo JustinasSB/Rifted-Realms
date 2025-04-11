@@ -10,7 +10,8 @@ public class InventoryItem : MonoBehaviour
     public ItemData data { get; set; }
     public Rarity Rarity { get; set; }
     public int ItemLevel { get; set; }
-    public List<ItemModifier> Modifiers { get; set; }
+    public string ItemName;
+    public List<ItemModifier> Modifiers = new List<ItemModifier>();
     public ItemStatsManager Stats = new ItemStatsManager();
 
     void Awake()
@@ -31,23 +32,20 @@ public class InventoryItem : MonoBehaviour
         }
         if (data.ItemType!= ItemType.Stackable)
             Modifiers = ModifierGenerator.GenerateModifiers(this);
+        if ((int)Rarity >= 1)
+        {
+            NameGenerator.GenerateRarity(this);
+        }
+        if (Modifiers == null) return;
         foreach (ItemModifier modifier in Modifiers)
         {
             if (modifier.Scope == ModifierScope.Local)
             {
                 if (modifier.OperationType == OperationType.Add)
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
-                else 
+                else
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue / 100);
             }
         }
-    }
-    public void AddValuesToPlayer()
-    {
-        
-    }
-    public void RemoveValuesFromPlayer() 
-    {
-        
     }
 }

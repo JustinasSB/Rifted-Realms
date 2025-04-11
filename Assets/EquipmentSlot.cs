@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     InventoryItem Item { get; set; }
     bool Allocated;
     [SerializeField] ItemType itemType;
+    public static event Action<InventoryItem> OnMainHandEquipmentChanged;
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
@@ -20,6 +22,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             RemoveModifiers();
             RemoveStats();
             deallocate();
+            PublishUpdate();
             SetTooltip();
         }
         else if (Inventory.carriedItem != null)
@@ -37,6 +40,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             }
             ApplyModifiers();
             AddStats();
+            PublishUpdate();
             SetTooltip();
         }
         ResetTooltip();
@@ -60,11 +64,19 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             trigger.OnPointerEnter();
         }
     }
+    private void PublishUpdate()
+    {
+        if (itemType == ItemType.Mainhand)
+        {
+            OnMainHandEquipmentChanged?.Invoke(Item);
+        }
+    }
     private void SetTooltip()
     {
         TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
         if (trigger != null)
         {
+            trigger.rt = this.GetComponent<RectTransform>();
             trigger.item = this.Item;
         }
     }
@@ -147,6 +159,9 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         rt.sizeDelta = new Vector2(item.data.SlotSize.x * item.data.Size.x, item.data.SlotSize.y * item.data.Size.y);
         rt.localScale = Vector3.one;
         rt.anchoredPosition = Vector2.zero;
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
     }
     public EquipmentSlot GetTargetSlot()
     {

@@ -30,7 +30,7 @@ public class ItemModifier
         Weight = weight;
         LevelRequirement = levelRequirement;
         RollValue();
-        Text = $"+{RolledValue} {AffectedStat}";
+        setText();
     }
     public ItemModifier(OperationType operationType, ModifierType type, ModifierScope scope, StatType to, float tier, float group, float min, float max, float weight, float levelRequirement, StatType from)
     {
@@ -46,7 +46,42 @@ public class ItemModifier
         LevelRequirement = levelRequirement;
         Extra = from;
         RollValue();
-        Text = $"+{RolledValue} {AffectedStat}";
+        setText();
+    }
+    private void setText()
+    {
+        switch ((int)(this.OperationType + (int)this.Scope*10)) {
+            case 0:
+                Text = $"Adds {RolledValue} {AffectedStat.GetDisplayName()}";
+                break;
+            case 1:
+                Text = $"{RolledValue}% increased {AffectedStat.GetDisplayName()}";
+                break;
+            case 2:
+                Text = $"+{RolledValue}% more {AffectedStat.GetDisplayName()}";
+                break;
+            case 3:
+                Text = $"{RolledValue}% of {Extra.GetDisplayName()} to {AffectedStat.GetDisplayName()}";
+                break;
+            case 4:
+                Text = $"{RolledValue}% of {Extra.GetDisplayName()} as extra {AffectedStat.GetDisplayName()}";
+                break;
+            case 10:
+                Text = $"+{RolledValue} To {AffectedStat.GetDisplayName()}";
+                break;
+            case 11:
+                Text = $"+{RolledValue}% To {AffectedStat.GetDisplayName()}";
+                break;
+            case 12:
+                Text = $"+{RolledValue}% Multiplier To {AffectedStat.GetDisplayName()}";
+                break;
+            case 13:
+                Text = $"{RolledValue}% of {Extra.GetDisplayName()} added as {AffectedStat.GetDisplayName()}";
+                break;
+            case 14:
+                Text = $"{RolledValue}% of {Extra.GetDisplayName()} added as extra {AffectedStat.GetDisplayName()}";
+                break;
+        }
     }
     public ItemModifier Clone()
     {

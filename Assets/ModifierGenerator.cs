@@ -12,6 +12,7 @@ public static class ModifierGenerator
         int itemLevel = item.ItemLevel;
         ItemType type = item.data.ItemType;
         ItemSpecific specificType = item.data.ItemSpecific;
+        if (!ModifierDictionary.ModifierPools.ContainsKey((type, specificType))) return null;
         List<ItemModifier> possibleModifiers = ModifierDictionary.ModifierPools[(type, specificType)]
             .Where(level => level.LevelRequirement < itemLevel)
             .ToList();

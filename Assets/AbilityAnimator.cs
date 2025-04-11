@@ -119,6 +119,27 @@ public class AbilityAnimator : MonoBehaviour
         rightArmCurrentRotation = Quaternion.Slerp(rightArmBaseRotation, rightArmTargetRotation, lerpFactor);
         rightArmHintCurrentPosition = Vector3.Lerp(rightArmHintBasePosition, rightArmHintTargetPosition, lerpFactor);
     }
+    private void OnEnable()
+    {
+        EquipmentSlot.OnMainHandEquipmentChanged += UpdateWeapon;
+    }
+
+    private void OnDisable()
+    {
+        EquipmentSlot.OnMainHandEquipmentChanged -= UpdateWeapon;
+    }
+    private void UpdateWeapon(InventoryItem item)
+    {
+        if (item != null)
+        {
+            Enum.TryParse<WeaponType>(item.data.ItemSpecific.ToString(), out var weaponType);
+            weapon = weaponType;
+        }
+        else
+        {
+            weapon = WeaponType.Unarmed;
+        }
+    }
     public void PlayAnimation(float AnimationTime, AbilityType Ability)
     {
         if (!animationPlaying)

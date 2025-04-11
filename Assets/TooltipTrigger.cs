@@ -1,3 +1,4 @@
+using System;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,22 +8,13 @@ using static UnityEditor.Progress;
 
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public InventorySlot slot;
     public InventoryItem item;
+    public RectTransform rt;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (slot != null && slot.Allocated)
+        if (rt != null && item != null)
         {
-            RectTransform itemRectTransform = slot.Item.GetComponent<RectTransform>();
-            Vector3 itemWorldPosition = itemRectTransform.position;
-            Vector3 tooltipPosition = new Vector3(itemWorldPosition.x, itemWorldPosition.y + (slot.Item.data.Size.y / 2) * (slot.Item.data.SlotSize.y / 2) + 10f, itemWorldPosition.z);
-            TooltipManager.Show(slot.Item, tooltipPosition);
-        }
-        if (item != null)
-        {
-            RectTransform itemRectTransform = item.GetComponent<RectTransform>();
-            Vector3 itemWorldPosition = itemRectTransform.position;
-            Vector3 tooltipPosition = new Vector3(itemWorldPosition.x, itemWorldPosition.y + (item.data.Size.y / 2) * (item.data.SlotSize.y / 2) + 10f, itemWorldPosition.z);
+            Vector3 tooltipPosition = new Vector3(rt.position.x, rt.position.y + 25f, rt.position.z);
             TooltipManager.Show(item, tooltipPosition);
         }
     }
@@ -32,18 +24,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void OnPointerEnter()
     {
-        if (slot != null && slot.Allocated)
+        if (rt != null && item != null)
         {
-            RectTransform itemRectTransform = slot.Item.GetComponent<RectTransform>();
-            Vector3 itemWorldPosition = itemRectTransform.position;
-            Vector3 tooltipPosition = new Vector3(itemWorldPosition.x, itemWorldPosition.y + (slot.Item.data.Size.y / 2) * (slot.Item.data.SlotSize.y / 2) + 10f, itemWorldPosition.z);
-            TooltipManager.Show(slot.Item, tooltipPosition);
-        }
-        if (item != null)
-        {
-            RectTransform itemRectTransform = item.GetComponent<RectTransform>();
-            Vector3 itemWorldPosition = itemRectTransform.position;
-            Vector3 tooltipPosition = new Vector3(itemWorldPosition.x, itemWorldPosition.y + (item.data.Size.y / 2) * (item.data.SlotSize.y / 2) + 10f, itemWorldPosition.z);
+            Vector3 tooltipPosition = new Vector3(rt.position.x, rt.position.y + 25f, rt.position.z);
             TooltipManager.Show(item, tooltipPosition);
         }
     }
