@@ -157,10 +157,10 @@ public enum ModifiableItemType
 }
 public enum ModifierType
 {
+    Enchant,
     Implicit,
     Prefix,
-    Suffix,
-    Enchant
+    Suffix
 }
 public enum ModifierScope
 {

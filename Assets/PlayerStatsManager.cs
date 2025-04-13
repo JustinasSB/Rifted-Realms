@@ -63,5 +63,11 @@ public class PlayerStatsManager : MonoBehaviour
         Debug.Log(playerStats.Stats[StatType.Dexterity].Name + " is " + playerStats.Stats[StatType.Dexterity].Value.ToString());
         Debug.Log(playerStats.Stats[StatType.Strength].Name + " is " + playerStats.Stats[StatType.Strength].Value.ToString());
         Debug.Log(playerStats.Stats[StatType.Intelligence].Name + " adjusted to " + playerStats.Stats[StatType.Intelligence].Value.ToString());
+        playerStats.Stats[StatType.Dexterity].AddAsExtra(playerStats.GetStat(StatType.Intelligence), 10f);
+        Debug.Log(playerStats.Stats[StatType.Dexterity].Name + " is " + playerStats.Stats[StatType.Dexterity].Value.ToString());
+        Debug.Log(playerStats.Stats[StatType.Strength].Name + " is " + playerStats.Stats[StatType.Strength].Value.ToString());
+        Debug.Log(playerStats.Stats[StatType.Intelligence].Name + " adjusted to " + playerStats.Stats[StatType.Intelligence].Value.ToString());
+        playerStats.Stats[StatType.Dexterity].AddIncrease(-1);
+        Debug.Log(playerStats.Stats[StatType.Intelligence].Name + " adjusted to " + playerStats.Stats[StatType.Intelligence].Value.ToString());
     }
 }

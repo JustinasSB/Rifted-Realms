@@ -48,6 +48,16 @@ public class ItemModifier
         RollValue();
         setText();
     }
+    public ItemModifier(ItemModifier clone)
+    {
+        OperationType = clone.OperationType;
+        AffectedStat = clone.AffectedStat;
+        Type = clone.Type;
+        Weight = clone.Weight;
+        Text = clone.Text;
+        Extra = clone.Extra;
+        RolledValue = clone.RolledValue;
+    }
     private void setText()
     {
         switch ((int)(this.OperationType + (int)this.Scope*10)) {
@@ -116,6 +126,14 @@ public class ItemModifier
                 LevelRequirement
             );
         }
+    }
+    /// <summary>
+    /// ONLY USED FOR TOOLTIP DISPLAY
+    /// </summary>
+    public void AddToRolledValue(float value)
+    {
+        RolledValue += value;
+        setText();
     }
     public void RollValue()
     {

@@ -44,6 +44,8 @@ public class InventoryItem : MonoBehaviour
                 if(!Stats.List.ContainsKey(modifier.AffectedStat)) Stats.List.Add(modifier.AffectedStat, new Stat(0, modifier.AffectedStat));
                 if (modifier.OperationType == OperationType.Add)
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
+                else if (modifier.OperationType == OperationType.Extra)
+                    Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue / 100, modifier.Extra);
                 else
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue / 100);
             }

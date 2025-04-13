@@ -42,11 +42,11 @@ public static class ModifierDictionary
                 new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.PhysicalDamage, 0, 1001, 10, 20, 1000, 0),
                 new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.AttackSpeed, 0, 1002, 5, 10, 1000, 0),
 
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.FireDamage, 0, 100, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.WaterDamage, 0, 101, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.AirDamage, 0, 102, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.PoisonDamage, 0, 103, 5, 10, 1000, 0, StatType.PhysicalDamage),
-                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.RadiantDamage, 0, 104, 5, 10, 1000, 0, StatType.PhysicalDamage)
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.FireDamage, 0, 100, 50, 100, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.WaterDamage, 0, 101, 50, 100, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.AirDamage, 0, 102, 50, 100, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.PoisonDamage, 0, 103, 50, 100, 1000, 0, StatType.PhysicalDamage),
+                new ItemModifier(OperationType.Extra, ModifierType.Enchant, ModifierScope.Local, StatType.RadiantDamage, 0, 104, 50, 100, 1000, 0, StatType.PhysicalDamage)
 
             }
         },

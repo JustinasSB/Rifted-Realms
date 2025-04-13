@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -58,13 +59,35 @@ public class Tooltip : MonoBehaviour
         }
         if (item.Modifiers != null)
         {
-            modifiersText.text = string.Join("\n", item.Modifiers.Select(mod => mod.Text.ToString()));
+            List<ItemModifier> displayModifiers = new List<ItemModifier>();
+            foreach (ItemModifier mod in item.Modifiers.AsEnumerable().Reverse())
+            {
+                var found = displayModifiers.FirstOrDefault(m =>
+                    m.AffectedStat == mod.AffectedStat &&
+                    m.OperationType == mod.OperationType);
+                if (found != null)
+                {
+                    found.AddToRolledValue(mod.RolledValue);
+                }
+                else
+                {
+                    displayModifiers.Add(new ItemModifier(mod));
+                }
+            }
+
+            modifiersText.text = string.Join("\n", displayModifiers
+                .OrderBy(mod => mod.Type)
+                .ThenByDescending(mod => mod.OperationType)
+                .ThenByDescending(mod => mod.Text)
+                .Select(mod => mod.Text));
         }
         else modifiersText.text = "";
         if (item.Stats != null)
         {
             coreValuesText.text = string.Join("\n",
-                item.Stats.List.Select(mod => $"{mod.Key.GetDisplayName()}: {mod.Value.Value}"));
+                item.Stats.List
+                .OrderByDescending(mod => mod.Key.GetDisplayName())
+                .Select(mod => $"{mod.Key.GetDisplayName()}: {mod.Value.Value}"));
         }
         else coreValuesText.text = "";
         layoutElement.enabled = (modifiersText.preferredWidth > 800 || nameText.preferredWidth > 800) ? true : false;

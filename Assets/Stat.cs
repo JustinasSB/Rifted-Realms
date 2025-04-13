@@ -112,6 +112,10 @@ public class Stat
         {
             RecalculateValue();
         }
+        if (asExtra.Count != 0)
+        {
+            RecalculateAsExtra();
+        }
     }
     private void deductConversionFromValue() 
     {
@@ -181,20 +185,38 @@ public class Stat
         float totalPercentage = conversion.Values.Sum();
         return totalPercentage > 1.0f ? 1.0f / totalPercentage : 1;
     }
-    public void AddAsExtra(Stat stat, float value)
+    private void RecalculateAsExtra()
     {
-        asExtra.Add(stat, new List<float>() { value, this.valueBeforeConversion*value});
-        stat.AddBaseAdded(this.valueBeforeConversion * value);
-        RefreshStat();
+        foreach (var item in asExtra)
+        {
+            float percentage = item.Value[0];
+            RemoveAsExtra(item.Key, percentage, false);
+            AddAsExtra(item.Key, percentage, false);
+            item.Value[2] = this.valueBeforeConversion;
+        }
     }
-    public void RemoveAsExtra(Stat stat, float value) 
+    public void AddAsExtra(Stat stat, float value, bool allowModifyingDict = true)
     {
-        stat.RemoveBaseAdded(this.asExtra[stat][1]);
+        if (allowModifyingDict && !asExtra.ContainsKey(stat))
+        {
+            asExtra.Add(stat, new List<float>() { value, this.valueBeforeConversion * value, this.valueBeforeConversion });
+        }
+        else
+        {
+            asExtra[stat][0] += value;
+            asExtra[stat][1] += this.valueBeforeConversion * value;
+        }
+        stat.AddBaseAdded(this.valueBeforeConversion * value);
+    }
+    public void RemoveAsExtra(Stat stat, float value, bool allowModifyingDict = true) 
+    {
+        float toRemove = this.asExtra[stat][2] * value;
+        stat.RemoveBaseAdded(toRemove);
+        this.asExtra[stat][1] -= toRemove;
         this.asExtra[stat][0] -= value;
-        if (this.asExtra[stat][0] == 0) 
+        if (allowModifyingDict && this.asExtra[stat][0] == 0) 
         {
             asExtra.Remove(stat);
         }
-        RefreshStat();
     }
 }
