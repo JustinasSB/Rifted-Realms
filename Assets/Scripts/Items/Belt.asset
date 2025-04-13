@@ -17,7 +17,7 @@ MonoBehaviour:
   Size: {x: 50, y: 50}
   SlotSize: {x: 2, y: 1}
   ItemType: 6
-  ItemSpecific: 0
+  ItemSpecific: 25
   BaseLevel: 0
   ItemStats: []
   ItemPrefab: {fileID: 0}

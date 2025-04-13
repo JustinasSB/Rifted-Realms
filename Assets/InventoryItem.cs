@@ -48,4 +48,14 @@ public class InventoryItem : MonoBehaviour
             }
         }
     }
+    public bool Equals(InventoryItem other)
+    {
+        if (data == other.data 
+            && Stats == other.Stats
+            && ItemName == other.ItemName
+            && Rarity == other.Rarity
+            && ItemLevel == other.ItemLevel)
+            return true;
+        return false;
+    }
 }

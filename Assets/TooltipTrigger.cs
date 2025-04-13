@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +27,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (rt != null && item != null)
         {
+
             Vector3 tooltipPosition = new Vector3(rt.position.x, rt.position.y + 25f, rt.position.z);
             TooltipManager.Show(item, tooltipPosition);
         }

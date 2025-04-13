@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Tooltip : MonoBehaviour
 {
@@ -19,11 +20,14 @@ public class Tooltip : MonoBehaviour
     public UnityEngine.UI.Image background;
     public UnityEngine.UI.Image border;
     private Vector2 lastpos;
-    private bool delayFrame = false;
+    private bool setToWorld = false;
+    private Material Regular;
+    private Material World;
+    private Coroutine Reposition;
 
     public void ShowTooltip(InventoryItem item, Vector2 position)
     {
-        delayFrame = true;
+        Reposition = StartCoroutine(DelayedReposition());
         lastpos = position;
         if (item.ItemName != null)
         {
@@ -34,6 +38,14 @@ public class Tooltip : MonoBehaviour
         rarityText.color = ToolTipColor(item.Rarity);
         background.color = ToolTipColor(item.Rarity);
         border.color = ToolTipColor(item.Rarity);
+        if (item.Rarity == Rarity.World && !setToWorld)
+        {
+            rarityText.fontMaterial = World;
+        }
+        else if (setToWorld)
+        {
+            rarityText.fontMaterial = Regular;
+        }
         if (item.Modifiers != null)
         {
             modifiersText.text = string.Join("\n", item.Modifiers.Select(mod => mod.Text.ToString()));
@@ -52,6 +64,10 @@ public class Tooltip : MonoBehaviour
         }
         panel.transform.position = new Vector2(position.x, position.y + height / 2);
     }
+    public void ShowTooltip()
+    {
+        Reposition = StartCoroutine(DelayedReposition());
+    }
     private void SetPivot(Vector2 position)
     {
         RectTransform rt = GetComponent<RectTransform>();
@@ -69,20 +85,16 @@ public class Tooltip : MonoBehaviour
         }
         rt.pivot = new Vector2(pivotX, pivotY);
     }
-    public void Update()
+    private IEnumerator DelayedReposition()
     {
-        if (!delayFrame) return;
+        yield return new WaitForSeconds(0.01f);
         float height = 0;
         foreach (RectTransform bg in backgrounds)
         {
             height += bg.sizeDelta.y;
         }
         panel.transform.position = new Vector2(lastpos.x, lastpos.y + height / 2);
-    }
-
-    public void HideTooltip()
-    {
-        panel.SetActive(false);
+        Reposition = null;
     }
 
     private Color ToolTipColor(Rarity rarity)
@@ -97,5 +109,15 @@ public class Tooltip : MonoBehaviour
             Rarity.World => new Color(0.15f, 0.15f, 0.15f),
             _ => Color.white
         };
+    }
+    public void Start()
+    {
+        Material newMat = new Material(rarityText.fontSharedMaterial);
+        newMat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.2f);
+        newMat.SetColor(ShaderUtilities.ID_OutlineColor, Color.white);
+        World = newMat;
+        newMat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.2f);
+        newMat.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
+        Regular = newMat;
     }
 }

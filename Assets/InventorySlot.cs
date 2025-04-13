@@ -70,7 +70,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
         if (slot.AllocatedBy != null) slot = slot.AllocatedBy;
         if (slot.AllocatingTo.Count != 0) slot = slot.AllocatingTo[0];
-        Debug.Log("Sending slot:" + slot);
         trigger.rt = slot.GetComponent<RectTransform>();
         trigger.item = slot.Item;
 
