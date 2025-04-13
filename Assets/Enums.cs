@@ -174,5 +174,6 @@ public enum Rarity
     Legendary,
     Rare,
     Magic,
-    Common
+    Common,
+    None
 }

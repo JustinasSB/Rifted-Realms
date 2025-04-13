@@ -57,12 +57,10 @@ public static class ModifierGenerator
         List<ItemModifier> filtered = possibleModifiers
         .Where(mod => mod.Type == type)
         .ToList();
-        Debug.Log(filtered.Count);
         if (filtered.Count == 0) return result;
         List<IGrouping<float, ItemModifier>> groupBuckets = filtered
         .GroupBy(mod => mod.Group)
         .ToList();
-        Debug.Log(groupBuckets.Count);
         if (groupBuckets.Count == 0) return result;
 
         var groupSampler = new VoseAliasSampler<IGrouping<float, ItemModifier>>(groupBuckets, g => g.Sum(m => m.Weight));

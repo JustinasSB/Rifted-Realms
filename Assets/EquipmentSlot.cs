@@ -19,8 +19,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         if (Inventory.carriedItem == null)
         {
             if (this.Item == null) return;
-            RemoveModifiers();
-            RemoveStats();
+            adjustEffect(true);
             deallocate();
             PublishUpdate();
             SetTooltip();
@@ -30,20 +29,29 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             if (Inventory.carriedItem.data.ItemType != itemType) return;
             if (Item != null)
             {
-                RemoveModifiers();
-                RemoveStats();
+                adjustEffect(true);
                 allocateItem(Inventory.carriedItem, Item);
             }
             else
             {
                 allocateItem(Inventory.carriedItem, null);
             }
-            ApplyModifiers();
-            AddStats();
+            adjustEffect(false);
             PublishUpdate();
             SetTooltip();
         }
         ResetTooltip();
+    }
+    private void adjustEffect(bool remove)
+    {
+        if (remove)
+        {
+            if (this.Item.Modifiers != null) RemoveModifiers();
+            if (this.Item.Stats != null) RemoveStats();
+            return;
+        }
+        if (this.Item.Modifiers != null) ApplyModifiers();
+        if (this.Item.Stats != null) AddStats();
     }
     private void Update()
     {
@@ -59,7 +67,8 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     {
         TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
         if (trigger != null)
-        { 
+        {
+            trigger.ResetManager();
             trigger.OnPointerExit();
             trigger.OnPointerEnter();
         }

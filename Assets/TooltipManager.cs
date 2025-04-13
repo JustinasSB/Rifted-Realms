@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class TooltipManager : MonoBehaviour
 {
@@ -8,21 +10,22 @@ public class TooltipManager : MonoBehaviour
     private InventoryItem recent;
     private static readonly Vector2 HiddenPosition = new Vector2(-9999, -9999);
     private Coroutine hideCoroutine;
-    private static float hideDelay = 0.05f;
+    private static float hideDelay = 0.02f;
+    public static bool displaying = false;
     public void Awake()
     {
         instance = this;
     }
     public static void Show(InventoryItem item, Vector2 position)
     {
-        if (instance.recent != null && instance.recent.Equals(item)) 
+        if (instance.recent != null && item != null && instance.recent.Equals(item))
         {
             if (instance.hideCoroutine != null)
             {
                 instance.StopCoroutine(instance.hideCoroutine);
                 instance.hideCoroutine = null;
             }
-            instance.tooltip.ShowTooltip(); 
+            displaying = true;
         }
         else
         {
@@ -33,16 +36,34 @@ public class TooltipManager : MonoBehaviour
             }
             instance.recent = item;
             instance.tooltip.ShowTooltip(item, position);
+            displaying = true;
         }
     }
     public static void Hide()
     {
+        if (instance.hideCoroutine != null) return;
         instance.hideCoroutine = instance.StartCoroutine(instance.DelayedHide());
+    }
+    public static void DestroyMemory()
+    {
+        instance.recent = null;
     }
     private IEnumerator DelayedHide()
     {
         yield return new WaitForSeconds(hideDelay);
         instance.tooltip.panel.transform.position = HiddenPosition;
         instance.hideCoroutine = null;
+        instance.recent = null;
+        displaying = false;
     }
+    public static bool DisplayingThis(InventoryItem toCheck)
+    {
+        if (!displaying) return false;
+        if (instance.recent != null && toCheck != null && instance.recent.Equals(toCheck))
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

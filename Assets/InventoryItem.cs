@@ -8,7 +8,7 @@ public class InventoryItem : MonoBehaviour
 {
     public Image itemIcon;
     public ItemData data { get; set; }
-    public Rarity Rarity { get; set; }
+    public Rarity Rarity = Rarity.None;
     public int ItemLevel { get; set; }
     public string ItemName;
     public List<ItemModifier> Modifiers = new List<ItemModifier>();
@@ -32,15 +32,16 @@ public class InventoryItem : MonoBehaviour
         }
         if (data.ItemType!= ItemType.Stackable)
             Modifiers = ModifierGenerator.GenerateModifiers(this);
-        if ((int)Rarity >= 1)
+        if (Rarity <= Rarity.Magic)
         {
-            NameGenerator.GenerateRarity(this);
+            NameGenerator.GenerateName(this);
         }
         if (Modifiers == null) return;
         foreach (ItemModifier modifier in Modifiers)
         {
             if (modifier.Scope == ModifierScope.Local)
             {
+                if(!Stats.List.ContainsKey(modifier.AffectedStat)) Stats.List.Add(modifier.AffectedStat, new Stat(0, modifier.AffectedStat));
                 if (modifier.OperationType == OperationType.Add)
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
                 else

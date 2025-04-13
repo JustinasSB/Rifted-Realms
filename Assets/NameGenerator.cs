@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public static class NameGenerator
@@ -208,11 +209,13 @@ public static class NameGenerator
             }
         }
     };
-    public static void GenerateRarity(InventoryItem Item)
+    public static void GenerateName(InventoryItem Item)
     {
         List<string> prefix = NameOptions[ItemSpecific.None];
-        if(!NameOptions.ContainsKey(Item.data.ItemSpecific) || Item.data.ItemSpecific == ItemSpecific.None) return;
-        List<string> suffix = NameOptions[Item.data.ItemSpecific];
+        ItemSpecific tag = Item.data.ItemSpecific;
+        if (tag > ItemSpecific.None && tag < ItemSpecific.Life ) tag = (ItemSpecific)Enum.Parse(typeof(ItemSpecific), Item.data.ItemType.ToString());
+        if (!NameOptions.ContainsKey(tag)) return;
+        List<string> suffix = NameOptions[tag];
         Item.ItemName = prefix[UnityEngine.Random.Range(0, prefix.Count)] + " " +suffix[UnityEngine.Random.Range(0, suffix.Count)];
     }
 }

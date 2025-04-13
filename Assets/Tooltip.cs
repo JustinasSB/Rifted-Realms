@@ -23,56 +23,57 @@ public class Tooltip : MonoBehaviour
     private bool setToWorld = false;
     private Material Regular;
     private Material World;
-    private Coroutine Reposition;
 
     public void ShowTooltip(InventoryItem item, Vector2 position)
     {
-        Reposition = StartCoroutine(DelayedReposition());
+        StartCoroutine(DelayedReposition());
         lastpos = position;
         if (item.ItemName != null)
         {
             itemNameText.text = item.ItemName;
         }
         nameText.text = item.data.name;
-        rarityText.text = item.Rarity.ToString();
-        rarityText.color = ToolTipColor(item.Rarity);
-        background.color = ToolTipColor(item.Rarity);
-        border.color = ToolTipColor(item.Rarity);
-        if (item.Rarity == Rarity.World && !setToWorld)
+        if (item.Rarity != Rarity.None)
         {
-            rarityText.fontMaterial = World;
+            rarityText.text = item.Rarity.ToString();
+            rarityText.color = ToolTipColor(item.Rarity);
+            background.color = ToolTipColor(item.Rarity);
+            border.color = ToolTipColor(item.Rarity);
+            if (item.Rarity == Rarity.World && !setToWorld)
+            {
+                rarityText.fontMaterial = World;
+                setToWorld = true;
+            }
+            else if (item.Rarity != Rarity.World && setToWorld)
+            {
+                rarityText.fontMaterial = Regular;
+                setToWorld = false;
+            }
         }
-        else if (setToWorld)
+        else
         {
-            rarityText.fontMaterial = Regular;
+            rarityText.text = "";
+            background.color = ToolTipColor(Rarity.Common);
+            border.color = ToolTipColor(Rarity.Common);
         }
         if (item.Modifiers != null)
         {
             modifiersText.text = string.Join("\n", item.Modifiers.Select(mod => mod.Text.ToString()));
         }
+        else modifiersText.text = "";
         if (item.Stats != null)
         {
             coreValuesText.text = string.Join("\n",
                 item.Stats.List.Select(mod => $"{mod.Key.GetDisplayName()}: {mod.Value.Value}"));
         }
+        else coreValuesText.text = "";
         layoutElement.enabled = (modifiersText.preferredWidth > 800 || nameText.preferredWidth > 800) ? true : false;
-        SetPivot(position);
-        float height = 0;
-        foreach (RectTransform bg in backgrounds)
-        {
-            height += bg.sizeDelta.y;
-        }
-        panel.transform.position = new Vector2(position.x, position.y + height / 2);
     }
-    public void ShowTooltip()
-    {
-        Reposition = StartCoroutine(DelayedReposition());
-    }
-    private void SetPivot(Vector2 position)
+    private void SetPivot(Vector2 position, float height)
     {
         RectTransform rt = GetComponent<RectTransform>();
-        float tooltipWidth = rt.rect.width > layoutElement.preferredWidth ? layoutElement.preferredWidth : rt.rect.width;
-        float tooltipHeight = rt.rect.height;
+        float tooltipWidth = rt.rect.width > layoutElement.preferredWidth ? layoutElement.preferredWidth : backgrounds[0].sizeDelta.x;
+        float tooltipHeight = height;
         float pivotX = 0.5f;
         float pivotY = 0.5f;
         if (position.x + tooltipWidth / 2 > Screen.width || position.x - tooltipWidth / 2 < 0)
@@ -93,8 +94,9 @@ public class Tooltip : MonoBehaviour
         {
             height += bg.sizeDelta.y;
         }
-        panel.transform.position = new Vector2(lastpos.x, lastpos.y + height / 2);
-        Reposition = null;
+        Vector2 SetPos = new Vector2(lastpos.x, lastpos.y + height / 2);
+        SetPivot(SetPos, height);
+        panel.transform.position = SetPos;
     }
 
     private Color ToolTipColor(Rarity rarity)
@@ -112,12 +114,11 @@ public class Tooltip : MonoBehaviour
     }
     public void Start()
     {
-        Material newMat = new Material(rarityText.fontSharedMaterial);
-        newMat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.2f);
-        newMat.SetColor(ShaderUtilities.ID_OutlineColor, Color.white);
-        World = newMat;
-        newMat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.2f);
-        newMat.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
-        Regular = newMat;
+        World = new Material(rarityText.fontSharedMaterial);
+        World.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.25f);
+        World.SetColor(ShaderUtilities.ID_OutlineColor, Color.white);
+        Regular = new Material(rarityText.fontSharedMaterial);
+        Regular.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.2f);
+        Regular.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
     }
 }

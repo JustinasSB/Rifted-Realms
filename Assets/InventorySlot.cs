@@ -54,6 +54,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
         if (trigger != null)
         {
+            trigger.ResetManager();
             trigger.OnPointerExit();
             trigger.OnPointerEnter();
         }
@@ -72,7 +73,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (slot.AllocatingTo.Count != 0) slot = slot.AllocatingTo[0];
         trigger.rt = slot.GetComponent<RectTransform>();
         trigger.item = slot.Item;
-
+        trigger.Initialize();
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
