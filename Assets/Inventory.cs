@@ -21,6 +21,10 @@ public class Inventory : MonoBehaviour
     private MonoBehaviour currentHoveredSlot;
     public GraphicRaycaster raycaster;
     public EventSystem eventSystem;
+    private bool displaying = false;
+    private Vector2 ShowingPosition = new Vector3(1545, 540, 0);
+    private Vector2 HiddenPosition = new Vector3(9999, 540, 0);
+
     private void Awake()
     {
         Singleton = this;
@@ -32,6 +36,13 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (displaying) this.transform.position = ShowingPosition;
+            else this.transform.position = HiddenPosition;
+            displaying = !displaying;
+        }
+
         if (carriedItem == null)
         {
             ClearHighlights();
