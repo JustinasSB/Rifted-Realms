@@ -7,7 +7,6 @@ using System;
 
 public class ResourceUI : MonoBehaviour
 {
-    [SerializeField] private PlayerStatsManager playerStatsManager;
     [SerializeField] Slider Health;
     [SerializeField] Slider Mana;
     [SerializeField] Slider Energy;
@@ -16,11 +15,8 @@ public class ResourceUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI EnergyLabel;
     private Stat[] resources;
 
-    //private IEnumerator Start()
     private void Start()
     {
-        //yield return new WaitUntil(() => GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>()?.playerStats != null);
-        //playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
         resources = new[]
         {
             PlayerStatsManager.playerStats.GetStat(StatType.Life),

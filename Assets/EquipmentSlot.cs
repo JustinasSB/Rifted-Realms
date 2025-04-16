@@ -4,6 +4,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
@@ -133,10 +134,10 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
                     PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.MultiplyRemove, modifier.RolledValue);
                     break;
                 case OperationType.Convert:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ConvertRemove, modifier.RolledValue);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ConvertRemove, modifier.RolledValue, modifier.Extra);
                     break;
                 case OperationType.Extra:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ExtraRemove, modifier.RolledValue);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ExtraRemove, modifier.RolledValue, modifier.Extra);
                     break;
                 case OperationType.SetBase:
                     PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.SetBase, modifier.RolledValue);
@@ -151,7 +152,12 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         foreach (ItemModifier modifier in Item.Modifiers)
         {
             if (modifier.Scope != ModifierScope.Global) continue;
-
+            if (modifier.OperationType == OperationType.Convert
+                || modifier.OperationType == OperationType.Extra)
+            {
+                PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue, modifier.Extra);
+                continue;
+            }
             PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
         }
     }

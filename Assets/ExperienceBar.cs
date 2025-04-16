@@ -9,18 +9,8 @@ using UnityEngine.UI;
 
 public class ExperienceBar : MonoBehaviour 
 {
-    [SerializeField] private LevelManager levelManager;
     [SerializeField] TextMeshProUGUI level;
     [SerializeField] Slider fill;
-
-    private void Start()
-    {
-        levelManager = GameObject.FindWithTag("Player")?.GetComponent<LevelManager>();
-        if (levelManager == null)
-        {
-            Debug.LogError("LevelManager not found");
-        }
-    }
     private void Update()
     {
         LevelManager.level.IncreaseExperience((uint)10, 1);

@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    PlayerStatsManager playerStatsManager;
     private Stat[] resources;
     private bool canRecharge = false;
-    //IEnumerator Start()
     private void Start()
     {
-        //yield return new WaitUntil(() => GetComponent<PlayerStatsManager>()?.playerStats != null);
-        playerStatsManager = GetComponent<PlayerStatsManager>();
         resources = new[]
         {
             PlayerStatsManager.playerStats.GetStat(StatType.Life),                          //0
@@ -33,8 +29,6 @@ public class ResourceManager : MonoBehaviour
 
     void Update()
     {
-        // PlayerStatsManager doesn't initialize immediately, the updates have to be delayed until the component populates
-        if (playerStatsManager == null) return;
         Regenerate(resources[0], resources[3], resources[6], resources[7]);
         Regenerate(resources[1], resources[4], resources[8], resources[9]);
         Regenerate(resources[2], resources[5], resources[11], resources[12]);

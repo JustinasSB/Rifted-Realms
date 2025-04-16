@@ -5,7 +5,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public float ledgeCheckDistance = 0.2f;
     public float maxDropDistanceForLedge = 0.4f;
-    private PlayerStatsManager playerStatsManager;
     private CharacterController controller;
     private Stat movementSpeed;
     private Stat animationSpeed;
@@ -15,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerStatsManager = GetComponent<PlayerStatsManager>();
         movementSpeed = PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
         animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
     }
@@ -23,12 +21,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Move();
+        if (!isMoving) return;
         GroundPlayer();
     }
 
     private void Move() {
         float moveZ = Input.GetAxisRaw("Horizontal");
         float moveX = -Input.GetAxisRaw("Vertical");
+        if (moveZ == 0 && moveX == 0)
+        {
+            isMoving = false;
+            return;
+        }
         Vector3 move = (transform.right * moveX + transform.forward * moveZ).normalized;
         if (IsLedgeAhead(move))
         {

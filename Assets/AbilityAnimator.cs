@@ -6,7 +6,6 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class AbilityAnimator : MonoBehaviour
 {
-    private PlayerStatsManager playerStatsManager;
     private CharacterController body;
     [SerializeField] Transform Skeleton;
     [SerializeField] Transform LeftArmTarget;
@@ -47,7 +46,6 @@ public class AbilityAnimator : MonoBehaviour
     private bool Triggered;
     void Start()
     {
-        playerStatsManager = GetComponent<PlayerStatsManager>();
         body = GetComponent<CharacterController>();
         attackSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AttackSpeed);
         castingSpeed = PlayerStatsManager.playerStats.GetStat(StatType.CastingSpeed);

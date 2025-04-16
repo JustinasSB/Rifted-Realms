@@ -7,6 +7,7 @@ public class Level
     private ulong experienceForLevel;
     private ulong experienceForPreviousLevel;
     public float percentageFilled;
+    public int SkillPoints;
     public int CurrentLevel { get; private set; }
     private uint penalty;
     public Level() 

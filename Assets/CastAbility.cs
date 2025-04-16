@@ -3,11 +3,9 @@ using UnityEngine;
 public class CastAbility : MonoBehaviour
 {
     AbilityAnimator animator;
-    PlayerStatsManager playerStatsManager;
     void Start()
     {
         animator = GetComponent<AbilityAnimator>();
-        playerStatsManager = GetComponent<PlayerStatsManager>();
         animator.SetWeaponType(0);
     }
 

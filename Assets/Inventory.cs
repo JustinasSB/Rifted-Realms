@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (displaying) this.transform.position = ShowingPosition;
+            if (!displaying) this.transform.position = ShowingPosition;
             else this.transform.position = HiddenPosition;
             displaying = !displaying;
         }

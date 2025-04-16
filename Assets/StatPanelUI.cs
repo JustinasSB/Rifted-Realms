@@ -14,7 +14,6 @@ public class StatPanelUI : MonoBehaviour
     [SerializeField] private Transform labelContainer;
     [SerializeField] private GameObject labelPrefab;
     [SerializeField] private GameObject[] AttributeNumerics;
-    private PlayerStatsManager playerStatsManager;
     private List<Stat> statsToUse;
     private List<Stat> Attributes = new List<Stat>();
     private List<(string, float, bool)> valuesToDisplay = new List<(string, float, bool)>();
@@ -24,7 +23,6 @@ public class StatPanelUI : MonoBehaviour
     private int pageToLoad = 0;
     void Start()
     {
-        playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
         labelPrefab.SetActive(false);
         loadStats();
         loadAttributes();

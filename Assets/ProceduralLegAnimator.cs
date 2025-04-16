@@ -9,7 +9,6 @@ public class ProceduralLegAnimator : MonoBehaviour
     [SerializeField] LayerMask layer;
     [SerializeField] float stepDistance;
     [SerializeField] float stepHeight;
-    [SerializeField] private PlayerStatsManager playerStatsManager;
     [SerializeField] ProceduralLegAnimator otherFoot;
     [SerializeField] PlayerMovement movement;
     [SerializeField] float scale;
@@ -25,7 +24,6 @@ public class ProceduralLegAnimator : MonoBehaviour
     float endMovement;
     private void Start()
     {
-        playerStatsManager = GameObject.FindWithTag("Player")?.GetComponent<PlayerStatsManager>();
         speed = PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
         animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
         currentposition = transform.position;
