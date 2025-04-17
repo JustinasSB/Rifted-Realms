@@ -48,7 +48,8 @@ public enum StatType
     [Description("Air Damage")] AirDamage,
     [Description("Poison Damage")] PoisonDamage,
     [Description("Radiant Damage")] RadiantDamage,
-    [Description("Effect Duration")] EffectDuration
+    [Description("Effect Duration")] EffectDuration,
+    [Description("Damage")] Damage,
 }
 public enum OperationType
 {

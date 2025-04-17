@@ -43,7 +43,8 @@ public class PlayerStats
             { StatType.AirResistance, new Stat ("Air Resistance", "Undescribed", 0f, StatType.AirResistance)},
             { StatType.RadiantResistance, new Stat ("Radiant Resistance", "Undescribed", 0f, StatType.RadiantResistance)},
             { StatType.PoisonResistance, new Stat ("Poison Resistance", "Undescribed", 0f, StatType.PoisonResistance)},
-            { StatType.PhysicalDamage, new Stat ("Physical Damage", "Undescribed", 0f, StatType.PhysicalDamage)}
+            { StatType.PhysicalDamage, new Stat ("Physical Damage", "Undescribed", 1f, StatType.PhysicalDamage)},
+            { StatType.Damage, new Stat ("Damage", "Undescribed", 1f, StatType.Damage)}
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {

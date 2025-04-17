@@ -3,6 +3,7 @@
 public class Level
 {
     public event Action<int> OnLevelUp;
+    public event Action<int> OnPassivePointChange;
     private ulong experience;
     private ulong experienceForLevel;
     private ulong experienceForPreviousLevel;
@@ -62,5 +63,14 @@ public class Level
 
         OnLevelUp?.Invoke(this.CurrentLevel);
     }
-
+    public void IncrementPassivePoints()
+    {
+        SkillPoints++;
+        OnPassivePointChange?.Invoke(SkillPoints);
+    }
+    public void DecrementPassivePoints()
+    {
+        SkillPoints--;
+        OnPassivePointChange?.Invoke(SkillPoints);
+    }
 }
