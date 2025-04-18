@@ -34,10 +34,9 @@ public class PassiveTreeManager : MonoBehaviour
     }
     public void DFS(PassiveTreeNode Node, HashSet<Guid> traversed)
     {
-        traversed.Add(Node.Id);
         foreach (PassiveTreeNode node in Node.Connections)
         {
-            if (traversed.Contains(node.Id)) continue;
+            if (traversed.Contains(node.Id) || node.Equals(Root)) continue;
             traversed.Add(node.Id);
             DFS(node, traversed);
         }
