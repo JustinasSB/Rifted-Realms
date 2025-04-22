@@ -44,7 +44,8 @@ public class PlayerStats
             { StatType.RadiantResistance, new Stat ("Radiant Resistance", "Undescribed", 0f, StatType.RadiantResistance)},
             { StatType.PoisonResistance, new Stat ("Poison Resistance", "Undescribed", 0f, StatType.PoisonResistance)},
             { StatType.PhysicalDamage, new Stat ("Physical Damage", "Undescribed", 1f, StatType.PhysicalDamage)},
-            { StatType.Damage, new Stat ("Damage", "Undescribed", 1f, StatType.Damage)}
+            { StatType.Damage, new Stat ("Damage", "Undescribed", 1f, StatType.Damage)},
+            { StatType.Interval, new Stat ("Interval", "Undescribed", 0f, StatType.Interval)}
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {

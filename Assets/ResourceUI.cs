@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class ResourceUI : MonoBehaviour
 {
@@ -26,26 +27,50 @@ public class ResourceUI : MonoBehaviour
             PlayerStatsManager.playerStats.GetStat(StatType.CurrentMana),
             PlayerStatsManager.playerStats.GetStat(StatType.CurrentEnergy),
         };
+        resources[0].OnValueChanged += value => UpdateHealth();
+        resources[1].OnValueChanged += value => UpdateMana();
+        resources[2].OnValueChanged += value => UpdateEnergy();
+        resources[3].OnValueChanged += value => UpdateHealth();
+        resources[4].OnValueChanged += value => UpdateMana();
+        resources[5].OnValueChanged += value => UpdateEnergy();
+        UpdateHealth();
+        UpdateMana();
+        UpdateEnergy();
     }
-    private void Update()
+    private void UpdateHealth()
     {
-        if (resources == null) return;
         if (resources[0].Value != 0)
         {
             Health.value = resources[3].Value / resources[0].Value;
-            HealthLabel.text = string.Format("{0} / {1}", Math.Round(resources[3].Value), resources[0].Value);
+            HealthLabel.text = $"{Math.Round(resources[3].Value)} / {resources[0].Value}";
         }
+        else
+        {
+            Health.value = 0;
+            HealthLabel.text = string.Format("{0} / {1}", 0, 0);
+        }
+    }
+    private void UpdateMana()
+    {
         if (resources[1].Value != 0)
         {
             Mana.value = resources[4].Value / resources[1].Value;
             ManaLabel.text = string.Format("{0} / {1}", Math.Round(resources[4].Value), resources[1].Value);
         }
+        else
+        {
+            Mana.value = 0;
+            ManaLabel.text = string.Format("{0} / {1}", 0, 0);
+        }
+    }
+    private void UpdateEnergy()
+    {
         if (resources[2].Value != 0)
         {
             Energy.value = resources[5].Value / resources[2].Value;
             EnergyLabel.text = string.Format("{0} / {1}", Math.Round(resources[5].Value), resources[2].Value);
         }
-        else 
+        else
         {
             Energy.value = 0;
             EnergyLabel.text = string.Format("{0} / {1}", 0, 0);

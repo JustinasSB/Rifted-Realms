@@ -15718,11 +15718,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1186088429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366cca909d2423d47bf51063c2777d3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7519fdf989f46534482b339b04431baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Root: {fileID: 0}
-  lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  Panel: {fileID: 1683657830}
+  playerCamera: {fileID: 1186088430}
+  ZoomRate: -0.075
 --- !u!114 &1186360954 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1312469628443109051, guid: 65ff650913bd5c84aba1b2f8b758893f, type: 3}

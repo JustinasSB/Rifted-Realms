@@ -50,6 +50,7 @@ public enum StatType
     [Description("Radiant Damage")] RadiantDamage,
     [Description("Effect Duration")] EffectDuration,
     [Description("Damage")] Damage,
+    [Description("Attack Time")] Interval,
 }
 public enum OperationType
 {

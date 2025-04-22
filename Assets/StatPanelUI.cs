@@ -2,8 +2,10 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Xml.Linq;
 
 public class StatPanelUI : MonoBehaviour
 {
@@ -16,10 +18,8 @@ public class StatPanelUI : MonoBehaviour
     [SerializeField] private GameObject[] AttributeNumerics;
     private List<Stat> statsToUse;
     private List<Stat> Attributes = new List<Stat>();
+    private List<Stat> subscribedStats = new();
     private List<(string, float, bool)> valuesToDisplay = new List<(string, float, bool)>();
-    private bool isVisible = false;
-    private float labelUpdatePeriod = 2f;
-    private float actionTime = 0f;
     private int pageToLoad = 0;
     void Start()
     {
@@ -30,20 +30,8 @@ public class StatPanelUI : MonoBehaviour
         offense.onClick.AddListener(() => SetValue(0));
         defense.onClick.AddListener(() => SetValue(1));
         utility.onClick.AddListener(() => SetValue(2));
-    }
-    void Update()
-    {
-        if (Time.time > actionTime && isVisible) 
-        {
-            actionTime = Time.time+labelUpdatePeriod;
-            updateAttributes();
-            loadDisplayValues();
-            updateLabels();
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            togglePanel();
-        }
+        updateAttributes();
+        updateLabels();
     }
     private void SetValue(int value)
     {
@@ -55,12 +43,30 @@ public class StatPanelUI : MonoBehaviour
     }
     private void loadAttributes()
     {
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Strength));
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Intelligence));
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Wisdom));
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Constitution));
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Dexterity));
-        Attributes.Add(PlayerStatsManager.playerStats.GetStat(StatType.Charisma));
+        Stat[] attributeStats = {
+            PlayerStatsManager.playerStats.GetStat(StatType.Strength),
+            PlayerStatsManager.playerStats.GetStat(StatType.Intelligence),
+            PlayerStatsManager.playerStats.GetStat(StatType.Wisdom),
+            PlayerStatsManager.playerStats.GetStat(StatType.Constitution),
+            PlayerStatsManager.playerStats.GetStat(StatType.Dexterity),
+            PlayerStatsManager.playerStats.GetStat(StatType.Charisma)
+        };
+        for (int i = 0; i < attributeStats.Length; i++)
+        {
+            var stat = attributeStats[i];
+            Attributes.Add(stat);
+            SubscribeToStat(stat, (float value) => OnAttributeChanged(i, value), false);
+        }
+    }
+    private void SubscribeToStat(Stat stat, Action<float> callback, bool addtoList = true)
+    {
+        stat.OnValueChanged += value => callback.Invoke(value);
+        if (!addtoList) return;
+        subscribedStats.Add(stat);
+    }
+    private void OnAttributeChanged(int i, float value)
+    {
+        AttributeNumerics[i].gameObject.GetComponent<TMP_Text>().text = value.ToString();
     }
     private void updateAttributes()
     {
@@ -71,6 +77,11 @@ public class StatPanelUI : MonoBehaviour
     }
     private void loadStats() 
     {
+        foreach (var stat in subscribedStats)
+        {
+            stat.OnValueChanged -= value => OnStatChanged();
+        }
+        subscribedStats.Clear();
         List<Stat> newStatList = new List<Stat>();
         switch (pageToLoad)
         {
@@ -98,6 +109,15 @@ public class StatPanelUI : MonoBehaviour
                 break;
         }
         statsToUse = newStatList;
+        foreach (var stat in statsToUse)
+        {
+            SubscribeToStat(stat, (float f) => OnStatChanged());
+        }
+    }
+    private void OnStatChanged()
+    {
+        loadDisplayValues();
+        updateLabels();
     }
     private void loadDisplayValues()
     {
@@ -162,12 +182,11 @@ public class StatPanelUI : MonoBehaviour
             i++;
         }
     }
-    private void togglePanel()
+    public void togglePanel()
     {
-        isVisible = !isVisible;
-        infoPanel.SetActive(isVisible);
-
-        if (isVisible)
+        bool toggle = !infoPanel.activeSelf;
+        infoPanel.SetActive(toggle);
+        if (toggle)
         {
             updateLabels();
         }

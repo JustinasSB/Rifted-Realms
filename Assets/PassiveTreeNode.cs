@@ -2,10 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
-using static UnityEngine.EventSystems.EventTrigger;
-using UnityEditor;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
 {
@@ -37,22 +34,37 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
             int count = Modifiers.Count;
             foreach (StatModifier modifier in Modifiers)
             {
-                switch (modifier.OperationType)
+                int negative = 0;
+                if (modifier.OperationType == OperationType.Multiply)
                 {
-                    case OperationType.Add:
+                    negative = modifier.Value < 100 ? 1 : 0;
+                }
+                else negative = modifier.Value < 0 ? 1 : 0;
+                switch ((int)modifier.OperationType + 10 * negative)
+                {
+                    case 0:
                         Description += $"+{modifier.Value} To {modifier.To.GetDisplayName()}";
                         break;
-                    case OperationType.Increase:
-                        Description += $"+{modifier.Value}% To {modifier.To.GetDisplayName()}";
+                    case 1:
+                        Description += $"+{modifier.To.GetDisplayName()}% increased by {modifier.Value}";
                         break;
-                    case OperationType.Multiply:
-                        Description += $"+{modifier.Value}% Multiplier To {modifier.To.GetDisplayName()}";
+                    case 2:
+                        Description += $"{modifier.Value - 100}% More {modifier.To.GetDisplayName()}";
                         break;
-                    case OperationType.Convert:
+                    case 3:
                         Description += $"{modifier.Value}% of {modifier.From.GetDisplayName()} added as {modifier.To.GetDisplayName()}";
                         break;
-                    case OperationType.Extra:
+                    case 4:
                         Description += $"{modifier.Value}% of {modifier.From.GetDisplayName()} added as extra {modifier.To.GetDisplayName()}";
+                        break;
+                    case 10:
+                        Description += $"{modifier.Value} To {modifier.To.GetDisplayName()}";
+                        break;
+                    case 11:
+                        Description += $"{Math.Abs(modifier.Value)}% Reduction To {modifier.To.GetDisplayName()}";
+                        break;
+                    case 12:
+                        Description += $"{Math.Abs(100 - modifier.Value)}% Less {modifier.To.GetDisplayName()}";
                         break;
                 }
                 if (count > 1)
@@ -88,10 +100,8 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
         Allocated = false;
         RemoveAllConnections();
         PassiveTreeManager.AllocatedNodesCounter--;
-        bool valid = PassiveTreeManager.instance.GetValidity();
-        Debug.Log(valid);
         if (Connections.Count < 2 
-            || valid)
+            || PassiveTreeManager.instance.GetValidity())
         {
             removeModifier();
             Connections.Clear();

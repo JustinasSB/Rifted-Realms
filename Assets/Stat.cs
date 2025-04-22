@@ -19,6 +19,9 @@ public class Stat
     private List<float> baseMultiplier = new List<float>();
     public StatType StatType;
 
+    //Invokable event for value changes, listeners can update labels on change instead of reading values every frame
+    public event Action<float> OnValueChanged;
+
     //Stores Stat and the percentage of this.Value converted into held Stat
     private Dictionary<Stat, float> conversion = new Dictionary<Stat, float>();
 
@@ -55,6 +58,7 @@ public class Stat
     public void DirectValueSet(float value) 
     {
         this.Value = value;
+        OnValueChanged?.Invoke(this.Value);
     }
     public void RecalculateValue()
     {
@@ -62,6 +66,7 @@ public class Stat
         float baseMul = baseMultiplier.Aggregate(1f, (total, next) => total * next);
         valueBeforeConversion = (BaseValue + baseAdded.Sum()) * baseInc * baseMul;
         Value = valueBeforeConversion;
+        OnValueChanged?.Invoke(this.Value);
     }
     public void AddBaseAdded(float value)
     {

@@ -27,8 +27,6 @@ public class PassiveTreeManager : MonoBehaviour
     {
         HashSet<Guid> traversedSet = new HashSet<Guid>();
         DFS(Root, traversedSet);
-        Debug.Log("traversed: " + traversedSet.Count);
-        Debug.Log("Allocated: " + AllocatedNodesCounter);
         if (traversedSet.Count == AllocatedNodesCounter) return true;
         return false;
     }
@@ -41,6 +39,11 @@ public class PassiveTreeManager : MonoBehaviour
             DFS(node, traversed);
         }
     }
+    public void toggle()
+    {
+        isVisible = !isVisible;
+        Panel.SetActive(isVisible);
+    }
     private void Start()
     {
         instance = this;
@@ -49,11 +52,6 @@ public class PassiveTreeManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            isVisible = !isVisible;
-            Panel.SetActive(isVisible);
-        }
         if (!isVisible) return;
         float scroll = Input.mouseScrollDelta.y;
         if (scroll == 0) return;

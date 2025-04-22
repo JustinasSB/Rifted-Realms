@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
     private Vector2 ShowingPosition = new Vector3(1545, 540, 0);
     private Vector2 HiddenPosition = new Vector3(9999, 540, 0);
 
-    private void Awake()
+    private void Start()
     {
         Singleton = this;
         giveItemBtn.onClick.AddListener(delegate { SpawnInventoryItem(); });
@@ -36,13 +36,6 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (!displaying) this.transform.position = ShowingPosition;
-            else this.transform.position = HiddenPosition;
-            displaying = !displaying;
-        }
-
         if (carriedItem == null)
         {
             ClearHighlights();
@@ -105,6 +98,12 @@ public class Inventory : MonoBehaviour
         }
 
         return null;
+    }
+    public void toggle()
+    {
+        if (!displaying) this.transform.position = ShowingPosition;
+        else this.transform.position = HiddenPosition;
+        displaying = !displaying;
     }
     private void HighlightInventorySlots(InventorySlot slot)
     {
