@@ -6,8 +6,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
-public class StatPanelUI : MonoBehaviour
+public class StatPanelUI : MonoBehaviour, IUIToggleable
 {
     [SerializeField] private Button offense;
     [SerializeField] private Button defense;
@@ -21,6 +22,7 @@ public class StatPanelUI : MonoBehaviour
     private List<Stat> subscribedStats = new();
     private List<(string, float, bool)> valuesToDisplay = new List<(string, float, bool)>();
     private int pageToLoad = 0;
+
     void Start()
     {
         labelPrefab.SetActive(false);
@@ -182,7 +184,7 @@ public class StatPanelUI : MonoBehaviour
             i++;
         }
     }
-    public void togglePanel()
+    public void Toggle()
     {
         bool toggle = !infoPanel.activeSelf;
         infoPanel.SetActive(toggle);
@@ -191,4 +193,5 @@ public class StatPanelUI : MonoBehaviour
             updateLabels();
         }
     }
+    public bool IsOpen => infoPanel.activeSelf;
 }

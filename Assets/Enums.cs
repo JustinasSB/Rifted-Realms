@@ -100,7 +100,8 @@ public enum ItemType
     Ring,
     Amulet,
     Elixir,
-    Stackable
+    Stackable,
+    Jewel
 }
 public enum ItemSpecific
 {
@@ -135,7 +136,8 @@ public enum ItemSpecific
     Boots,
     Ring,
     Amulet,
-    Elixir
+    Elixir,
+    AbilityJewel
 }
 public enum ModifiableItemType
 {

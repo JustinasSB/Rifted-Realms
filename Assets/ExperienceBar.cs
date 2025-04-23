@@ -11,10 +11,21 @@ public class ExperienceBar : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI level;
     [SerializeField] Slider fill;
+    private void Start()
+    {
+        LevelManager.level.OnExperienceChange += experience => ExperienceChanged(experience);
+        LevelManager.level.OnLevelUp += level => LevelChanged(level);
+    }
+    private void ExperienceChanged(ulong experience)
+    {
+        fill.value = (float)LevelManager.level.percentageFilled;
+    }
+    private void LevelChanged(int lvl)
+    {
+        this.level.text = lvl.ToString();
+    }
     private void Update()
     {
         LevelManager.level.IncreaseExperience((uint)10, 1);
-        level.text = LevelManager.level.CurrentLevel.ToString();
-        fill.value = (float)LevelManager.level.percentageFilled;
     }
 }

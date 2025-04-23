@@ -4,6 +4,7 @@ public class Level
 {
     public event Action<int> OnLevelUp;
     public event Action<int> OnPassivePointChange;
+    public event Action<ulong> OnExperienceChange;
     private ulong experience;
     private ulong experienceForLevel;
     private ulong experienceForPreviousLevel;
@@ -27,6 +28,7 @@ public class Level
             LevelUp();
         }
         CalculateFill();
+        OnExperienceChange?.Invoke(experience);
     }
     private void setPenalty()
     {

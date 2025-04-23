@@ -43,6 +43,11 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         }
         ResetTooltip();
     }
+    private void Start()
+    {
+        Inventory.Singleton.OnCarriedItemChange += item => CarriedItemChanged(item);
+    }
+
     private void adjustEffect(bool remove)
     {
         if (remove)
@@ -54,15 +59,14 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         if (this.Item.Modifiers != null) ApplyModifiers();
         if (this.Item.Stats != null) AddStats();
     }
-    private void Update()
+    private void CarriedItemChanged(InventoryItem item)
     {
-        if (Inventory.carriedItem == null || Inventory.carriedItem.data.ItemType != itemType)
+        if (item == null || item.data.ItemType != itemType)
         {
             Border.color = Color.white;
             return;
         }
         Border.color = Color.yellow;
-
     }
     private void ResetTooltip()
     {
@@ -163,7 +167,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
-        Inventory.carriedItem = null;
+        Inventory.Singleton.RemoveCarriedItem();
         if (reallocate!=null)
         {
             Inventory.Singleton.SetCarriedItem(reallocate, false);

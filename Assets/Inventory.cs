@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IUIToggleable
 {
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
@@ -13,7 +15,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform draggablesTransform;
     [SerializeField] InventoryItem itemPrefab;
     [SerializeField] ItemData[] items;
+    [SerializeField] AbilityItem[] abilityitems;
     [SerializeField] Button giveItemBtn;
+    [SerializeField] Button giveAbilityBtn;
     private Vector3 carriedItemOffset;
     private List<InventorySlot> highlightedSlots = new();
     private EquipmentSlot highlightedSlot;
@@ -24,11 +28,13 @@ public class Inventory : MonoBehaviour
     private bool displaying = false;
     private Vector2 ShowingPosition = new Vector3(1545, 540, 0);
     private Vector2 HiddenPosition = new Vector3(9999, 540, 0);
+    public event Action<InventoryItem> OnCarriedItemChange;
 
     private void Start()
     {
         Singleton = this;
         giveItemBtn.onClick.AddListener(delegate { SpawnInventoryItem(); });
+        giveAbilityBtn.onClick.AddListener(delegate { SpawnAbility(); });
         if (raycaster == null)
             raycaster = GetComponent<GraphicRaycaster>();
         if (eventSystem == null)
@@ -99,12 +105,13 @@ public class Inventory : MonoBehaviour
 
         return null;
     }
-    public void toggle()
+    public void Toggle()
     {
         if (!displaying) this.transform.position = ShowingPosition;
         else this.transform.position = HiddenPosition;
         displaying = !displaying;
     }
+    public bool IsOpen => displaying;
     private void HighlightInventorySlots(InventorySlot slot)
     {
         int status = slot.CanAllocate(Inventory.carriedItem);
@@ -133,6 +140,19 @@ public class Inventory : MonoBehaviour
 
         (bool possible, int location) = TryPlaceItem(_item);
         if (possible) 
+        {
+            Instantiate(itemPrefab).InitializeInInventory(_item, location);
+            //Instantiate(itemPrefab, inventorySlots[location].transform).InitializeInInventory(_item, inventorySlots[location]);
+        }
+    }
+    public void SpawnAbility(AbilityItem item = null)
+    {
+        AbilityItem _item = item;
+        if (_item == null)
+        { _item = PickRandomAbiltiy(); }
+
+        (bool possible, int location) = TryPlaceItem(_item);
+        if (possible)
         {
             Instantiate(itemPrefab).InitializeInInventory(_item, location);
             //Instantiate(itemPrefab, inventorySlots[location].transform).InitializeInInventory(_item, inventorySlots[location]);
@@ -167,15 +187,35 @@ public class Inventory : MonoBehaviour
         rt.pivot = new Vector2(0.15f, 0.85f);
         rt.anchorMin = new Vector2(0.5f, 0.5f);
         rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.localScale = Vector3.one;
         clearHightlights = withClear;
+        this.OnCarriedItemChange?.Invoke(item);
+    }
+    public void RemoveCarriedItem()
+    {
+        Inventory.carriedItem = null;
+        this.OnCarriedItemChange?.Invoke(null);
     }
 
     ItemData PickRandomItem()
     {
-        int random = Random.Range(0, items.Length);
+        int random = UnityEngine.Random.Range(0, items.Length);
         return items[random];
     }
+    AbilityItem PickRandomAbiltiy()
+    {
+        int random = UnityEngine.Random.Range(0, abilityitems.Length);
+        return abilityitems[random];
+    }
     private (bool, int) TryPlaceItem(ItemData item)
+    {
+        for (int i = 0; i < inventorySlots.Count(); i++)
+        {
+            if (inventorySlots[i].CanAllocate(item)) return (true, i);
+        }
+        return (false, -1);
+    }
+    private (bool, int) TryPlaceItem(AbilityItem item)
     {
         for (int i = 0; i < inventorySlots.Count(); i++)
         {

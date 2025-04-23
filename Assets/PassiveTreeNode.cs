@@ -9,7 +9,7 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
     [HideInInspector]
     public Guid Id = Guid.NewGuid();
     public string Name;
-    [SerializeField] private bool special;
+    [SerializeField] public bool special;
     public string Description;
     [SerializeField] List<StatModifier> Modifiers;
     public bool Allocated;
@@ -75,7 +75,7 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
             }
         }
     }
-    private void allocateNode()
+    public void allocateNode()
     {
         bool firstConnection = true;
         foreach (PassiveTreeNode neighbor in Neighbors)
@@ -95,7 +95,7 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
             this.AddConnection(neighbor);
         }
     }
-    private void deallocateNode()
+    public void deallocateNode()
     {
         Allocated = false;
         RemoveAllConnections();
@@ -184,6 +184,19 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
             Background.color = Color.white;
         }
         else 
+        {
+            Border.color = new Color32(71, 71, 71, 255);
+            Background.color = new Color32(57, 57, 57, 255);
+        }
+    }
+    public void highLightNode(bool hightlight)
+    {
+        if (hightlight)
+        {
+            Border.color = Color.white;
+            Background.color = Color.white;
+        }
+        else
         {
             Border.color = new Color32(71, 71, 71, 255);
             Background.color = new Color32(57, 57, 57, 255);

@@ -77,7 +77,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)
     {
-        Inventory.carriedItem = null;
+        Inventory.Singleton.RemoveCarriedItem();
         if (reallocate != null) Inventory.Singleton.SetCarriedItem(reallocate, true);
         int x = item.data.SlotSize.x;
         int y = item.data.SlotSize.y;
@@ -241,7 +241,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         }
         return 0;
     }
-    public bool CanAllocate(ItemData item)
+    public bool CanAllocate(BaseItem item)
     {
         int index = transform.GetSiblingIndex();
         int x = item.SlotSize.x;

@@ -1,21 +1,61 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
+using System.Xml.Linq;
 
 public class UIToggler : MonoBehaviour
 {
     [SerializeField] StatPanelUI statPanel;
+    Stack<IUIToggleable> activePanels = new(); 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            statPanel.togglePanel();
+            HandleToggle(statPanel);
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Inventory.Singleton.toggle();
+            HandleToggle(Inventory.Singleton);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            PassiveTreeManager.instance.toggle();
+            HandleToggle(PassiveTreeManager.instance);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (activePanels.Count > 0)
+            {
+                IUIToggleable top = activePanels.Pop();
+                top.Toggle();
+            }
         }
     }
+    private void HandleToggle(IUIToggleable panel)
+    {
+        panel.Toggle();
+
+        if (panel.IsOpen)
+        {
+            activePanels.Push(panel);
+        }
+        else
+        {
+            RemoveFromStack(panel);
+        }
+    }
+    private void RemoveFromStack(IUIToggleable panel)
+    {
+        Stack<IUIToggleable> temp = new();
+        while (activePanels.Count > 0)
+        {
+            var item = activePanels.Pop();
+            if (item != panel) temp.Push(item);
+        }
+        activePanels = temp;
+    }
+}
+public interface IUIToggleable
+{
+    void Toggle();
+    bool IsOpen { get; }
 }

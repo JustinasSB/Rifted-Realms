@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static System.Net.Mime.MediaTypeNames;
 
 public class Tooltip : MonoBehaviour
 {
@@ -33,7 +30,36 @@ public class Tooltip : MonoBehaviour
         {
             itemNameText.text = item.ItemName;
         }
-        nameText.text = item.data.name;
+        if (item.item != null)
+        {
+            itemTooltip(item, position);
+            return;
+        }
+        else if (item.ability != null)
+        {
+            abilityTooltip(item, position);
+            return;
+        }
+    }
+    private void abilityTooltip(InventoryItem item, Vector2 position)
+    {
+        nameText.text = item.data.name.Replace("_", " ");
+        rarityText.text = "Ability Jewel";
+        rarityText.color = Color.green;
+        background.color = Color.green;
+        border.color = Color.green;
+        if (setToWorld)
+        {
+            rarityText.fontMaterial = Regular;
+            setToWorld = false;
+        }
+        modifiersText.text = item.ability.Description;
+        coreValuesText.text = "Damage multiplier: " + item.ability.DamageMultiplier + "%";
+        layoutElement.enabled = (modifiersText.preferredWidth > 800 || nameText.preferredWidth > 800) ? true : false;
+    }
+    private void itemTooltip(InventoryItem item, Vector2 position)
+    {
+        nameText.text = item.data.name.Replace("_", " "); ;
         if (item.Rarity != Rarity.None)
         {
             rarityText.text = item.Rarity.ToString();

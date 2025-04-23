@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.LightTransport;
 using UnityEngine.UI;
 
-public class PassiveTreeManager : MonoBehaviour
+public class PassiveTreeManager : MonoBehaviour, IUIToggleable
 {
     public static PassiveTreeManager instance;
     public static int AllocatedNodesCounter = 0;
@@ -39,11 +39,12 @@ public class PassiveTreeManager : MonoBehaviour
             DFS(node, traversed);
         }
     }
-    public void toggle()
+    public void Toggle()
     {
         isVisible = !isVisible;
         Panel.SetActive(isVisible);
     }
+    public bool IsOpen => isVisible;
     private void Start()
     {
         instance = this;
@@ -150,6 +151,5 @@ public class PassiveTreeManager : MonoBehaviour
                 break;
         }
     }
-
 }
 

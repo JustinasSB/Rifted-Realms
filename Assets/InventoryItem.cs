@@ -7,7 +7,9 @@ using System.Collections.Generic;
 public class InventoryItem : MonoBehaviour
 {
     public Image itemIcon;
-    public ItemData data { get; set; }
+    public BaseItem data { get; set; }
+    public ItemData item { get; set; }
+    public AbilityItem ability { get; set; }
     public Rarity Rarity = Rarity.None;
     public int ItemLevel { get; set; }
     public string ItemName;
@@ -20,13 +22,14 @@ public class InventoryItem : MonoBehaviour
     }
     public void InitializeInInventory(ItemData item, int location)
     {
-        data = item;
+        this.data = item;
+        this.item = item;
         itemIcon.sprite = item.Icon;
         itemIcon.raycastTarget = false;
         ItemRarityGenerator.GenerateRarity(this, 0f, LevelManager.level.CurrentLevel);
         ItemLevel = LevelManager.level.CurrentLevel;
         Inventory.Singleton.PlaceItem(this, location);
-        foreach (ItemTemplateStats stat in data.ItemStats)
+        foreach (ItemTemplateStats stat in this.item.ItemStats)
         {
             Stats.List.Add(stat.StatType,new Stat(stat.BaseValue, stat.StatType));
         }
@@ -50,6 +53,14 @@ public class InventoryItem : MonoBehaviour
                     Stats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue / 100);
             }
         }
+    }
+    public void InitializeInInventory(AbilityItem ability, int location)
+    {
+        this.data = ability;
+        this.ability = ability;
+        itemIcon.sprite = ability.Icon;
+        itemIcon.raycastTarget = false;
+        Inventory.Singleton.PlaceItem(this, location);
     }
     public bool Equals(InventoryItem other)
     {

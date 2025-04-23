@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36046ce5ee0dc7f479f0a7b3ce88e9d6, type: 3}
+  m_Name: Tempest_Spiral
+  m_EditorClassIdentifier: 
+  ItemName: Tempest Spiral
+  Icon: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
+  Size: {x: 50, y: 50}
+  SlotSize: {x: 1, y: 1}
+  ItemType: 13
+  ItemSpecific: 31
+  effectPrefab: {fileID: 0}
+  abilityIcon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
+  DamageMultiplier: 240
+  Description: Fire a chaotic Air projectile in the aimed direction, as the projectile
+    travels, it changes direction and speed unpredictably, bouncing off surfaces
+    or shifting mid-flight. Its path is erratic, making it difficult to anticipate
+    but capable of striking enemies from unexpected angles. Hits cannot be evaded
+    or blocked.
