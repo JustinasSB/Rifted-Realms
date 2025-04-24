@@ -51,6 +51,7 @@ public enum StatType
     [Description("Effect Duration")] EffectDuration,
     [Description("Damage")] Damage,
     [Description("Attack Time")] Interval,
+    [Description("Projectile Pierce")] Pierce,
 }
 public enum OperationType
 {
@@ -180,4 +181,12 @@ public enum Rarity
     Magic,
     Common,
     None
+}
+public enum AbilityTag
+{
+    Projectile,
+    Spell,
+    Attack,
+    Physical,
+    Elemental
 }

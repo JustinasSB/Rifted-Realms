@@ -18,8 +18,37 @@ MonoBehaviour:
   SlotSize: {x: 1, y: 1}
   ItemType: 13
   ItemSpecific: 31
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 2450911391666317793, guid: 61cbf1d45032dc744808be857a0ec617, type: 3}
   abilityIcon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
+  ability:
+    serializedStats:
+    - statType: 6
+      stat:
+        StatType: 6
+        Value: 5
+      scalable: 1
+    - statType: 28
+      stat:
+        StatType: 28
+        Value: 0.67
+      scalable: 1
+    - statType: 36
+      stat:
+        StatType: 36
+        Value: 5
+      scalable: 1
+    - statType: 39
+      stat:
+        StatType: 39
+        Value: 3
+      scalable: 1
+    - statType: 33
+      stat:
+        StatType: 33
+        Value: 20
+      scalable: 1
+    tags: 000000000100000004000000
+    type: 1
   DamageMultiplier: 240
   Description: Fire a chaotic Air projectile in the aimed direction, as the projectile
     travels, it changes direction and speed unpredictably, bouncing off surfaces

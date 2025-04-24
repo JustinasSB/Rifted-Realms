@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEditor.Progress;
@@ -8,10 +9,12 @@ using static UnityEditor.Progress;
 
 public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
 {
+    Guid id;
     InventoryItem item;
-    Ability abilty;
+    AbilityItem ability;
     public void Start()
     {
+        id = Guid.NewGuid();
         Inventory.Singleton.OnCarriedItemChange += item => carriedItemChanged(item);
     }
     private void carriedItemChanged(InventoryItem item)
@@ -48,6 +51,8 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
         Inventory.Singleton.RemoveCarriedItem();
         if (slotted != null) Inventory.Singleton.SetCarriedItem(slotted, true);
         item = carried;
+        ability = item.ability;
+        AbilityEvents.TriggerAbilityEquipped(ability, id);
         item.transform.SetParent(transform);
         RectTransform rt = item.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(item.data.SlotSize.x * item.data.Size.x, item.data.SlotSize.y * item.data.Size.y);
@@ -81,6 +86,8 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
     {
         Inventory.Singleton.SetCarriedItem(item, false);
         item = null;
+        ability = null;
+        AbilityEvents.TriggerAbilityEquipped(null, id);
         ResetTooltip();
     }
 }

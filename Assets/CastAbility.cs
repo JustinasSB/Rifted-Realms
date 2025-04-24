@@ -3,10 +3,12 @@ using UnityEngine;
 public class CastAbility : MonoBehaviour
 {
     AbilityAnimator animator;
+    AbilityItem ability;
     void Start()
     {
         animator = GetComponent<AbilityAnimator>();
         animator.SetWeaponType(0);
+        AbilityEvents.OnAbilityEquipped += OnAbilityEquipped;
     }
 
     void Update()
@@ -17,11 +19,15 @@ public class CastAbility : MonoBehaviour
         }
 
         // Right Click (Reduce Mana)
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
-            animator.PlayAnimation((float)0.2, AbilityType.Spell);
-            //PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - 10);
+            animator.PlayAnimation(ability.ability.Stats[StatType.CastingSpeed].Item1.Value, AbilityType.Spell, ability);
+            PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - 10);
             //PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].Value - 10);
         }
+    }
+    private void OnAbilityEquipped(AbilityItem a)
+    {
+        ability = a;
     }
 }

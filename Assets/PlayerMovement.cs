@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Stat animationSpeed;
     public Vector3 MovementDirection;
     public bool isMoving;
+    public LayerMask groundLayer;
 
     void Start()
     {
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void GroundPlayer() {
         Ray ray = new(transform.position, Vector3.down);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 10f, groundLayer))
         {
             Vector3 newPosition = transform.position;
             newPosition.y = hit.point.y + controller.height;
@@ -70,6 +71,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 rayOrigin = transform.position;
         Ray ray = new(rayOrigin + direction.normalized * (controller.radius + ledgeCheckDistance), Vector3.down);
-        return !Physics.Raycast(ray, controller.height + maxDropDistanceForLedge);
+        return !Physics.Raycast(ray, controller.height + maxDropDistanceForLedge, groundLayer);
     }
 }

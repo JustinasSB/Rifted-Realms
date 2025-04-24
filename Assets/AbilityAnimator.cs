@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,11 +18,13 @@ public class AbilityAnimator : MonoBehaviour
     private Stat animationSpeed;
     private WeaponType weapon;
     private AbilityType ability;
+    private AbilityItem abilityItem;
     private bool animationPlaying;
     private float animationTime;
     private float elapsedTime;
     private float bufferedAnimation;
     private AbilityType bufferedAbility;
+    private AbilityItem bufferedAbilityItem;
 
     private Vector3 leftArmBasePosition;
     private Vector3 leftArmCurrentPosition;
@@ -79,7 +82,7 @@ public class AbilityAnimator : MonoBehaviour
             if (!Triggered && NormalizedElapsedTime >= 0.5f)
             {
                 Triggered = true;
-                //do some ability
+                TriggerAbility(abilityItem, LeftArmTarget, PlayerStatsManager.playerStats.Stats);
             }
             if (NormalizedElapsedTime >= 1)
             {
@@ -93,7 +96,7 @@ public class AbilityAnimator : MonoBehaviour
                 }
                 else
                 {
-                    PlayAnimation(bufferedAnimation, bufferedAbility);
+                    PlayAnimation(bufferedAnimation, bufferedAbility, bufferedAbilityItem);
                     bufferedAnimation = 0;
                     bufferedAbility = 0;
                 }
@@ -138,12 +141,13 @@ public class AbilityAnimator : MonoBehaviour
             weapon = WeaponType.Unarmed;
         }
     }
-    public void PlayAnimation(float AnimationTime, AbilityType Ability)
+    public void PlayAnimation(float AnimationTime, AbilityType Ability, AbilityItem AbilityData)
     {
         if (!animationPlaying)
         {
             animationTime = AnimationTime;
             ability = Ability;
+            abilityItem = AbilityData;
             elapsedTime = 0;
             switch ((int)weapon+(int)ability*100)
             {
@@ -165,6 +169,7 @@ public class AbilityAnimator : MonoBehaviour
         {
             bufferedAnimation = AnimationTime;
             bufferedAbility = ability;
+            bufferedAbilityItem = AbilityData;
         }
     }
     public void SetWeaponType(WeaponType type)
@@ -242,6 +247,22 @@ public class AbilityAnimator : MonoBehaviour
                 break;
             case 2:
                 break;
+        }
+    }
+    public void TriggerAbility(AbilityItem abilityItem, Transform spawnOrigin, Dictionary<StatType, Stat> casterStats)
+    {
+        GameObject instance = Instantiate(
+            abilityItem.effectPrefab,
+            spawnOrigin.position,
+            spawnOrigin.rotation
+        );
+
+        TempestBehaviour behaviour = instance.GetComponent<TempestBehaviour>();
+        if (behaviour != null)
+        {
+            behaviour.abilityData = abilityItem.ability;
+            behaviour.Caster = casterStats;
+            behaviour.Initialize(abilityItem.ability, abilityItem.DamageMultiplier);
         }
     }
 }
