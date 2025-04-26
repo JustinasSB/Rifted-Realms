@@ -31,10 +31,12 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
         if (Inventory.carriedItem != null)
         {
             Allocate(Inventory.carriedItem, this.item);
+            SetTooltip();
         }
         else if (item != null)
         {
             Deallocate();
+            SetTooltip();
         }
         else
         {
@@ -44,6 +46,7 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
             if (LevelManager.level.SkillPoints <= 0) return;
             else allocateNode();
         }
+        ResetTooltip();
     }
     private void Allocate(InventoryItem carried, InventoryItem slotted)
     {
@@ -61,7 +64,6 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
         rt.pivot = new Vector2(0.5f, 0.5f);
         rt.anchorMin = new Vector2(0.5f, 0.5f);
         rt.anchorMax = new Vector2(0.5f, 0.5f);
-        SetTooltip();
     }
     private void SetTooltip()
     {
@@ -82,12 +84,19 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
             trigger.OnPointerEnter();
         }
     }
+    public void DestroyTooltip()
+    {
+        TooltipTrigger trigger = this.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        {
+            trigger.OnPointerExit();
+        }
+    }
     private void Deallocate()
     {
         Inventory.Singleton.SetCarriedItem(item, false);
         item = null;
         ability = null;
         AbilityEvents.TriggerAbilityEquipped(null, id);
-        ResetTooltip();
     }
 }

@@ -13,6 +13,8 @@ public class AbilityAnimator : MonoBehaviour
     [SerializeField] Transform RightArmTarget;
     [SerializeField] Transform LeftArmHint;
     [SerializeField] Transform RightArmHint;
+    [SerializeField] Transform Target;
+    [SerializeField] LayerMask targetLayer;
     private Stat attackSpeed;
     private Stat castingSpeed;
     private Stat animationSpeed;
@@ -46,6 +48,8 @@ public class AbilityAnimator : MonoBehaviour
     private quaternion rightArmCurrentRotation;
     private quaternion rightArmTargetRotation;
 
+    private bool settled = false;
+
     private bool Triggered;
     void Start()
     {
@@ -64,6 +68,7 @@ public class AbilityAnimator : MonoBehaviour
     }
     void Update()
     {
+        if (settled) return;
         LeftArmTarget.transform.localPosition = leftArmCurrentPosition;
         LeftArmTarget.transform.localRotation = leftArmCurrentRotation;
         LeftArmHint.transform.localPosition = leftArmHintCurrentPosition;
@@ -88,11 +93,9 @@ public class AbilityAnimator : MonoBehaviour
             {
                 animationPlaying = false;
                 Triggered = false;
-                elapsedTime = 0;
-                animationTime = 0.5f;
                 if (bufferedAnimation == 0 && bufferedAbility == 0)
                 {
-                    LoadIdleAnimation();
+                    prepareReturnToIdle();
                 }
                 else
                 {
@@ -108,7 +111,29 @@ public class AbilityAnimator : MonoBehaviour
             float NormalizedElapsedTime = Mathf.Clamp01(elapsedTime / animationTime);
             float lerpFactor = (1f - NormalizedElapsedTime);
             interpolateMovement(lerpFactor);
+            if (lerpFactor == 0)
+            {
+                LeftArmTarget.transform.localPosition = leftArmCurrentPosition;
+                LeftArmTarget.transform.localRotation = leftArmCurrentRotation;
+                LeftArmHint.transform.localPosition = leftArmHintCurrentPosition;
+                RightArmTarget.transform.localPosition = rightArmCurrentPosition;
+                RightArmTarget.transform.localRotation = rightArmCurrentRotation;
+                RightArmHint.transform.localPosition = rightArmHintCurrentPosition;
+                settled = true;
+            }
         }
+    }
+    private void prepareReturnToIdle()
+    {
+        elapsedTime = 0;
+        animationTime = 0.5f;
+        leftArmTargetPosition = leftArmCurrentPosition;
+        leftArmTargetRotation = leftArmCurrentRotation;
+        leftArmHintTargetPosition = leftArmHintCurrentPosition;
+        rightArmTargetPosition = rightArmCurrentPosition;
+        rightArmTargetRotation = rightArmCurrentRotation;
+        rightArmHintTargetPosition = rightArmHintCurrentPosition;
+        LoadIdleAnimation();
     }
     private void interpolateMovement(float lerpFactor)
     {
@@ -149,6 +174,7 @@ public class AbilityAnimator : MonoBehaviour
             ability = Ability;
             abilityItem = AbilityData;
             elapsedTime = 0;
+            settled = false;
             switch ((int)weapon+(int)ability*100)
             {
                 case 100:
@@ -251,18 +277,19 @@ public class AbilityAnimator : MonoBehaviour
     }
     public void TriggerAbility(AbilityItem abilityItem, Transform spawnOrigin, Dictionary<StatType, Stat> casterStats)
     {
-        GameObject instance = Instantiate(
-            abilityItem.effectPrefab,
-            spawnOrigin.position,
-            spawnOrigin.rotation
-        );
-
-        TempestBehaviour behaviour = instance.GetComponent<TempestBehaviour>();
-        if (behaviour != null)
+        switch (abilityItem.ability.behaviour)
         {
-            behaviour.abilityData = abilityItem.ability;
-            behaviour.Caster = casterStats;
-            behaviour.Initialize(abilityItem.ability, abilityItem.DamageMultiplier);
+            case AbilityBehaviourTag.Projectile:
+                AbilityInitialiser.TriggerProjectile(abilityItem.effectPrefab, abilityItem.ability, abilityItem.DamageMultiplier, spawnOrigin, Target.position, casterStats, targetLayer);
+                break;
+            case AbilityBehaviourTag.Attack:
+                break;
+            case AbilityBehaviourTag.Slam:
+                break;
+            case AbilityBehaviourTag.TargetAOE:
+                break;
+            case AbilityBehaviourTag.CenterAOE:
+                break;
         }
     }
 }

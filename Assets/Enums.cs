@@ -52,6 +52,11 @@ public enum StatType
     [Description("Damage")] Damage,
     [Description("Attack Time")] Interval,
     [Description("Projectile Pierce")] Pierce,
+    [Description("Projectile Count")] Projectile,
+    [Description("Projectile Speed")] ProjectileSpeed,
+    [Description("Projectile Damage")] ProjectileDamage,
+    [Description("Spell Damage")] SpellDamage,
+    [Description("Attack Damage")] AttackDamage
 }
 public enum OperationType
 {
@@ -189,4 +194,12 @@ public enum AbilityTag
     Attack,
     Physical,
     Elemental
+}
+public enum AbilityBehaviourTag
+{
+    Projectile,
+    Attack,
+    Slam,
+    TargetAOE,
+    CenterAOE,
 }

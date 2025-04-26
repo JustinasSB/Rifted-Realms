@@ -43,6 +43,10 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
     {
         isVisible = !isVisible;
         Panel.SetActive(isVisible);
+        foreach (PassiveTreeAbilityNode node in Nodes.GetComponentsInChildren<PassiveTreeAbilityNode>())
+        {
+            node.DestroyTooltip();
+        }
     }
     public bool IsOpen => isVisible;
     private void Start()

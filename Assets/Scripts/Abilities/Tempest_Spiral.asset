@@ -22,9 +22,9 @@ MonoBehaviour:
   abilityIcon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
   ability:
     serializedStats:
-    - statType: 6
+    - statType: 41
       stat:
-        StatType: 6
+        StatType: 41
         Value: 5
       scalable: 1
     - statType: 28
@@ -45,10 +45,16 @@ MonoBehaviour:
     - statType: 33
       stat:
         StatType: 33
-        Value: 20
+        Value: 0
+      scalable: 1
+    - statType: 40
+      stat:
+        StatType: 40
+        Value: 1
       scalable: 1
     tags: 000000000100000004000000
     type: 1
+    behaviour: 0
   DamageMultiplier: 240
   Description: Fire a chaotic Air projectile in the aimed direction, as the projectile
     travels, it changes direction and speed unpredictably, bouncing off surfaces

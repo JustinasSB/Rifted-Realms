@@ -13,6 +13,7 @@ public class CastAbility : MonoBehaviour
 
     void Update()
     {
+        if (ability == null) return;
         if (Input.GetMouseButton(0))
         {
             //PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].Value - 50);

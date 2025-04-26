@@ -9,28 +9,27 @@ using UnityEngine;
 using static UnityEditor.Progress;
 
 [System.Serializable]
-public class Stat
+public class Stat : ISerializationCallbackReceiver
 {
     public string Name { get; }
     public string Description { get; }
     public float BaseValue { get; private set; }
-    private List<float> baseAdded = new List<float>();
-    private List<float> baseIncrease = new List<float>();
-    private List<float> baseMultiplier = new List<float>();
+    [NonSerialized] private List<float> baseAdded = new List<float>();
+    [NonSerialized] private List<float> baseIncrease = new List<float>();
+    [NonSerialized] private List<float> baseMultiplier = new List<float>();
     public StatType StatType;
 
     //Invokable event for value changes, listeners can update labels on change instead of reading values every frame
     public event Action<float> OnValueChanged;
 
     //Stores Stat and the percentage of this.Value converted into held Stat
-    private Dictionary<Stat, float> conversion = new Dictionary<Stat, float>();
+    [NonSerialized] private Dictionary<Stat, float> conversion = new Dictionary<Stat, float>();
 
     //Stores Stat type and the amount of this.Value converted into held Stat type
-    private Dictionary<StatType, float> scaledConversion = new Dictionary<StatType, float>();
-    private Dictionary<Stat, List<float>> asExtra = new Dictionary<Stat, List<float>>();
+    [NonSerialized] private Dictionary<StatType, float> scaledConversion = new Dictionary<StatType, float>();
+    [NonSerialized] private Dictionary<Stat, List<float>> asExtra = new Dictionary<Stat, List<float>>();
     public float Value;
     private float valueBeforeConversion;
-    //public event Action<string, float> OnStatChanged;
     public Stat(string name, string description, float baseValue, StatType statType)
     {
         this.Name = name;
@@ -223,5 +222,41 @@ public class Stat
         {
             asExtra.Remove(stat);
         }
+    }
+    public float GetTotalIncrease()
+    {
+        return baseIncrease.Sum();
+    }
+    public float GetTotalMultiplier()
+    {
+        return baseMultiplier.Aggregate(1f, (total, next) => total * next);
+    }
+    public float GetTotalAdd()
+    {
+        return BaseValue + baseAdded.Sum();
+    }
+    public void OnBeforeSerialize() { }
+    public void OnAfterDeserialize()
+    {
+        if (BaseValue == 0f && Value != 0f)
+            BaseValue = Value;
+        baseAdded = new List<float>();
+        baseIncrease = new List<float>();
+        baseMultiplier = new List<float>();
+        conversion = new Dictionary<Stat, float>();
+        scaledConversion = new Dictionary<StatType, float>();
+        asExtra = new Dictionary<Stat, List<float>>();
+    }
+    public Stat Clone()
+    {
+        Stat clone = new Stat(this.BaseValue, this.StatType);
+        clone.baseAdded = new List<float>(this.baseAdded);
+        clone.baseIncrease = new List<float>(this.baseIncrease);
+        clone.baseMultiplier = new List<float>(this.baseMultiplier);
+        clone.conversion = new Dictionary<Stat, float>(this.conversion);
+        clone.scaledConversion = new Dictionary<StatType, float>(this.scaledConversion);
+        clone.asExtra = new Dictionary<Stat, List<float>>(asExtra);
+        clone.RefreshStat();
+        return clone;
     }
 }

@@ -9,6 +9,7 @@ public class Ability
     public List<AbilityStatEntry> serializedStats;
     public List<AbilityTag> tags;
     public AbilityType type;
+    public AbilityBehaviourTag behaviour;
 
     private Dictionary<StatType, (Stat stat, bool scalable)> _runtimeStats;
 
