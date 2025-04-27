@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -234,6 +235,33 @@ public class Stat : ISerializationCallbackReceiver
     public float GetTotalAdd()
     {
         return BaseValue + baseAdded.Sum();
+    }
+    public void ModifyStat(OperationType operation, float value)
+    {
+        switch (operation)
+        {
+            case OperationType.Add:
+                AddBaseAdded(value);
+                break;
+            case OperationType.Increase:
+                AddIncrease(value);
+                break;
+            case OperationType.Multiply:
+                AddMultiplier(value);
+                break;
+            case OperationType.AddRemove:
+                RemoveBaseAdded(value);
+                break;
+            case OperationType.IncreaseRemove:
+                RemoveIncrease(value);
+                break;
+            case OperationType.MultiplyRemove:
+                RemoveMultiplier(value);
+                break;
+            case OperationType.SetBase:
+                SetBaseValue(value);
+                break;
+        }
     }
     public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()

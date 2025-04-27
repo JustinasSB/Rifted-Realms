@@ -280,7 +280,7 @@ public class AbilityAnimator : MonoBehaviour
         switch (abilityItem.ability.behaviour)
         {
             case AbilityBehaviourTag.Projectile:
-                AbilityInitialiser.TriggerProjectile(abilityItem.effectPrefab, abilityItem.ability, abilityItem.DamageMultiplier, spawnOrigin, Target.position, casterStats, targetLayer);
+                AbilityInitialiser.TriggerProjectile(abilityItem.effectPrefab, abilityItem.ability, abilityItem.Multiplier, spawnOrigin, Target.position, casterStats, targetLayer);
                 break;
             case AbilityBehaviourTag.Attack:
                 break;

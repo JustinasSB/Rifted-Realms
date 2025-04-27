@@ -45,7 +45,7 @@ MonoBehaviour:
     - statType: 33
       stat:
         StatType: 33
-        Value: 0
+        Value: 20
       scalable: 1
     - statType: 40
       stat:
@@ -54,8 +54,13 @@ MonoBehaviour:
       scalable: 1
     tags: 000000000100000004000000
     type: 1
-    behaviour: 0
-  DamageMultiplier: 240
+    behaviour: 1
+    pool: 1
+    support: 0
+    modifiers: []
+  Multiplier: 240
+  BaseManaCost: 5
+  ManaCost: 5
   Description: Fire a chaotic Air projectile in the aimed direction, as the projectile
     travels, it changes direction and speed unpredictably, bouncing off surfaces
     or shifting mid-flight. Its path is erratic, making it difficult to anticipate

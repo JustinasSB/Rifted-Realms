@@ -54,6 +54,7 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
         instance = this;
         isVisible = instance.Panel.activeSelf;
         drawLines();
+        Toggle();
     }
     private void Update()
     {

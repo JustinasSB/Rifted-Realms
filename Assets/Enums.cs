@@ -197,9 +197,13 @@ public enum AbilityTag
 }
 public enum AbilityBehaviourTag
 {
-    Projectile,
+    Projectile = 1,
     Attack,
     Slam,
     TargetAOE,
     CenterAOE,
+}
+public enum ProjectilePool
+{
+    Tempest=1
 }

@@ -108,7 +108,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.9, z: 1}
+  m_Size: {x: 1, y: 2.8, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7703477293920411163
 Rigidbody:
@@ -160,4 +160,7 @@ MonoBehaviour:
     tags: 
     type: 0
     behaviour: 0
+    pool: 0
+    support: 0
+    modifiers: []
   isUsed: 0

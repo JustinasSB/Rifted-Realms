@@ -44,7 +44,6 @@ public class Tooltip : MonoBehaviour
     private void abilityTooltip(InventoryItem item, Vector2 position)
     {
         nameText.text = item.data.name.Replace("_", " ");
-        rarityText.text = "Ability Jewel";
         rarityText.color = Color.green;
         background.color = Color.green;
         border.color = Color.green;
@@ -54,7 +53,18 @@ public class Tooltip : MonoBehaviour
             setToWorld = false;
         }
         modifiersText.text = item.ability.Description;
-        coreValuesText.text = "Damage multiplier: " + item.ability.DamageMultiplier + "%";
+        if (item.ability.ability.support)
+        {
+            rarityText.text = "Support Jewel";
+            coreValuesText.text = "Mana cost multiplier: " + item.ability.Multiplier + "%";
+        }
+        else
+        {
+            rarityText.text = "Ability Jewel";
+            coreValuesText.text = "Damage multiplier: " + item.ability.Multiplier + "%\n"
+                + "Mana Cost: " + item.ability.ManaCost;
+
+        }
         layoutElement.enabled = (modifiersText.preferredWidth > 800 || nameText.preferredWidth > 800) ? true : false;
     }
     private void itemTooltip(InventoryItem item, Vector2 position)

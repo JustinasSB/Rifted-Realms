@@ -2,6 +2,7 @@
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using System;
 
 internal class AbilityInitialiser : MonoBehaviour
 {
@@ -21,15 +22,12 @@ internal class AbilityInitialiser : MonoBehaviour
         float distance = Vector3.Distance(origin.position, target);
         for (int i = 0; i < projectileCount; i++)
         {
-            GameObject instance = Instantiate(
-                prefab,
-                origin.position,
-                quaternion.identity
-            );
+            GameObject instance = PoolManager.Instance.getGameObject(prefab, origin.position, quaternion.identity, data.pool);
             IProjectile projectile = instance.GetComponent<IProjectile>();
             if (projectile != null)
             {
-                Vector3 direction = (target - origin.position).normalized;
+                Vector3 direction = (target - origin.position);
+                direction = new Vector3(direction.x, 0f, direction.z).normalized;
                 if (i > 0)
                 {
                     // Calculate angle offset
@@ -39,7 +37,7 @@ internal class AbilityInitialiser : MonoBehaviour
 
                     direction = Quaternion.Euler(0, angle, 0) * direction;
                 }
-                projectile.Initialize(damage, targetLayer, direction, pierce, duration, speed);
+                projectile.Initialize(damage, targetLayer, direction, pierce, duration, speed, data.pool);
             }
         }
     }
@@ -128,5 +126,6 @@ internal class AbilityInitialiser : MonoBehaviour
 }
 public interface IProjectile
 {
-    void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, Vector3 target, float pierce, float duration, float speed);
+    event Action<GameObject, ProjectilePool> OnExpired;
+    void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, Vector3 target, float pierce, float duration, float speed, ProjectilePool pool);
 }

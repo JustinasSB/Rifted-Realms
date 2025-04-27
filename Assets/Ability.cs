@@ -10,6 +10,9 @@ public class Ability
     public List<AbilityTag> tags;
     public AbilityType type;
     public AbilityBehaviourTag behaviour;
+    public ProjectilePool pool;
+    public bool support;
+    public List<StatModifier> modifiers;
 
     private Dictionary<StatType, (Stat stat, bool scalable)> _runtimeStats;
 

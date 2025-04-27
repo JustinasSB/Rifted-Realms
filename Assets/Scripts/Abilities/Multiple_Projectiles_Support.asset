@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36046ce5ee0dc7f479f0a7b3ce88e9d6, type: 3}
+  m_Name: Multiple_Projectiles_Support
+  m_EditorClassIdentifier: 
+  ItemName: Multiple Projectiles Support
+  Icon: {fileID: 21300000, guid: 99fa9b88cc03c2e43b32bab01ca1692e, type: 3}
+  Size: {x: 50, y: 50}
+  SlotSize: {x: 1, y: 1}
+  ItemType: 13
+  ItemSpecific: 31
+  effectPrefab: {fileID: 0}
+  abilityIcon: {fileID: 0}
+  ability:
+    serializedStats: []
+    tags: 00000000
+    type: 0
+    behaviour: 0
+    pool: 0
+    support: 1
+    modifiers:
+    - To: 40
+      OperationType: 0
+      From: 0
+      Value: 2
+  Multiplier: 150
+  BaseManaCost: 0
+  ManaCost: 0
+  Description: Adds 2 additional projectiles to abilities

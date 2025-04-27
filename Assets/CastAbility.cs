@@ -22,8 +22,11 @@ public class CastAbility : MonoBehaviour
         // Right Click (Reduce Mana)
         if (Input.GetMouseButtonDown(1))
         {
-            animator.PlayAnimation(ability.ability.Stats[StatType.CastingSpeed].Item1.Value, AbilityType.Spell, ability);
-            PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - 10);
+            if (PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value > ability.ManaCost)
+            {
+                animator.PlayAnimation(ability.ability.Stats[StatType.CastingSpeed].Item1.Value, AbilityType.Spell, ability);
+                PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - ability.ManaCost);
+            }
             //PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].Value - 10);
         }
     }
