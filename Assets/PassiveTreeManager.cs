@@ -22,6 +22,8 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
     float scale = 1;
     public float ZoomRate = 0.05f;
     [SerializeField] private GameObject linePrefab;
+    [SerializeField] GameObject mana;
+    [SerializeField] GameObject experience;
     Dictionary<(PassiveTreeNode, PassiveTreeNode), Image> lines = new();
     public bool GetValidity()
     {
@@ -46,6 +48,16 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
         foreach (PassiveTreeAbilityNode node in Nodes.GetComponentsInChildren<PassiveTreeAbilityNode>())
         {
             node.DestroyTooltip();
+        }
+        if (!isVisible)
+        {
+            mana.SetActive(true);
+            experience.SetActive(true);
+        }
+        else
+        {
+            mana.SetActive(false);
+            experience.SetActive(false);
         }
     }
     public bool IsOpen => isVisible;

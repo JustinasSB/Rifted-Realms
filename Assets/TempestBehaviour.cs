@@ -51,8 +51,8 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
             Expire();
             return;
         }
-        Move();
         Ground();
+        Move();
         TimeUntilChange -= Time.deltaTime;
         if (TimeUntilChange > 0) return;
         TimeUntilChange = 1f;
@@ -61,7 +61,7 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
     }
     private void Move()
     {
-        if (IsLedgeAhead(TargetDirection))
+        if (canMoveAhead(TargetDirection))
         {
             TimeUntilChange = 1f;
             Speed = UnityEngine.Random.Range(BaseSpeed / 2f, BaseSpeed * 2f);
@@ -70,11 +70,23 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
         }
         transform.position += Speed * Time.deltaTime * TargetDirection;
     }
-    private bool IsLedgeAhead(Vector3 direction)
+    private bool canMoveAhead(Vector3 direction)
     {
-        Vector3 rayOrigin = transform.position;
-        Ray ray = new(rayOrigin + 1.5f * direction, Vector3.down);
-        return !Physics.Raycast(ray, 3f, groundLayer);
+        Vector3 rayOrigin = transform.position + Vector3.up + direction.normalized * 1f;
+        Ray ray = new(rayOrigin, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f, groundLayer))
+        {
+            float heightDifference = rayOrigin.y - hit.point.y;
+            // Check if ground is too far down (ledge) OR ground is too high (obstacle)
+            if (heightDifference > 3f || heightDifference < 1.75f)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // No ground detected, treat it as a ledge
+        return true;
     }
     private void Ground()
     {

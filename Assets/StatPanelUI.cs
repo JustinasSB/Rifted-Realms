@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Xml.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
 
 public class StatPanelUI : MonoBehaviour, IUIToggleable
 {
@@ -53,11 +54,12 @@ public class StatPanelUI : MonoBehaviour, IUIToggleable
             PlayerStatsManager.playerStats.GetStat(StatType.Dexterity),
             PlayerStatsManager.playerStats.GetStat(StatType.Charisma)
         };
-        for (int i = 0; i < attributeStats.Length; i++)
+        for (int i = 0; i < attributeStats.Count(); i++)
         {
             var stat = attributeStats[i];
             Attributes.Add(stat);
-            SubscribeToStat(stat, (float value) => OnAttributeChanged(i, value), false);
+            int capturedIndex = i;
+            SubscribeToStat(stat, (float value) => OnAttributeChanged(capturedIndex, value), false);
         }
     }
     private void SubscribeToStat(Stat stat, Action<float> callback, bool addtoList = true)
@@ -68,14 +70,19 @@ public class StatPanelUI : MonoBehaviour, IUIToggleable
     }
     private void OnAttributeChanged(int i, float value)
     {
-        AttributeNumerics[i].gameObject.GetComponent<TMP_Text>().text = value.ToString();
+        StartCoroutine(LoadAttributeNextFrame(AttributeNumerics[i].gameObject.GetComponent<TMP_Text>(), Attributes[i]));
     }
     private void updateAttributes()
     {
-        for (int i = 0; i < Attributes.Count; i++)
+        for (int i = 0; i < Attributes.Count(); i++)
         {
             AttributeNumerics[i].gameObject.GetComponent<TMP_Text>().text = Attributes[i].Value.ToString();
         }
+    }
+    private IEnumerator LoadAttributeNextFrame(TMP_Text field, Stat attribute)
+    {
+        yield return null;
+        field.text = attribute.Value.ToString();
     }
     private void loadStats() 
     {
