@@ -47,7 +47,7 @@ public class PlayerStats
             { StatType.Damage, new Stat ("Damage", "Undescribed", 1f, StatType.Damage)},
             { StatType.Interval, new Stat ("Interval", "Undescribed", 0f, StatType.Interval)},
             { StatType.Pierce, new Stat ("Pierce", "Undescribed", 0f, StatType.Pierce)},
-            { StatType.Projectile, new Stat ("Projectile", "Undescribed", 2f, StatType.Projectile)},
+            { StatType.Projectile, new Stat ("Projectile", "Undescribed", 0f, StatType.Projectile)},
             { StatType.ProjectileSpeed, new Stat ("Projectile Speed", "Undescribed", 1f, StatType.ProjectileSpeed)},
             { StatType.ProjectileDamage, new Stat ("Projectile Damage", "Undescribed", 1f, StatType.ProjectileDamage)},
             { StatType.SpellDamage, new Stat ("Spell Damage", "Undescribed", 1f, StatType.SpellDamage)},

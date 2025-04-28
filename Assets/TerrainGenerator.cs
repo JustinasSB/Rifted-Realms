@@ -12,18 +12,14 @@ public class TerrainGenerator : MonoBehaviour
     [Header("Grass and Tree Prefabs")]
     [SerializeField] GameObject[] treePrefabs;
     [Header("Spawn Settings")]
-    [SerializeField] private float grassSpawnProbability = 0.1f;
     [SerializeField] private float treeSpawnProbability = 0.05f;
-    [SerializeField] private float grassSpacing = 2f;
     [SerializeField] private float treeSpacing = 4f;
-    [SerializeField] private float minGrassScale = 0.8f;
-    [SerializeField] private float maxGrassScale = 1.2f;
     [SerializeField] private float minTreeScale = 0.8f;
     [SerializeField] private float maxTreeScale = 1.5f;
     [Header("Tile Map Settings")]
-    public int mapWidth = 10;
-    public int mapHeight = 10;
-    public float tileSize = 2f;
+    [SerializeField] int mapWidth = 10;
+    [SerializeField] int mapHeight = 10;
+    [SerializeField] float tileSize = 2f;
     private int[,] tileMap;
     private Dictionary<int, List<GameObject>> tileTreeBuckets = new Dictionary<int, List<GameObject>>();
     // Define allowed adjacent tile values.

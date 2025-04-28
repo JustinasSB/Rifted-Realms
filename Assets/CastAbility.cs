@@ -10,10 +10,9 @@ public class CastAbility : MonoBehaviour
         animator.SetWeaponType(0);
         AbilityEvents.OnAbilityEquipped += OnAbilityEquipped;
     }
-
     void Update()
     {
-        if (ability == null) return;
+        if (ability == null || DeathManager.Dead) return;
         if (Input.GetMouseButton(0))
         {
             //PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].Value - 50);

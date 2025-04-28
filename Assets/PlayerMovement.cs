@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IMovement
 {
     public float ledgeCheckDistance = 0.2f;
     public float maxDropDistanceForLedge = 0.4f;
     private CharacterController controller;
     private Stat movementSpeed;
     private Stat animationSpeed;
-    public Vector3 MovementDirection;
-    public bool isMoving;
+    public Vector3 MovementDirection { get; set; }
+    public bool isMoving { get; set; }
     public LayerMask groundLayer;
 
     void Start()
@@ -18,9 +18,9 @@ public class PlayerMovement : MonoBehaviour
         movementSpeed = PlayerStatsManager.playerStats.GetStat(StatType.MovementSpeed);
         animationSpeed = PlayerStatsManager.playerStats.GetStat(StatType.AnimationSpeed);
     }
-
     void Update()
     {
+        if (DeathManager.Dead) return;
         Move();
         if (!isMoving) return;
         GroundPlayer();
@@ -73,4 +73,9 @@ public class PlayerMovement : MonoBehaviour
         Ray ray = new(rayOrigin + direction.normalized * (controller.radius + ledgeCheckDistance), Vector3.down);
         return !Physics.Raycast(ray, controller.height + maxDropDistanceForLedge, groundLayer);
     }
+}
+public interface IMovement
+{
+    bool isMoving { get; set; }
+    Vector3 MovementDirection { get; set; }
 }

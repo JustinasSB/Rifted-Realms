@@ -111,7 +111,11 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
         }
         if (((1 << other.gameObject.layer) & TargetLayer.value) != 0)
         {
-            //do damage
+            EnemyHealthManager enemy = other.gameObject.GetComponent<EnemyHealthManager>();
+            foreach (var damage in Damage)
+            {
+                enemy.TakeDamage(damage.Value.Value);
+            }
         }
     }
     public void Expire()

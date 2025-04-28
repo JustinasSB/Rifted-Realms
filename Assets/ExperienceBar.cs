@@ -24,8 +24,4 @@ public class ExperienceBar : MonoBehaviour
     {
         this.level.text = lvl.ToString();
     }
-    private void Update()
-    {
-        LevelManager.level.IncreaseExperience((uint)10, 1);
-    }
 }

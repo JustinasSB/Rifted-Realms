@@ -46,7 +46,7 @@ internal class AbilityInitialiser : MonoBehaviour
         Dictionary<StatType, Stat> damage = new();
         damage = RetrieveBaseDamageValues(damage, data, caster);
         float genericIncrease = caster[StatType.Damage].GetTotalIncrease();
-        float genericMultiplier = caster[StatType.Damage].GetTotalMultiplier() * damageMultiplier;
+        float genericMultiplier = caster[StatType.Damage].GetTotalMultiplier() * (damageMultiplier/100);
         foreach (AbilityTag tag in data.tags)
         {
             Stat value;
