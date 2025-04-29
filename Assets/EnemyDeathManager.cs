@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyDeathManager : MonoBehaviour
@@ -12,13 +13,21 @@ public class EnemyDeathManager : MonoBehaviour
     [SerializeField] private float endValue = 1f;
     [SerializeField] private float duration = 1f;
     [SerializeField] SkinnedMeshRenderer[] objects;
-    public event Action OnDeath;
+    public event Action<GameObject> OnDeath;
+    public event Action OnRevive;
+    public bool isDead = false;
     public int level;
+    private Material[][] originalMaterials;
     private void Start()
     {
         level = LevelManager.level.CurrentLevel + UnityEngine.Random.Range(0, 4);
         EnemyHealthManager healthManager = GetComponent<EnemyHealthManager>();
         healthManager.LevelUp(level);
+        originalMaterials = new Material[objects.Length][];
+        for (int i = 0; i < objects.Length; i++)
+        {
+            originalMaterials[i] = objects[i].materials;
+        }
     }
     public void deathTrigger()
     {
@@ -27,8 +36,22 @@ public class EnemyDeathManager : MonoBehaviour
         {
             obj.material = targetMaterial;
         }
-        OnDeath?.Invoke();
+        OnDeath?.Invoke(this.gameObject);
+        isDead = true;
+        Inventory.Singleton.SpawnInventoryItem();
         StartCoroutine(AnimateShaderProperty());
+    }
+    public void Revive()
+    {
+        isDead = false;
+        level = LevelManager.level.CurrentLevel + UnityEngine.Random.Range(0, 4);
+        EnemyHealthManager healthManager = GetComponent<EnemyHealthManager>();
+        healthManager.LevelUp(level);
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i].materials = originalMaterials[i];
+        }
+        OnRevive?.Invoke();
     }
     private IEnumerator AnimateShaderProperty()
     {
@@ -43,6 +66,7 @@ public class EnemyDeathManager : MonoBehaviour
             yield return null;
         }
         targetMaterial.SetFloat(propertyName, endValue);
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
+        PoolManager.Instance.EnqueueToHostilePool(gameObject);
     }
 }

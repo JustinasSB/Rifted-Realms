@@ -175,6 +175,7 @@ public class AbilityAnimator : MonoBehaviour
             abilityItem = AbilityData;
             elapsedTime = 0;
             settled = false;
+            PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - abilityItem.ManaCost);
             switch ((int)weapon+(int)ability*100)
             {
                 case 100:

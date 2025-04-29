@@ -61,7 +61,9 @@ public static class ModifierDictionary
             (ItemType.Helmet, ItemSpecific.Armor),
             new List<ItemModifier>
             {
-
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 0, 50, 99, 1000, 0)
             }
         },
         {
@@ -99,7 +101,9 @@ public static class ModifierDictionary
             (ItemType.Gloves, ItemSpecific.Armor),
             new List<ItemModifier>
             {
-
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0)
             }
         },
         {

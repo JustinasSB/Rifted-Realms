@@ -41,6 +41,22 @@ public class Tooltip : MonoBehaviour
             return;
         }
     }
+    public void ShowTooltip(PassiveTooltipData nodeData, Vector2 position)
+    {
+        StartCoroutine(DelayedReposition());
+        lastpos = position;
+
+        itemNameText.text = "";
+        nameText.text = nodeData.Name;
+        coreValuesText.text = "";
+        rarityText.text = "Passive Node";
+        rarityText.color = Color.white;
+        background.color = Color.black;
+        border.color = Color.white;
+        modifiersText.text = nodeData.Description;
+
+        layoutElement.enabled = (modifiersText.preferredWidth > 800 || nameText.preferredWidth > 800);
+    }
     private void abilityTooltip(InventoryItem item, Vector2 position)
     {
         nameText.text = item.data.name.Replace("_", " ");

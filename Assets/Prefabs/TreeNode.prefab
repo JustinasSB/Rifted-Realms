@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 1312469628443109051}
   - component: {fileID: 4715093427548465787}
   - component: {fileID: 4286611120899952944}
+  - component: {fileID: 6569546811302628548}
   m_Layer: 5
   m_Name: TreeNode
   m_TagString: Untagged
@@ -129,10 +130,7 @@ MonoBehaviour:
   Name: 
   special: 0
   Description: 
-  To: 0
-  OperationType: 0
-  From: 0
-  Value: 0
+  Modifiers: []
   Allocated: 0
   Neighbors: []
   Connections: []
@@ -176,6 +174,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6569546811302628548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5355700025888224799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aeab2021a397344cbb009df78a3cb09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  node: {fileID: 1312469628443109051}
 --- !u!1 &7326791625342881046
 GameObject:
   m_ObjectHideFlags: 0

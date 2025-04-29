@@ -46,7 +46,7 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
                         Description += $"+{modifier.Value} To {modifier.To.GetDisplayName()}";
                         break;
                     case 1:
-                        Description += $"+{modifier.To.GetDisplayName()}% increased by {modifier.Value}";
+                        Description += $"{modifier.To.GetDisplayName()} increased by +{modifier.Value}%";
                         break;
                     case 2:
                         Description += $"{modifier.Value - 100}% More {modifier.To.GetDisplayName()}";
@@ -218,5 +218,18 @@ public class PassiveTreeNode : MonoBehaviour, IPointerClickHandler
     internal int CompareTo(PassiveTreeNode b)
     {
         return this.Id.ToString().CompareTo(b.Id.ToString());
+    }
+}
+public class PassiveTooltipData
+{
+    public Guid Id;
+    public string Name;
+    public string Description;
+
+    public PassiveTooltipData(Guid id, string name, string description)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
     }
 }

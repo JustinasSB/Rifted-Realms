@@ -8,6 +8,7 @@ public class BasicEnemySpawner : MonoBehaviour
     [SerializeField] private Vector3 spawnAreaSize = new Vector3(10f, 0f, 10f);
     [SerializeField] private Vector3 spawnOffset = Vector3.zero;
     [SerializeField] private Transform player;
+    [SerializeField] private float minDistanceFromCenter = 3f;
 
     void Start()
     {
@@ -27,18 +28,28 @@ public class BasicEnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Vector3 randomPos = new Vector3(
-            Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
-            Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2),
-            Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
-        );
-        Vector3 spawnPosition = transform.position + spawnOffset + randomPos;
-
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition = Vector3.zero;
+        int maxAttempts = 10;
+        int attempts = 0;
+        while (Vector3.Distance(spawnPosition, player.position) < minDistanceFromCenter && attempts < maxAttempts)
+        {
+            Vector3 randomPos = new Vector3(
+                Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
+                Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2),
+                Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
+            );
+            spawnPosition = transform.position + spawnOffset + randomPos;
+        }
+        GameObject enemy = PoolManager.Instance.GetEnemyObject(enemyPrefab, spawnPosition, Quaternion.identity);
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position + spawnOffset, spawnAreaSize);
+        if (player != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(player.position, minDistanceFromCenter);
+        }
     }
 }

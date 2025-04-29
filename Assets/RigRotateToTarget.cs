@@ -24,10 +24,15 @@ public class RigRotateToTarget : MonoBehaviour
         }
         EnemyDeathManager deathManager = this.GetComponentInParent<EnemyDeathManager>();
         deathManager.OnDeath += Dead;
+        deathManager.OnRevive += Revive;
     }
-    private void Dead()
+    private void Dead(GameObject o)
     {
         dead = true;
+    }
+    private void Revive()
+    {
+        dead = false;
     }
     void Update()
     {

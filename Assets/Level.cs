@@ -18,6 +18,7 @@ public class Level
         experienceForPreviousLevel = 0;
         experienceForLevel = 1024;
         experience = 0;
+        CurrentLevel = 0;
     }
     public void IncreaseExperience(ulong exp, int sourceLevel) 
     {

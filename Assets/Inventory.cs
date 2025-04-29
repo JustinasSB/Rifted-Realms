@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
         }
 
         GameObject hoveredObject = hoveredResult.Value.gameObject;
-        currentHoveredSlot = hoveredObject.GetComponent<MonoBehaviour>(); // still stored for tracking
+        currentHoveredSlot = hoveredObject.GetComponent<MonoBehaviour>();
 
         if (hoveredObject.TryGetComponent(out InventorySlot invSlot))
         {
@@ -142,7 +142,6 @@ public class Inventory : MonoBehaviour, IUIToggleable
         if (possible) 
         {
             Instantiate(itemPrefab).InitializeInInventory(_item, location);
-            //Instantiate(itemPrefab, inventorySlots[location].transform).InitializeInInventory(_item, inventorySlots[location]);
         }
     }
     public void SpawnAbility(AbilityItem item = null)
@@ -155,7 +154,6 @@ public class Inventory : MonoBehaviour, IUIToggleable
         if (possible)
         {
             Instantiate(itemPrefab).InitializeInInventory(_item, location);
-            //Instantiate(itemPrefab, inventorySlots[location].transform).InitializeInInventory(_item, inventorySlots[location]);
         }
     }
     private void ClearHighlights()

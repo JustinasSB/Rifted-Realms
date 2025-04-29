@@ -13,20 +13,14 @@ public class CastAbility : MonoBehaviour
     void Update()
     {
         if (ability == null || DeathManager.Dead) return;
-        if (Input.GetMouseButton(0))
-        {
-            //PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentLife].Value - 50);
-        }
-
         // Right Click (Reduce Mana)
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             if (PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value > ability.ManaCost)
             {
-                animator.PlayAnimation(ability.ability.Stats[StatType.CastingSpeed].Item1.Value, AbilityType.Spell, ability);
-                PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value - ability.ManaCost);
+                float castTime = ability.ability.Stats[StatType.CastingSpeed].Item1.Value / PlayerStatsManager.playerStats.Stats[StatType.CastingSpeed].Value;
+                animator.PlayAnimation(castTime, AbilityType.Spell, ability);
             }
-            //PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].DirectValueSet(PlayerStatsManager.playerStats.Stats[StatType.CurrentEnergy].Value - 10);
         }
     }
     private void OnAbilityEquipped(AbilityItem a)

@@ -132,16 +132,16 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
                     PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.AddRemove, modifier.RolledValue);
                     break;
                 case OperationType.Increase:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.IncreaseRemove, modifier.RolledValue);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.IncreaseRemove, modifier.RolledValue / 100);
                     break;
                 case OperationType.Multiply:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.MultiplyRemove, modifier.RolledValue);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.MultiplyRemove, modifier.RolledValue / 100);
                     break;
                 case OperationType.Convert:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ConvertRemove, modifier.RolledValue, modifier.Extra);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ConvertRemove, modifier.RolledValue / 100, modifier.Extra);
                     break;
                 case OperationType.Extra:
-                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ExtraRemove, modifier.RolledValue, modifier.Extra);
+                    PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.ExtraRemove, modifier.RolledValue / 100, modifier.Extra);
                     break;
                 case OperationType.SetBase:
                     PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, OperationType.SetBase, modifier.RolledValue);
@@ -159,10 +159,13 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             if (modifier.OperationType == OperationType.Convert
                 || modifier.OperationType == OperationType.Extra)
             {
-                PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue, modifier.Extra);
+                PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue / 100, modifier.Extra);
                 continue;
             }
-            PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
+            if (modifier.OperationType == OperationType.Add)
+                PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue);
+            else
+                PlayerStatsManager.playerStats.ModifyStat(modifier.AffectedStat, modifier.OperationType, modifier.RolledValue/100);
         }
     }
     private void allocateItem(InventoryItem item, InventoryItem reallocate)

@@ -6,7 +6,6 @@ public class EnemyHealthManager : MonoBehaviour
     [SerializeField] Stat CurrentHealth;
     [SerializeField] Stat RegenerationPercentage;
     [SerializeField] EnemyDeathManager deathManager;
-    bool dead = false;
     private void Update()
     {
         if (Health.Value > CurrentHealth.Value)
@@ -34,7 +33,7 @@ public class EnemyHealthManager : MonoBehaviour
     }
     public void TakeDamage(float value)
     {
-        if (dead) return;
+        if (deathManager.isDead) return;
         Debug.Log("enemy taking: " + value + " damage");
         CurrentHealth.DirectValueSet(CurrentHealth.Value - value);
         if (CurrentHealth.Value < 0)
@@ -44,6 +43,7 @@ public class EnemyHealthManager : MonoBehaviour
     }
     public void LevelUp(int lvl)
     {
+        this.Health.PurgeMultiplierList();
         for (int i = 0; i < lvl; i++)
         {
             this.Health.AddMultiplier(1.1f);

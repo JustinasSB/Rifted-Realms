@@ -236,6 +236,16 @@ public class Stat : ISerializationCallbackReceiver
     {
         return BaseValue + baseAdded.Sum();
     }
+    public void PurgeModifierLists()
+    {
+        this.baseAdded.Clear();
+        this.baseIncrease.Clear();
+        this.baseMultiplier.Clear();
+    }
+    public void PurgeMultiplierList()
+    {
+        this.baseMultiplier.Clear();
+    }
     public void ModifyStat(OperationType operation, float value)
     {
         switch (operation)

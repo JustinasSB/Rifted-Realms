@@ -13,12 +13,11 @@ public class BasicEnemy : MonoBehaviour, IMovement, IMovementData
     [SerializeField] GameObject LeftFootIk;
     [SerializeField] GameObject RightFootIk;
     [SerializeField] EnemyDeathManager deathManager;
-    bool dead = false;
 
     void Start()
     {
         speed = new(3f, StatType.MovementSpeed);
-        animationSpeed = new(1f, StatType.AnimationSpeed);
+        animationSpeed = new(Random.Range(1,1.3f), StatType.AnimationSpeed);
         LeftFootIk.SetActive(true);
         RightFootIk.SetActive(true);
         if (target == null)
@@ -37,23 +36,32 @@ public class BasicEnemy : MonoBehaviour, IMovement, IMovementData
             }
         }
         deathManager.OnDeath += Dead;
+        deathManager.OnRevive += Revive;
     }
-    private void Dead()
+    private void Dead(GameObject enemy)
     {
         if (controller != null)
             controller.enabled = false;
         Animator animator = GetComponent<Animator>();
         if (animator != null)
             animator.enabled = false;
-        dead = true;
+    }
+    private void Revive()
+    {
+        if (controller != null)
+            controller.enabled = true;
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+            animator.enabled = true;
+        animationSpeed = new(Random.Range(1, 1.3f), StatType.AnimationSpeed);
     }
     void Update()
     {
-        if (dead) return;
+        if (deathManager.isDead) return;
         Ground();
         isMoving = true;
         Vector3 direction = (target.position - transform.position).normalized;
-        transform.position += direction * speed.Value * Time.deltaTime;
+        transform.position += animationSpeed.Value * speed.Value * Time.deltaTime * direction;
         MovementDirection = direction;
     }
     private void Ground()

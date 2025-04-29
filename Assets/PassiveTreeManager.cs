@@ -22,6 +22,7 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
     float scale = 1;
     public float ZoomRate = 0.05f;
     [SerializeField] private GameObject linePrefab;
+    // Added in order to hide when PassiveTreeCanvas is toggled
     [SerializeField] GameObject mana;
     [SerializeField] GameObject experience;
     Dictionary<(PassiveTreeNode, PassiveTreeNode), Image> lines = new();
