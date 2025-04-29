@@ -56,8 +56,9 @@ public class InventoryItem : MonoBehaviour
     }
     public void InitializeInInventory(AbilityItem ability, int location)
     {
-        this.data = ability;
-        this.ability = ability.Clone();
+        AbilityItem clone = ability.Clone();
+        this.data = clone;
+        this.ability = clone;
         itemIcon.sprite = ability.Icon;
         itemIcon.raycastTarget = false;
         Inventory.Singleton.PlaceItem(this, location);

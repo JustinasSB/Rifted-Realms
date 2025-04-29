@@ -25,6 +25,7 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
     private float TimeUntilChange;
     private ProjectilePool pool;
     public event Action<GameObject, ProjectilePool> OnExpired;
+    private List<GameObject> hitTargets = new();
 
     public void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, Vector3 target, float pierce, float duration, float speed, ProjectilePool pool)
     {
@@ -47,7 +48,6 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
         Elapsed += Time.deltaTime;
         if (Elapsed > Duration)
         {
-            isUsed = false;
             Expire();
             return;
         }
@@ -111,15 +111,24 @@ public class TempestBehaviour : MonoBehaviour, IProjectile
         }
         if (((1 << other.gameObject.layer) & TargetLayer.value) != 0)
         {
+            if (hitTargets.Contains(other.gameObject)) return;
             EnemyHealthManager enemy = other.gameObject.GetComponent<EnemyHealthManager>();
             foreach (var damage in Damage)
             {
                 enemy.TakeDamage(damage.Value.Value);
             }
+            hitTargets.Add(other.gameObject);
+            Pierce--;
+            if (Pierce == 0)
+            {
+                Expire();
+            }
         }
     }
     public void Expire()
     {
+        hitTargets.Clear();
+        isUsed = false;
         OnExpired?.Invoke(this.gameObject, pool);
     }
 }

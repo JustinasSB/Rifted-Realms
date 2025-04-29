@@ -40,7 +40,7 @@ MonoBehaviour:
     - statType: 39
       stat:
         StatType: 39
-        Value: 3
+        Value: 1
       scalable: 1
     - statType: 33
       stat:

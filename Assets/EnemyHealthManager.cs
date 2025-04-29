@@ -34,7 +34,6 @@ public class EnemyHealthManager : MonoBehaviour
     public void TakeDamage(float value)
     {
         if (deathManager.isDead) return;
-        Debug.Log("enemy taking: " + value + " damage");
         CurrentHealth.DirectValueSet(CurrentHealth.Value - value);
         if (CurrentHealth.Value < 0)
         {

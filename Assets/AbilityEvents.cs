@@ -11,7 +11,6 @@ public static class AbilityEvents
 
     public static void TriggerAbilityEquipped(AbilityItem ability, Guid id)
     {
-        Debug.Log("ability triggered");
         OnAbilityEquipped?.Invoke(ability);
     }
 }

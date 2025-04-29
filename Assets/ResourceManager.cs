@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ public class ResourceManager : MonoBehaviour
 {
     private Dictionary<StatType, Stat> stats;
     private bool canRecharge = false;
+    private float CummulativeEvasion = 0;
     private void Start()
     {
         stats = PlayerStatsManager.playerStats.Stats;
+        CummulativeEvasion = stats[StatType.Evasion].Value;
     }
 
     void Update()
@@ -57,8 +60,19 @@ public class ResourceManager : MonoBehaviour
             }
         }
     }
-    public void TakeDamage(float value)
+    public void TakeDamage(float value, StatType DamageType)
     {
+        switch(DamageType)
+        {
+            case StatType.PhysicalDamage:
+                if (Evade(value)) return;
+                float armour = stats[StatType.Armour].Value;
+                float damageReduction = armour / (50 * value);
+                // limit to 90% damage reduction
+                damageReduction = Mathf.Clamp(damageReduction, 0f, 0.9f);
+                value *= (1f - damageReduction);
+                break;
+        }
         Stat Energy = stats[StatType.CurrentEnergy];
         float energy = Energy.Value - value;
         if (energy > 0)
@@ -78,5 +92,15 @@ public class ResourceManager : MonoBehaviour
         {
             DeathManager.Dead = true;
         }
+    }
+    private bool Evade(float value)
+    {
+        CummulativeEvasion -= value*10;
+        if (CummulativeEvasion < 0)
+        {
+            CummulativeEvasion = stats[StatType.Evasion].Value;
+            return false;
+        }
+        return true;
     }
 }

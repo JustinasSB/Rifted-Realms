@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36046ce5ee0dc7f479f0a7b3ce88e9d6, type: 3}
+  m_Name: Pierce_Support
+  m_EditorClassIdentifier: 
+  ItemName: Pierce Support
+  Icon: {fileID: 21300000, guid: dabd662e73aa6ec4a95a074e6fd79f86, type: 3}
+  Size: {x: 50, y: 50}
+  SlotSize: {x: 1, y: 1}
+  ItemType: 13
+  ItemSpecific: 31
+  effectPrefab: {fileID: 0}
+  abilityIcon: {fileID: 0}
+  ability:
+    serializedStats: []
+    tags: 
+    type: 0
+    behaviour: 0
+    pool: 0
+    support: 1
+    modifiers:
+    - To: 39
+      OperationType: 0
+      From: 0
+      Value: 2
+  Multiplier: 120
+  BaseManaCost: 0
+  ManaCost: 0
+  Description: Adds +2 to Projectile Pierce Cap

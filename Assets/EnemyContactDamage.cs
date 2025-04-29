@@ -21,7 +21,7 @@ public class EnemyContactDamage : MonoBehaviour
                 ResourceManager playerHealth = other.gameObject.GetComponent<ResourceManager>();
                 if (playerHealth != null)
                 {
-                    playerHealth.TakeDamage(damageAmount);
+                    playerHealth.TakeDamage(damageAmount, StatType.PhysicalDamage);
                     lastDamageTime = Time.time;
                 }
             }

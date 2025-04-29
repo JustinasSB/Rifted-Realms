@@ -3,6 +3,8 @@ using UnityEngine;
 
 public static class ModifierDictionary
 {
+    // Format:
+    // OperationType operationType | ModifierType type | ModifierScope scope | StatType affectedStat | float tier | float group | float min | float max | float weight | float levelRequirement
     public static Dictionary<(ItemType, ItemSpecific), List<ItemModifier>> ModifierPools = new()
     {
         {
@@ -61,9 +63,30 @@ public static class ModifierDictionary
             (ItemType.Helmet, ItemSpecific.Armor),
             new List<ItemModifier>
             {
-                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 0, 150, 200, 100, 80),
-                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 0, 100, 149, 500, 40),
-                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 0, 50, 99, 1000, 0)
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 2, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 2, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 2, 40, 79, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 3, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 3, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 3, 50, 99, 1000, 0),
+
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1000, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1001, 10, 20, 1000, 0)
             }
         },
         {
@@ -94,44 +117,159 @@ public static class ModifierDictionary
             (ItemType.Pants, ItemSpecific.Armor),
             new List<ItemModifier>
             {
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 1, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 1, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 1, 40, 79, 1000, 0),
 
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1000, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1001, 10, 20, 1000, 0)
             }
         },
         {
             (ItemType.Gloves, ItemSpecific.Armor),
             new List<ItemModifier>
             {
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 4, 1, 2, 1000, 0),
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
-                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0)
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 2, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 2, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 2, 40, 79, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 3, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 3, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 3, 50, 99, 1000, 0),
+
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1000, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1001, 10, 20, 1000, 0)
             }
         },
         {
             (ItemType.Boots, ItemSpecific.Armor),
             new List<ItemModifier>
             {
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 0, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 0, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 0, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 1, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 1, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 1, 40, 79, 1000, 0),
 
+                new ItemModifier(OperationType.Increase, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1000, 10, 20, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Implicit, ModifierScope.Local, StatType.Armour, 0, 1001, 10, 20, 1000, 0)
             }
         },
         {
-            (ItemType.Amulet, ItemSpecific.None),
+            (ItemType.Amulet, ItemSpecific.Amulet),
             new List<ItemModifier>
             {
-
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 2, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 2, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 2, 40, 79, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 3, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 3, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 3, 50, 99, 1000, 0)
             }
         },
         {
-            (ItemType.Belt, ItemSpecific.None),
+            (ItemType.Belt, ItemSpecific.Belt),
             new List<ItemModifier>
             {
-
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 2, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 2, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 2, 40, 79, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 3, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 3, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 3, 50, 99, 1000, 0)
             }
         },
         {
-            (ItemType.Ring, ItemSpecific.None),
+            (ItemType.Ring, ItemSpecific.Ring),
             new List<ItemModifier>
             {
-
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Strength, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Dexterity, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 0, 4, 3, 5, 100, 80),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 1, 4, 2, 3, 500, 40),
+                new ItemModifier(OperationType.Add, ModifierType.Suffix, ModifierScope.Global, StatType.Constitution, 2, 4, 1, 2, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 0, 0, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 1, 0, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.CastingSpeed, 2, 0, 50, 99, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 0, 1, 80, 100, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 1, 1, 60, 79, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Life, 2, 1, 40, 59, 1000, 0),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 0, 2, 120, 150, 1000, 60),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 1, 2, 80, 119, 1000, 30),
+                new ItemModifier(OperationType.Add, ModifierType.Prefix, ModifierScope.Global, StatType.Mana, 2, 2, 40, 79, 1000, 0),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 0, 3, 150, 200, 100, 80),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 1, 3, 100, 149, 500, 40),
+                new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.ManaRegenerationPercentage, 2, 3, 50, 99, 1000, 0)
             }
         },
         {

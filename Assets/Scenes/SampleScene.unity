@@ -10175,7 +10175,7 @@ MonoBehaviour:
   - {fileID: 1610821610}
   - {fileID: 1819489311}
   - {fileID: 1204926762}
-  levelToUnhide: 15
+  levelToUnhide: 2
 --- !u!224 &717145423 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8803623670797016454, guid: 65ff650913bd5c84aba1b2f8b758893f, type: 3}
@@ -16823,7 +16823,7 @@ MonoBehaviour:
   - {fileID: 1610821610}
   - {fileID: 1819489311}
   - {fileID: 717145422}
-  levelToUnhide: 10
+  levelToUnhide: 2
 --- !u!1001 &1215065078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24071,8 +24071,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a80d14436cf4d240b9cd978daa8a603, type: 2}
   - {fileID: 11400000, guid: 0189e5b9a61f25b4f99ceff117939cc2, type: 2}
   abilityitems:
-  - {fileID: 11400000, guid: 01f94f909ff1d79489768bc7b02d0740, type: 2}
   - {fileID: 11400000, guid: c7414e675c8ae514a83f1d051fccca77, type: 2}
+  - {fileID: 11400000, guid: d418f273b4441194096c6d68cb7e5cfe, type: 2}
+  - {fileID: 11400000, guid: a0afa81418221d740822bcfd0f7e4ae7, type: 2}
+  activeAbilityitems:
+  - {fileID: 11400000, guid: 01f94f909ff1d79489768bc7b02d0740, type: 2}
   giveItemBtn: {fileID: 1609232760}
   giveAbilityBtn: {fileID: 460488419}
   raycaster: {fileID: 0}
@@ -25438,7 +25441,7 @@ MonoBehaviour:
   - {fileID: 1610821610}
   - {fileID: 1204926762}
   - {fileID: 717145422}
-  levelToUnhide: 1
+  levelToUnhide: 2
 --- !u!4 &1819980052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4071975763106041728, guid: 721cd0216cd0bd546ab2aec518ffe0c2, type: 3}

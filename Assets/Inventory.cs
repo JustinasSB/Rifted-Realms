@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
     [SerializeField] InventoryItem itemPrefab;
     [SerializeField] ItemData[] items;
     [SerializeField] AbilityItem[] abilityitems;
+    [SerializeField] AbilityItem[] activeAbilityitems;
     [SerializeField] Button giveItemBtn;
     [SerializeField] Button giveAbilityBtn;
     private Vector3 carriedItemOffset;
@@ -39,6 +40,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
             raycaster = GetComponent<GraphicRaycaster>();
         if (eventSystem == null)
             eventSystem = EventSystem.current;
+        Singleton.SpawnAbility(activeAbilityitems[0]);
     }
     private void Update()
     {

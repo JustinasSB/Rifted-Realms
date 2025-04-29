@@ -26,6 +26,10 @@ public class AbilityItem : BaseItem
         clone.BaseManaCost = this.BaseManaCost;
         clone.ManaCost = this.ManaCost;
         clone.Description = this.Description;
+        clone.ItemName = this.ItemName;
+        clone.Size = this.Size;
+        clone.SlotSize = this.SlotSize;
+        clone.ItemSpecific = this.ItemSpecific;
 
         if (this.ability != null)
         {
