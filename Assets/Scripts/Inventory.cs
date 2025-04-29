@@ -121,7 +121,11 @@ public class Inventory : MonoBehaviour, IUIToggleable
 
         foreach (var s in slotsToHighlight)
         {
-            s.Highlight(status == 2 ? Color.red.WithAlpha(50f / 255f) : Color.green.WithAlpha(50f / 255f));
+            s.Highlight(
+            status == 2
+                ? new Color(Color.red.r, Color.red.g, Color.red.b, 50f / 255f)
+                : new Color(Color.green.r, Color.green.g, Color.green.b, 50f / 255f)
+            );
             highlightedSlots.Add(s);
         }
     }
@@ -130,7 +134,11 @@ public class Inventory : MonoBehaviour, IUIToggleable
     {
         int status = slot.CanAllocate(Inventory.carriedItem);
         EquipmentSlot slotToHighlight = slot.GetTargetSlot();
-        slotToHighlight.Highlight(status == 2 ? Color.red.WithAlpha(50f / 255f) : Color.green.WithAlpha(50f / 255f));
+        slotToHighlight.Highlight(
+        status == 2
+                ? new Color(Color.red.r, Color.red.g, Color.red.b, 50f / 255f)
+                : new Color(Color.green.r, Color.green.g, Color.green.b, 50f / 255f)
+        );
         highlightedSlot = slotToHighlight;
     }
 

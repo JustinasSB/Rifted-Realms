@@ -6,8 +6,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
-using static UnityEngine.Rendering.HDROutputUtils;
 
 [System.Serializable]
 public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler

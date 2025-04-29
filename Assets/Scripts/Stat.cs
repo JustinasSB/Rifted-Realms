@@ -172,7 +172,7 @@ public class Stat : ISerializationCallbackReceiver
     }
     public void RemoveConversion(Stat stat, float value)
     {
-        if (conversion[stat].IsUnityNull()) return;
+        //if (conversion[stat] == null) return;
 
         //Remove values added by conversion for other stats
         purgeScaledConversionList();
@@ -284,6 +284,7 @@ public class Stat : ISerializationCallbackReceiver
         conversion = new Dictionary<Stat, float>();
         scaledConversion = new Dictionary<StatType, float>();
         asExtra = new Dictionary<Stat, List<float>>();
+        RecalculateValue();
     }
     public Stat Clone()
     {

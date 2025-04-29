@@ -15,7 +15,7 @@ public class ResourceManager : MonoBehaviour
         CummulativeEvasion = stats[StatType.Evasion].Value;
     }
 
-    void Update()
+    public void Update()
     {
         if (DeathManager.Dead) return;
         Regenerate(stats[StatType.Life], stats[StatType.CurrentLife], stats[StatType.RegenerationPercentage], stats[StatType.RegenerationFlat]);

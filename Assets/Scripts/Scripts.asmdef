@@ -1,0 +1,20 @@
+{
+    "name": "ScriptAssembly",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Mathematics",
+        "TMPro",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem",
+        "Unity.VisualScripting.State.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

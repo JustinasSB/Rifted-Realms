@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 public class ItemModifier
 {
     public ModifierType Type { get; set; }

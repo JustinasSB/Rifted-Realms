@@ -4,7 +4,6 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
