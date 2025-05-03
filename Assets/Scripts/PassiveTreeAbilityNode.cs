@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -88,6 +84,7 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
     }
     public new void OnPointerClick(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
         if (Inventory.carriedItem != null)
         {
             Allocate(Inventory.carriedItem, this.item);
@@ -101,7 +98,6 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
         else
         {
             if (this.special) return;
-            if (eventData.button != PointerEventData.InputButton.Left) return;
             if (this.Allocated) { deallocateNode(); return; }
             if (LevelManager.level.SkillPoints <= 0) return;
             else allocateNode();

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [System.Serializable]
 public class Stat : ISerializationCallbackReceiver
@@ -119,7 +113,7 @@ public class Stat : ISerializationCallbackReceiver
         }
         if (asExtra.Count != 0)
         {
-            RecalculateAsExtra();
+            recalculateAsExtra();
         }
     }
     private void deductConversionFromValue() 
@@ -190,7 +184,7 @@ public class Stat : ISerializationCallbackReceiver
         float totalPercentage = conversion.Values.Sum();
         return totalPercentage > 1.0f ? 1.0f / totalPercentage : 1;
     }
-    private void RecalculateAsExtra()
+    private void recalculateAsExtra()
     {
         foreach (var item in asExtra)
         {

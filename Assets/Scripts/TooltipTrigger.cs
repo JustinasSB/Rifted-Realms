@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {

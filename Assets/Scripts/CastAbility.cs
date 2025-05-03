@@ -18,7 +18,7 @@ public class CastAbility : MonoBehaviour
         {
             if (PlayerStatsManager.playerStats.Stats[StatType.CurrentMana].Value > ability.ManaCost)
             {
-                float castTime = ability.ability.Stats[StatType.CastingSpeed].Item1.Value / PlayerStatsManager.playerStats.Stats[StatType.CastingSpeed].Value;
+                float castTime = ability.ability.Stats[StatType.CastingSpeed].Item1.Value;// / PlayerStatsManager.playerStats.Stats[StatType.CastingSpeed].Value;
                 animator.PlayAnimation(castTime, AbilityType.Spell, ability);
             }
         }

@@ -6,9 +6,23 @@ using System.Xml.Linq;
 public class UIToggler : MonoBehaviour
 {
     [SerializeField] StatPanelUI statPanel;
+    [SerializeField] GameOver EndGamePanel;
     Stack<IUIToggleable> activePanels = new(); 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (activePanels.Count > 0)
+            {
+                IUIToggleable top = activePanels.Pop();
+                top.Toggle();
+            }
+            else
+            {
+                HandleToggle(EndGamePanel);
+            }
+        }
+        if (EndGamePanel.isOpen && DeathManager.Dead == false) return;
         if (Input.GetKeyDown(KeyCode.C))
         {
             HandleToggle(statPanel);
@@ -20,14 +34,6 @@ public class UIToggler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             HandleToggle(PassiveTreeManager.instance);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (activePanels.Count > 0)
-            {
-                IUIToggleable top = activePanels.Pop();
-                top.Toggle();
-            }
         }
     }
     private void HandleToggle(IUIToggleable panel)

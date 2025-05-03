@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour, IUIToggleable
 {
@@ -22,6 +20,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
     private Vector3 carriedItemOffset;
     private List<InventorySlot> highlightedSlots = new();
     private EquipmentSlot highlightedSlot;
+    private TrashSlot highlightedTrash;
     private bool clearHightlights = false;
     private MonoBehaviour currentHoveredSlot;
     public GraphicRaycaster raycaster;
@@ -85,6 +84,10 @@ public class Inventory : MonoBehaviour, IUIToggleable
         {
             HighlightEquipmentSlots(equipSlot);
         }
+        else if (hoveredObject.TryGetComponent(out TrashSlot trash))
+        {
+            HighlightTrashSlots(trash);
+        }
     }
     private RaycastResult? GetHoveredSlotResult()
     {
@@ -99,7 +102,8 @@ public class Inventory : MonoBehaviour, IUIToggleable
         foreach (RaycastResult result in results)
         {
             if (result.gameObject.GetComponent<InventorySlot>() != null ||
-                result.gameObject.GetComponent<EquipmentSlot>() != null)
+                result.gameObject.GetComponent<EquipmentSlot>() != null ||
+                result.gameObject.GetComponent<TrashSlot>() != null)
             {
                 return result;
             }
@@ -141,6 +145,12 @@ public class Inventory : MonoBehaviour, IUIToggleable
         );
         highlightedSlot = slotToHighlight;
     }
+    private void HighlightTrashSlots(TrashSlot slot)
+    {
+        TrashSlot slotToHighlight = slot.GetTargetSlot();
+        slotToHighlight.Highlight();
+        highlightedTrash = slotToHighlight;
+    }
 
     public void SpawnInventoryItem(ItemData item = null)
     {
@@ -172,6 +182,11 @@ public class Inventory : MonoBehaviour, IUIToggleable
         {
             highlightedSlot.ResetHighlight();
             highlightedSlot = null;
+        }
+        if (highlightedTrash != null)
+        {
+            highlightedTrash.ResetHighlight();
+            highlightedTrash = null;
         }
         foreach (var s in highlightedSlots)
             s.ResetHighlight();

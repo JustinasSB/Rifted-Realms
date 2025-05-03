@@ -14,10 +14,14 @@ public class RigRotateToMouse : MonoBehaviour
     }
     void Update()
     {
-        if (DeathManager.Dead) 
+        if (DeathManager.Dead)
         {
             Model.rotation = Quaternion.Euler(90, 0, 0);
             return;
+        }
+        else
+        {
+            Model.rotation = Quaternion.Euler(0, 0, 0);
         }
         screenCenter = new Vector2(Screen.width / 2, (Screen.height / 2) - 100);
         float distanceFromCenter = Vector2.Distance(Input.mousePosition, screenCenter);

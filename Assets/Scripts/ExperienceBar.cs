@@ -15,7 +15,6 @@ public class ExperienceBar : MonoBehaviour
     {
         LevelManager.level.OnExperienceChange += experience => ExperienceChanged(experience);
         LevelManager.level.OnLevelUp += level => LevelChanged(level);
-        LevelManager.level.IncreaseExperience(2000, 1);
     }
     private void ExperienceChanged(ulong experience)
     {

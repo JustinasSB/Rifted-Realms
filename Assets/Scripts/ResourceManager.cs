@@ -9,6 +9,7 @@ public class ResourceManager : MonoBehaviour
     private Dictionary<StatType, Stat> stats;
     private bool canRecharge = false;
     private float CummulativeEvasion = 0;
+    [SerializeField] private GameObject GameOverPanel;
     private void Start()
     {
         stats = PlayerStatsManager.playerStats.Stats;
@@ -91,6 +92,9 @@ public class ResourceManager : MonoBehaviour
         if (Life.Value <= 0)
         {
             DeathManager.Dead = true;
+            GameOverPanel.SetActive(true);
+            GameOver panel = GameOverPanel.GetComponent<GameOver>();
+            panel.isOpen = true;
         }
     }
     private bool Evade(float value)

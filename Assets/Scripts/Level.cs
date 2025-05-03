@@ -9,7 +9,7 @@ public class Level
     private ulong experienceForLevel;
     private ulong experienceForPreviousLevel;
     public float percentageFilled;
-    public int SkillPoints;
+    public int SkillPoints { get; private set; }
     public int CurrentLevel { get; private set; }
     private uint penalty;
     public Level() 
@@ -24,7 +24,7 @@ public class Level
     {
         float gain = Math.Max(Math.Abs(sourceLevel - CurrentLevel) - (CurrentLevel/20),0);
         experience += (ulong)(exp * Math.Pow(0.9,gain));
-        if (experience >= experienceForLevel) 
+        while (experience >= experienceForLevel) 
         {
             LevelUp();
         }

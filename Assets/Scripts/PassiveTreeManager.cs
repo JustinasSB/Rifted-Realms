@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.LightTransport;
 using UnityEngine.UI;
 
 public class PassiveTreeManager : MonoBehaviour, IUIToggleable
@@ -46,12 +41,12 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
     {
         isVisible = !isVisible;
         Panel.SetActive(isVisible);
-        foreach (PassiveTreeAbilityNode node in Nodes.GetComponentsInChildren<PassiveTreeAbilityNode>())
-        {
-            node.DestroyTooltip();
-        }
         if (!isVisible)
         {
+            foreach (PassiveTreeAbilityNode node in Nodes.GetComponentsInChildren<PassiveTreeAbilityNode>())
+            {
+                node.DestroyTooltip();
+            }
             mana.SetActive(true);
             experience.SetActive(true);
         }

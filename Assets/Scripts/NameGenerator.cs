@@ -1,13 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using UnityEditor;
-using UnityEngine;
 
 public static class NameGenerator
 {

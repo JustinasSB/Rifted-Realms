@@ -59,7 +59,7 @@ public class Tooltip : MonoBehaviour
     }
     private void abilityTooltip(InventoryItem item, Vector2 position)
     {
-        nameText.text = item.data.name.Replace("_", " ");
+        nameText.text = item.ability.ItemName.Replace("_", " ");
         rarityText.color = Color.green;
         background.color = Color.green;
         border.color = Color.green;

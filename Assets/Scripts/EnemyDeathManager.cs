@@ -33,7 +33,7 @@ public class EnemyDeathManager : MonoBehaviour
     }
     public void deathTrigger()
     {
-        LevelManager.level.IncreaseExperience((ulong)(20 * level), level);
+        LevelManager.level.IncreaseExperience((ulong)(4000 * level), level);
         foreach (var obj in objects)
         {
             obj.material = clone;
