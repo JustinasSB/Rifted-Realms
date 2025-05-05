@@ -75,6 +75,7 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
     }
     private void carriedItemChanged(InventoryItem item)
     {
+        if (!this.Allocated) return;
         if (item == null || item.ability == null)
         {
             highLightNode(false);
@@ -85,7 +86,7 @@ public class PassiveTreeAbilityNode : PassiveTreeNode, IPointerClickHandler
     public new void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
-        if (Inventory.carriedItem != null)
+        if (Inventory.carriedItem != null && this.Allocated)
         {
             Allocate(Inventory.carriedItem, this.item);
             SetTooltip();

@@ -12,14 +12,14 @@ public class UIToggler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (activePanels.Count > 0)
+            if (activePanels.Count != 0)
             {
                 IUIToggleable top = activePanels.Pop();
                 top.Toggle();
             }
             else
             {
-                HandleToggle(EndGamePanel);
+                EndGamePanel.Toggle();
             }
         }
         if (EndGamePanel.isOpen && DeathManager.Dead == false) return;
