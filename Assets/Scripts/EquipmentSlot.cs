@@ -9,10 +9,11 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] Image image;
     [SerializeField] Image Border;
-    InventoryItem Item { get; set; }
+    public InventoryItem Item { get; set; }
     bool Allocated;
-    [SerializeField] ItemType itemType;
+    [SerializeField] public ItemType itemType;
     public static event Action<InventoryItem> OnMainHandEquipmentChanged;
+    public static event Action<EquipmentSlot> OnItemChanged;
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
@@ -82,6 +83,10 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         if (itemType == ItemType.Mainhand)
         {
             OnMainHandEquipmentChanged?.Invoke(Item);
+        }
+        else
+        {
+            OnItemChanged?.Invoke(this);
         }
     }
     private void SetTooltip()

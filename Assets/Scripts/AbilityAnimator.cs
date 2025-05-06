@@ -103,7 +103,8 @@ public class AbilityAnimator : MonoBehaviour
                 }
             }
         }
-        else if (leftArmCurrentPosition != leftArmBasePosition)
+        else if (leftArmCurrentPosition != leftArmBasePosition 
+            || rightArmCurrentPosition != rightArmBasePosition)
         {
             elapsedTime += getScaledDeltaTime(0);
             float NormalizedElapsedTime = Mathf.Clamp01(elapsedTime / animationTime);
@@ -154,15 +155,9 @@ public class AbilityAnimator : MonoBehaviour
     }
     private void UpdateWeapon(InventoryItem item)
     {
-        if (item != null)
-        {
-            Enum.TryParse<WeaponType>(item.data.ItemSpecific.ToString(), out var weaponType);
-            weapon = weaponType;
-        }
-        else
-        {
-            weapon = WeaponType.Unarmed;
-        }
+        if (item == null) { SetWeaponType(0); return; }
+        Enum.TryParse<WeaponType>(item.data.ItemSpecific.ToString(), out var weaponType);
+        SetWeaponType(weaponType);
     }
     public void PlayAnimation(float AnimationTime, AbilityType Ability, AbilityItem AbilityData)
     {
@@ -185,6 +180,12 @@ public class AbilityAnimator : MonoBehaviour
                 case 300:
                     AttackHandAnimation();
                     break;
+                case 102:
+                    SpellSwordAnimation();
+                    break;
+                case 108:
+                    SpellBookAnimation();
+                    break;
                 default:
                     Debug.Log("Weapon, ability pair has no case");
                     break;
@@ -200,6 +201,16 @@ public class AbilityAnimator : MonoBehaviour
     public void SetWeaponType(WeaponType type)
     {
         this.weapon = type;
+        settled = false;
+        elapsedTime = 0;
+        animationTime = 0.5f;
+        leftArmTargetPosition = leftArmCurrentPosition;
+        leftArmTargetRotation = leftArmCurrentRotation;
+        leftArmHintTargetPosition = leftArmHintCurrentPosition;
+        rightArmTargetPosition = rightArmCurrentPosition;
+        rightArmTargetRotation = rightArmCurrentRotation;
+        rightArmHintTargetPosition = rightArmHintCurrentPosition;
+        LoadIdleAnimation();
     }
     private float getScaledDeltaTime(AbilityType Ability)
     {
@@ -230,6 +241,28 @@ public class AbilityAnimator : MonoBehaviour
         rightArmHintTargetPosition = new Vector3(0.067f, 0.0525f, 0.262f);
         animationPlaying = true;
     }
+    private void SpellSwordAnimation()
+    {
+        LoadAbilityBase();
+        leftArmTargetPosition = new Vector3(-0.01539947f, -0.1010992f, 0.312396f);
+        leftArmTargetRotation = new quaternion(-0.09592f, 0.53698f, 0.83658f, -0.05089f);
+        leftArmHintTargetPosition = new Vector3(-0.0782f, 0.0525f, 0.262f);
+        rightArmTargetPosition = new Vector3(0.051f, -0.0989f, 0.3232f);
+        rightArmTargetRotation = Quaternion.Euler(-172.16f, -91.64999f, 56.309f);
+        rightArmHintTargetPosition = new Vector3(0.067f, 0.0525f, 0.262f);
+        animationPlaying = true;
+    }
+    private void SpellBookAnimation()
+    {
+        LoadAbilityBase();
+        leftArmBasePosition = new Vector3(-0.006795675f, -0.07510176f, 0.2961606f);
+        leftArmBaseRotation = Quaternion.Euler(-161.023f, 16.048f, -4.59198f);
+        leftArmHintBasePosition = new Vector3(-0.103f, 0.0525f, 0.262f);
+        rightArmTargetPosition = new Vector3(0.05540254f, -0.09709762f, 0.308092f);
+        rightArmTargetRotation = Quaternion.Euler(-138.244f, -199.302f, 58.221f);
+        rightArmHintTargetPosition = new Vector3(0.075f, 0.0525f, 0.262f);
+        animationPlaying = true;
+    }
     private void BuffHandAnimation()
     {
         animationPlaying = true;
@@ -253,6 +286,20 @@ public class AbilityAnimator : MonoBehaviour
             case 1:
                 break;
             case 2:
+                leftArmBasePosition = new Vector3(-0.06810334f, 0.0009017753f, 0.2167678f);
+                leftArmBaseRotation = new quaternion(0.8271084f, -0.062163f, -0.0193626f, -0.5582584f);
+                leftArmHintBasePosition = new Vector3(-0.0721f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.0502f, -0.0699f, 0.2725f);
+                rightArmBaseRotation = Quaternion.Euler(-172.16f, -91.65f, 22.3f);
+                rightArmHintBasePosition = new Vector3(0.0741f, 0.0525f, 0.287f);
+                break;
+            case 8:
+                leftArmBasePosition = new Vector3(-0.006795675f, -0.07510176f, 0.2961606f);
+                leftArmBaseRotation = Quaternion.Euler(-161.023f, 16.048f, -4.59198f);
+                leftArmHintBasePosition = new Vector3(-0.103f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.03760367f, -0.05310554f, 0.2963893f);
+                rightArmBaseRotation = new quaternion(0.0838614f, -0.582919f, 0.7199153f, -0.3672801f);
+                rightArmHintBasePosition = new Vector3(0.0722f, 0.05254095f, 0.2619794f);
                 break;
         }
     }
@@ -271,6 +318,20 @@ public class AbilityAnimator : MonoBehaviour
             case 1:
                 break;
             case 2:
+                leftArmBasePosition = new Vector3(-0.06810334f, 0.0009017753f, 0.2167678f);
+                leftArmBaseRotation = new quaternion(0.8271084f, -0.062163f, -0.0193626f, -0.5582584f);
+                leftArmHintBasePosition = new Vector3(-0.0721f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.0502f, -0.0699f, 0.2725f);
+                rightArmBaseRotation = Quaternion.Euler(-172.16f, -91.65f, 22.3f);
+                rightArmHintBasePosition = new Vector3(0.0741f, 0.0525f, 0.287f);
+                break;
+            case 8:
+                leftArmBasePosition = new Vector3(-0.006795675f, -0.07510176f, 0.2961606f);
+                leftArmBaseRotation = Quaternion.Euler(-161.023f, 16.048f, -4.59198f);
+                leftArmHintBasePosition = new Vector3(-0.103f, 0.0525f, 0.262f);
+                rightArmBasePosition = new Vector3(0.0674f, 0.0127f, 0.2224f);
+                rightArmBaseRotation = new quaternion(-0.8236926f, -0.2241978f, -0.4545183f, 0.2543205f);
+                rightArmHintBasePosition = new Vector3(0.0648f, 0.0525f, 0.262f);
                 break;
         }
     }

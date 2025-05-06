@@ -22,4 +22,4 @@ MonoBehaviour:
   ItemStats:
   - StatType: 8
     BaseValue: 25
-  ItemPrefab: {fileID: 0}
+  ItemPrefab: {fileID: 1193310529012311985, guid: f5e6453994f7df04fa475c5e40562f29, type: 3}

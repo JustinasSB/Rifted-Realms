@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static Codice.Client.BaseCommands.Import.Commit;
 public class ItemModifier
 {
     public ModifierType Type { get; set; }
@@ -59,7 +60,15 @@ public class ItemModifier
     }
     private void setText()
     {
-        switch ((int)(this.OperationType + (int)this.Scope*10)) {
+
+        int negative = 0;
+        if (OperationType == OperationType.Multiply)
+        {
+            negative = RolledValue < 100 ? 1 : 0;
+        }
+        else negative = RolledValue < 0 ? 1 : 0;
+
+        switch ((int)(this.OperationType + negative * 10 + (int)this.Scope*100)) {
             case 0:
                 Text = $"Adds {RolledValue} {AffectedStat.GetDisplayName()}";
                 break;
@@ -75,20 +84,29 @@ public class ItemModifier
             case 4:
                 Text = $"{RolledValue}% of {Extra.GetDisplayName()} as extra {AffectedStat.GetDisplayName()}";
                 break;
-            case 10:
+            case 100:
                 Text = $"+{RolledValue} To {AffectedStat.GetDisplayName()}";
                 break;
-            case 11:
+            case 101:
                 Text = $"+{RolledValue}% To {AffectedStat.GetDisplayName()}";
                 break;
-            case 12:
-                Text = $"+{RolledValue}% Multiplier To {AffectedStat.GetDisplayName()}";
+            case 102:
+                Text = $"+{RolledValue - 100}% Multiplier To {AffectedStat.GetDisplayName()}";
                 break;
-            case 13:
+            case 103:
                 Text = $"{RolledValue}% of {Extra.GetDisplayName()} added as {AffectedStat.GetDisplayName()}";
                 break;
-            case 14:
+            case 104:
                 Text = $"{RolledValue}% of {Extra.GetDisplayName()} added as extra {AffectedStat.GetDisplayName()}";
+                break;
+            case 110:
+                Text += $"{RolledValue} To {AffectedStat.GetDisplayName()}";
+                break;
+            case 111:
+                Text += $"{Math.Abs(RolledValue)}% Reduction To {AffectedStat.GetDisplayName()}";
+                break;
+            case 112:
+                Text += $"{Math.Abs(100 - RolledValue)}% Less {AffectedStat.GetDisplayName()}";
                 break;
         }
     }

@@ -133,7 +133,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         rt.sizeDelta = new Vector2(item.data.SlotSize.x * item.data.Size.x, item.data.SlotSize.y * item.data.Size.y);
         rt.localScale = Vector3.one;
-        rt.anchoredPosition = Vector2.zero;
+        rt.anchoredPosition = Vector3.zero;
         if (item.data.SlotSize != Vector2.one)
         {
             rt.anchorMin = new Vector2(1, 0);

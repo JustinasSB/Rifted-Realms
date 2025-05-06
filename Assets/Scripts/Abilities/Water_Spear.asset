@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36046ce5ee0dc7f479f0a7b3ce88e9d6, type: 3}
+  m_Name: Water_Spear
+  m_EditorClassIdentifier: 
+  ItemName: Water Spear
+  Icon: {fileID: 21300000, guid: 44a3e58b140125a4bbebf574d72058f8, type: 3}
+  Size: {x: 50, y: 50}
+  SlotSize: {x: 1, y: 1}
+  ItemType: 13
+  ItemSpecific: 31
+  effectPrefab: {fileID: 7916926358919936416, guid: 207ec6801878e594d8056f1754da9308, type: 3}
+  abilityIcon: {fileID: 0}
+  ability:
+    serializedStats:
+    - statType: 41
+      stat:
+        StatType: 41
+        Value: 2
+      scalable: 1
+    - statType: 28
+      stat:
+        StatType: 28
+        Value: 0.8
+      scalable: 1
+    - statType: 36
+      stat:
+        StatType: 36
+        Value: 3
+      scalable: 1
+    - statType: 39
+      stat:
+        StatType: 39
+        Value: 10
+      scalable: 1
+    - statType: 32
+      stat:
+        StatType: 32
+        Value: 30
+      scalable: 1
+    - statType: 40
+      stat:
+        StatType: 40
+        Value: 1
+      scalable: 1
+    tags: 000000000100000004000000
+    type: 1
+    behaviour: 1
+    pool: 2
+    support: 0
+    modifiers: []
+  Multiplier: 360
+  BaseManaCost: 7
+  ManaCost: 7
+  Description: Fire a water projectile that suddenly accelerates

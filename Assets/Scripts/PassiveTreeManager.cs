@@ -123,7 +123,7 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
         GameObject line = Instantiate(linePrefab, midPoint, Quaternion.identity, Nodes.transform);
         line.transform.SetSiblingIndex(0);
         line.transform.right = direction.normalized;
-        line.transform.localScale = new Vector3(length, line.transform.localScale.y, line.transform.localScale.z);
+        line.transform.localScale = new Vector3(length*1.25f, line.transform.localScale.y, line.transform.localScale.z);
         lines.Add((NodeA, NodeB), line.GetComponent<Image>());
     }
     private (PassiveTreeNode, PassiveTreeNode) MakePairKey(PassiveTreeNode a, PassiveTreeNode b)

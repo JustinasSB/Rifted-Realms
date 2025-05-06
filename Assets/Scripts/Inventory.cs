@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
 {
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
+    [SerializeField] Camera main;
     [SerializeField] public InventorySlot[] inventorySlots;
     [SerializeField] Transform draggablesTransform;
     [SerializeField] InventoryItem itemPrefab;
@@ -26,8 +27,6 @@ public class Inventory : MonoBehaviour, IUIToggleable
     public GraphicRaycaster raycaster;
     public EventSystem eventSystem;
     private bool displaying = false;
-    private Vector2 ShowingPosition = new Vector3(1545, 540, 0);
-    private Vector2 HiddenPosition = new Vector3(9999, 540, 0);
     public event Action<InventoryItem> OnCarriedItemChange;
 
     private void Start()
@@ -40,6 +39,14 @@ public class Inventory : MonoBehaviour, IUIToggleable
         if (eventSystem == null)
             eventSystem = EventSystem.current;
         Singleton.SpawnAbility(activeAbilityitems[0]);
+        Singleton.SpawnAbility(activeAbilityitems[1]);
+        Singleton.SpawnInventoryItem(items[16]);
+        Singleton.SpawnInventoryItem(items[17]);
+        Singleton.SpawnInventoryItem(items[18]);
+        Singleton.SpawnInventoryItem(items[12]);
+        Singleton.SpawnInventoryItem(items[14]);
+        Singleton.SpawnInventoryItem(items[19]);
+        this.Toggle();
     }
     private void Update()
     {
@@ -48,9 +55,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
             ClearHighlights();
             return;
         }
-
         carriedItem.transform.position = Input.mousePosition; //+ carriedItemOffset;
-
         RaycastResult? hoveredResult = GetHoveredSlotResult();
         if (!clearHightlights)
         {
@@ -113,8 +118,14 @@ public class Inventory : MonoBehaviour, IUIToggleable
     }
     public void Toggle()
     {
-        if (!displaying) this.transform.position = ShowingPosition;
-        else this.transform.position = HiddenPosition;
+        if (!displaying)
+        {
+            this.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            this.transform.localScale = new Vector3(0, 0, 0);
+        }
         displaying = !displaying;
     }
     public bool IsOpen => displaying;

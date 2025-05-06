@@ -107,7 +107,8 @@ public enum ItemType
     Amulet,
     Elixir,
     Stackable,
-    Jewel
+    Jewel,
+    Core
 }
 public enum ItemSpecific
 {
@@ -143,7 +144,8 @@ public enum ItemSpecific
     Ring,
     Amulet,
     Elixir,
-    AbilityJewel
+    AbilityJewel,
+    Core
 }
 public enum ModifiableItemType
 {
@@ -205,5 +207,6 @@ public enum AbilityBehaviourTag
 }
 public enum ProjectilePool
 {
-    Tempest=1
+    Tempest=1,
+    Spear
 }
