@@ -2123,7 +2123,7 @@ Transform:
   m_GameObject: {fileID: 160552776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -9999, y: -9999, z: -9999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11777,7 +11777,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1908226686}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999973
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20072,7 +20072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: -0.0037231445}
+  m_AnchoredPosition: {x: 0.00012207031, y: -0.0021820068}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1311431491
@@ -26346,6 +26346,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7eb6db2e0fe8b2b4883d4949bf0b29a3, type: 2}
   - {fileID: 11400000, guid: a6d26b4d271f3d745aa16119282285ea, type: 2}
   - {fileID: 11400000, guid: 505e30fbde75faf4e98eb3de04da87ba, type: 2}
+  - {fileID: 11400000, guid: dc82666052386284f8e39fc52583d270, type: 2}
   abilityitems:
   - {fileID: 11400000, guid: c7414e675c8ae514a83f1d051fccca77, type: 2}
   - {fileID: 11400000, guid: d418f273b4441194096c6d68cb7e5cfe, type: 2}
@@ -26353,6 +26354,7 @@ MonoBehaviour:
   activeAbilityitems:
   - {fileID: 11400000, guid: 01f94f909ff1d79489768bc7b02d0740, type: 2}
   - {fileID: 11400000, guid: ef63012df57e6374b8c22e72da0c3132, type: 2}
+  - {fileID: 11400000, guid: 49ab0eff22c8a3e45b9af1cd68758fc3, type: 2}
   giveItemBtn: {fileID: 1609232760}
   giveAbilityBtn: {fileID: 460488419}
   raycaster: {fileID: 0}
@@ -28936,7 +28938,7 @@ RectTransform:
   m_Father: {fileID: 962846515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999973}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1.2299995, y: 0}
   m_SizeDelta: {x: -8.37, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -29528,13 +29530,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931780720}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1fabc1542a8a314b80bc56f7f747e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2919186760366436656, guid: 6118c0361a32b8841b080f61fa351dc3, type: 3}
-  spawnInterval: 3
+  spawnInterval: 0.66
   spawnAreaSize: {x: 100, y: 0, z: 100}
   spawnOffset: {x: 0, y: 0, z: 0}
   player: {fileID: 694491999}

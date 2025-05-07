@@ -6,12 +6,26 @@ public class EnemyHealthManager : MonoBehaviour
     [SerializeField] Stat CurrentHealth;
     [SerializeField] Stat RegenerationPercentage;
     [SerializeField] EnemyDeathManager deathManager;
+    public bool isAlive;
+    public void Start()
+    {
+        deathManager.OnDeath += onDeath;
+        deathManager.OnRevive += onRevive;
+    }
     private void Update()
     {
         if (Health.Value > CurrentHealth.Value)
         {
             Regenerate(Health, CurrentHealth, RegenerationPercentage);
         }
+    }
+    public void onRevive()
+    {
+        isAlive = true;
+    }
+    public void onDeath(GameObject o)
+    {
+        isAlive = false;
     }
     private void Regenerate(Stat Total, Stat Current, Stat Percentage)
     {

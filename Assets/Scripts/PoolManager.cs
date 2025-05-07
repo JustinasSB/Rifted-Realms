@@ -37,6 +37,31 @@ public class PoolManager : MonoBehaviour
         allObjects[projectilePool].Add(instance);
         return instance;
     }
+    public GameObject getCenterAOEGameObject(GameObject prefab, Transform origin, quaternion rotation, ProjectilePool projectilePool)
+    {
+        if (!pools.ContainsKey(projectilePool))
+        {
+            pools[projectilePool] = new Queue<GameObject>();
+            allObjects[projectilePool] = new List<GameObject>();
+        }
+        Queue<GameObject> pool = pools[projectilePool];
+        if (pool.Count > 0)
+        {
+            GameObject pooledObject = pool.Dequeue();
+            pooledObject.transform.SetPositionAndRotation(origin.position, rotation);
+            pooledObject.transform.localScale = new Vector3(1f, 1f, 1f);
+            return pooledObject;
+        }
+        GameObject instance = Instantiate(
+                prefab,
+                origin.position,
+                quaternion.identity,
+                origin
+            );
+        instance.GetComponent<ICenterAOE>().OnExpired += AppendAvailable;
+        allObjects[projectilePool].Add(instance);
+        return instance;
+    }
     public GameObject GetEnemyObject(GameObject enemyPrefab, Vector3 position, Quaternion rotation)
     {
         GameObject enemy;

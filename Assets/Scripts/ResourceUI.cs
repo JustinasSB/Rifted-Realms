@@ -41,8 +41,9 @@ public class ResourceUI : MonoBehaviour
     {
         if (resources[0].Value != 0)
         {
+            if (resources[3].Value > resources[0].Value) resources[3].DirectValueSet(resources[0].Value);
             Health.value = resources[3].Value / resources[0].Value;
-            HealthLabel.text = $"{Math.Round(resources[3].Value)} / {resources[0].Value}";
+            HealthLabel.text = $"{Math.Round(resources[3].Value)} / {Math.Round(resources[0].Value)}";
         }
         else
         {
@@ -54,8 +55,9 @@ public class ResourceUI : MonoBehaviour
     {
         if (resources[1].Value != 0)
         {
+            if (resources[4].Value > resources[1].Value) resources[4].DirectValueSet(resources[1].Value);
             Mana.value = resources[4].Value / resources[1].Value;
-            ManaLabel.text = string.Format("{0} / {1}", Math.Round(resources[4].Value), resources[1].Value);
+            ManaLabel.text = string.Format("{0} / {1}", Math.Round(resources[4].Value), Math.Round(resources[1].Value));
         }
         else
         {
@@ -67,8 +69,9 @@ public class ResourceUI : MonoBehaviour
     {
         if (resources[2].Value != 0)
         {
+            if (resources[5].Value > resources[2].Value) resources[5].DirectValueSet(resources[2].Value);
             Energy.value = resources[5].Value / resources[2].Value;
-            EnergyLabel.text = string.Format("{0} / {1}", Math.Round(resources[5].Value), resources[2].Value);
+            EnergyLabel.text = string.Format("{0} / {1}", Math.Round(resources[5].Value), Math.Round(resources[2].Value));
         }
         else
         {

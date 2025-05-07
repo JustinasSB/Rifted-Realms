@@ -44,6 +44,7 @@ public class Stat : ISerializationCallbackReceiver
         this.BaseValue = baseValue;
         this.StatType = statType;
         RecalculateValue();
+        OnValueChanged?.Invoke(Value);
     }
     /// <summary>
     /// For use in regeneration, sets stat value directly to avoid unnecessary calculations
@@ -60,7 +61,7 @@ public class Stat : ISerializationCallbackReceiver
         float baseMul = baseMultiplier.Aggregate(1f, (total, next) => total * next);
         valueBeforeConversion = (BaseValue + baseAdded.Sum()) * baseInc * baseMul;
         Value = valueBeforeConversion;
-        OnValueChanged?.Invoke(this.Value);
+        //OnValueChanged?.Invoke(this.Value);
     }
     public void AddBaseAdded(float value)
     {
@@ -115,6 +116,7 @@ public class Stat : ISerializationCallbackReceiver
         {
             recalculateAsExtra();
         }
+        OnValueChanged?.Invoke(Value);
     }
     private void deductConversionFromValue() 
     {

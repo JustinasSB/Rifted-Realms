@@ -1,7 +1,7 @@
+using Codice.CM.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class WaterSpearBehaviour : MonoBehaviour, IProjectile
 {
@@ -22,7 +22,15 @@ public class WaterSpearBehaviour : MonoBehaviour, IProjectile
     public event Action<GameObject, ProjectilePool> OnExpired;
     private List<GameObject> hitTargets = new();
     bool changed = false;
-
+    TrailRenderer tr;
+    private float damageMultiplier;
+    float CalculateDamageMultiplier(float speed)
+    {
+        if (speed >= 40f)
+            return 1f + ((speed - 40f) * 0.01f);
+        else
+            return speed / 40f;
+    }
     public void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, Vector3 target, float pierce, float duration, float speed, ProjectilePool pool)
     {
         Damage = damage;
@@ -35,9 +43,17 @@ public class WaterSpearBehaviour : MonoBehaviour, IProjectile
         this.pool = pool;
         isUsed = true;
         changed = false;
+        damageMultiplier = CalculateDamageMultiplier(speed);
         Quaternion offset = Quaternion.Euler(0, -90, 0);
         transform.rotation = Quaternion.LookRotation(target) * offset;
+        if (tr==null) getTrailRenderer();
+        tr.enabled = false;
     }
+    void getTrailRenderer()
+    {
+        tr = GetComponent<TrailRenderer>();
+    }
+
     void Update()
     {
         if (!isUsed) return;
@@ -51,7 +67,9 @@ public class WaterSpearBehaviour : MonoBehaviour, IProjectile
         Move();
         if (changed || Elapsed < 1) return;
         changed = true;
-        Speed = Speed * 10;
+        tr.enabled = true;
+        Speed = Speed * 20;
+        damageMultiplier = CalculateDamageMultiplier(Speed);
     }
     private void Move()
     {
@@ -81,7 +99,7 @@ public class WaterSpearBehaviour : MonoBehaviour, IProjectile
             EnemyHealthManager enemy = other.gameObject.GetComponent<EnemyHealthManager>();
             foreach (var damage in Damage)
             {
-                enemy.TakeDamage(damage.Value.Value);
+                enemy.TakeDamage(damage.Value.Value * damageMultiplier);
             }
             hitTargets.Add(other.gameObject);
             Pierce--;

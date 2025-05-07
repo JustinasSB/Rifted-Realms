@@ -52,7 +52,8 @@ public class PlayerStats
             { StatType.ProjectileDamage, new Stat ("Projectile Damage", "Undescribed", 1f, StatType.ProjectileDamage)},
             { StatType.SpellDamage, new Stat ("Spell Damage", "Undescribed", 1f, StatType.SpellDamage)},
             { StatType.AttackDamage, new Stat ("Attack Damage", "Undescribed", 1f, StatType.AttackDamage)},
-            { StatType.EffectDuration, new Stat ("Effect Duration", "Undescribed", 1f, StatType.EffectDuration)}
+            { StatType.EffectDuration, new Stat ("Effect Duration", "Undescribed", 1f, StatType.EffectDuration)},
+            { StatType.AreaOfEffect, new Stat ("Area of Effect", "Undescribed", 1f, StatType.AreaOfEffect)}
         };
     }
     public void ModifyStat(StatType statType, OperationType operation, float value) {

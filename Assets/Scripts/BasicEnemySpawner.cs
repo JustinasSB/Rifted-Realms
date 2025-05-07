@@ -31,16 +31,27 @@ public class BasicEnemySpawner : MonoBehaviour
         Vector3 spawnPosition = Vector3.zero;
         int maxAttempts = 10;
         int attempts = 0;
-        while (Vector3.Distance(spawnPosition, player.position) < minDistanceFromCenter && attempts < maxAttempts)
+        bool found = false;
+        while (attempts < maxAttempts)
         {
             Vector3 randomPos = new Vector3(
                 Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
                 Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2),
                 Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
             );
-            spawnPosition = transform.position + spawnOffset + randomPos;
+            Vector3 candidatePos = transform.position + spawnOffset + randomPos;
+            if (Vector3.Distance(candidatePos, player.position) >= minDistanceFromCenter)
+            {
+                spawnPosition = candidatePos;
+                found = true;
+                break;
+            }
+            attempts++;
         }
-        GameObject enemy = PoolManager.Instance.GetEnemyObject(enemyPrefab, spawnPosition, Quaternion.identity);
+        if (found)
+        {
+            GameObject enemy = PoolManager.Instance.GetEnemyObject(enemyPrefab, spawnPosition, Quaternion.identity);
+        }
     }
     private void OnDrawGizmos()
     {

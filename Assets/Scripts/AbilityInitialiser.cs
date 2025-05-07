@@ -3,6 +3,10 @@ using UnityEngine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using System;
+using Codice.CM.Common;
+using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using Unity.Plastic.Newtonsoft.Json.Linq;
 
 internal class AbilityInitialiser : MonoBehaviour
 {
@@ -40,6 +44,15 @@ internal class AbilityInitialiser : MonoBehaviour
                 projectile.Initialize(damage, targetLayer, direction, pierce, duration, speed, data.pool);
             }
         }
+    }
+    public static void TriggerCenterAOE(GameObject prefab, Ability data, float damageMultiplier, Transform origin, Dictionary<StatType, Stat> caster, LayerMask targetLayer)
+    {
+        float duration = RetrieveStatMul(StatType.EffectDuration, data, caster);
+        Dictionary<StatType, Stat> damage = CalculateDamage(data, caster, damageMultiplier);
+        GameObject instance = PoolManager.Instance.getCenterAOEGameObject(prefab, origin, quaternion.identity, data.pool);
+        ICenterAOE AOE = instance.GetComponent<ICenterAOE>();
+        float areaOfEffect = RetrieveStatMul(StatType.AreaOfEffect, data, caster);
+        AOE.Initialize(damage, targetLayer, duration, areaOfEffect, data.pool);
     }
     private static Dictionary<StatType, Stat> CalculateDamage(Ability data, Dictionary<StatType, Stat> caster, float damageMultiplier)
     {
@@ -128,4 +141,9 @@ public interface IProjectile
 {
     event Action<GameObject, ProjectilePool> OnExpired;
     void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, Vector3 target, float pierce, float duration, float speed, ProjectilePool pool);
+}
+public interface ICenterAOE
+{
+    event Action<GameObject, ProjectilePool> OnExpired;
+    void Initialize(Dictionary<StatType, Stat> damage, LayerMask targetLayer, float duration, float AreaOfEffect, ProjectilePool pool);
 }

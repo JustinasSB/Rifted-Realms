@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour, IUIToggleable
             eventSystem = EventSystem.current;
         Singleton.SpawnAbility(activeAbilityitems[0]);
         Singleton.SpawnAbility(activeAbilityitems[1]);
+        Singleton.SpawnAbility(activeAbilityitems[2]);
         Singleton.SpawnInventoryItem(items[16]);
         Singleton.SpawnInventoryItem(items[17]);
         Singleton.SpawnInventoryItem(items[18]);

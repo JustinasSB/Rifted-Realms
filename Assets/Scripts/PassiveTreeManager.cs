@@ -119,11 +119,14 @@ public class PassiveTreeManager : MonoBehaviour, IUIToggleable
         Vector3 direction = end - start;
         Vector3 midPoint = (start + end) / 2f;
         float length = direction.magnitude;
+        float expectedAspect = 16f / 9f;
+        float actualAspect = (float)Screen.width / Screen.height;
+        float scaleFactor = actualAspect / expectedAspect;
 
         GameObject line = Instantiate(linePrefab, midPoint, Quaternion.identity, Nodes.transform);
         line.transform.SetSiblingIndex(0);
         line.transform.right = direction.normalized;
-        line.transform.localScale = new Vector3(length*1.25f, line.transform.localScale.y, line.transform.localScale.z);
+        line.transform.localScale = new Vector3(length*scaleFactor, line.transform.localScale.y, line.transform.localScale.z);
         lines.Add((NodeA, NodeB), line.GetComponent<Image>());
     }
     private (PassiveTreeNode, PassiveTreeNode) MakePairKey(PassiveTreeNode a, PassiveTreeNode b)

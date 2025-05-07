@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36046ce5ee0dc7f479f0a7b3ce88e9d6, type: 3}
+  m_Name: Vortex
+  m_EditorClassIdentifier: 
+  ItemName: Vortex
+  Icon: {fileID: 21300000, guid: ad5037bfde68fc548b5aa1fe5247aab4, type: 3}
+  Size: {x: 50, y: 50}
+  SlotSize: {x: 1, y: 1}
+  ItemType: 13
+  ItemSpecific: 31
+  effectPrefab: {fileID: 5773115480990014885, guid: 8113a74d8dc103742a6532c4d614c5bd, type: 3}
+  abilityIcon: {fileID: 0}
+  ability:
+    serializedStats:
+    - statType: 30
+      stat:
+        StatType: 30
+        Value: 30
+      scalable: 0
+    - statType: 28
+      stat:
+        StatType: 28
+        Value: 1
+      scalable: 0
+    - statType: 45
+      stat:
+        StatType: 45
+        Value: 1
+      scalable: 0
+    - statType: 36
+      stat:
+        StatType: 36
+        Value: 5
+      scalable: 0
+    tags: 
+    type: 1
+    behaviour: 5
+    pool: 3
+    support: 0
+    modifiers: []
+  Multiplier: 200
+  BaseManaCost: 6
+  ManaCost: 6
+  Description: Creates a Vortex centered around the user, targets that enter the
+    area of effect take damage immediately and every 0.5seconds while inside

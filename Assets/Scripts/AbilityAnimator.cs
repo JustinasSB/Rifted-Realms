@@ -349,6 +349,7 @@ public class AbilityAnimator : MonoBehaviour
             case AbilityBehaviourTag.TargetAOE:
                 break;
             case AbilityBehaviourTag.CenterAOE:
+                AbilityInitialiser.TriggerCenterAOE(abilityItem.effectPrefab, abilityItem.ability, abilityItem.Multiplier, body.transform, casterStats, targetLayer);
                 break;
         }
     }

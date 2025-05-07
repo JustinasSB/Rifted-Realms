@@ -56,7 +56,8 @@ public enum StatType
     [Description("Projectile Speed")] ProjectileSpeed,
     [Description("Projectile Damage")] ProjectileDamage,
     [Description("Spell Damage")] SpellDamage,
-    [Description("Attack Damage")] AttackDamage
+    [Description("Attack Damage")] AttackDamage,
+    [Description("Area of Effect")] AreaOfEffect
 }
 public enum OperationType
 {
@@ -208,5 +209,6 @@ public enum AbilityBehaviourTag
 public enum ProjectilePool
 {
     Tempest=1,
-    Spear
+    Spear,
+    Vortex
 }

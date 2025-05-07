@@ -328,8 +328,6 @@ public static class ModifierDictionary
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.SpellDamage, 1, 5, 100, 149, 500, 40),
                 new ItemModifier(OperationType.Increase, ModifierType.Suffix, ModifierScope.Global, StatType.SpellDamage, 2, 5, 50, 99, 1000, 0),
                 new ItemModifier(OperationType.Convert, ModifierType.Enchant, ModifierScope.Global, StatType.Intelligence, 0,100, 20, 50, 1000, 0, StatType.Strength),
-                new ItemModifier(OperationType.Convert, ModifierType.Enchant, ModifierScope.Global, StatType.Intelligence, 1,101, 20, 50, 1000, 0, StatType.Dexterity),
-                new ItemModifier(OperationType.Convert, ModifierType.Enchant, ModifierScope.Global, StatType.Intelligence, 2,102, 20, 50, 1000, 0, StatType.Constitution),
                 new ItemModifier(OperationType.Multiply, ModifierType.Implicit, ModifierScope.Global, StatType.SpellDamage, 0, 8, 126, 150, 100, 80),
                 new ItemModifier(OperationType.Multiply, ModifierType.Implicit, ModifierScope.Global, StatType.SpellDamage, 1, 8, 111, 125, 500, 40),
                 new ItemModifier(OperationType.Multiply, ModifierType.Implicit, ModifierScope.Global, StatType.SpellDamage, 2, 8, 101, 110, 1000, 0),

@@ -61,4 +61,5 @@ MonoBehaviour:
   Multiplier: 360
   BaseManaCost: 7
   ManaCost: 7
-  Description: Fire a water projectile that suddenly accelerates
+  Description: Fire a water projectile that suddenly accelerates. The damage of the
+    projectile scales with speed, doing little damage at the beginning of it's trajectory.
